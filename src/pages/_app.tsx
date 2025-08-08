@@ -1,7 +1,6 @@
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { useState, useEffect } from 'react'
-import { AnimatePresence } from 'framer-motion'
 import LoadingScreen from '@/components/LoadingScreen'
 import Layout from '@/components/Layout'
 import { useRouter } from 'next/router'
@@ -21,11 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   // Force Vercel to use updated code - React error fix
   if (isLoading) {
-    return (
-      <AnimatePresence mode="wait">
-        <LoadingScreen key="loading" />
-      </AnimatePresence>
-    )
+    return <LoadingScreen />
   }
 
   return (
