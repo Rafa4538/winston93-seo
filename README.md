@@ -87,4 +87,4 @@ Este proyecto está configurado para funcionar con:
 - [Documentación de TypeScript](https://www.typescriptlang.org/docs)
 - [Documentación de Tailwind CSS](https://tailwindcss.com/docs)
 
-¡Feliz codificación! 🎉 
+¡Feliz codificación! 🎉 # Updated for Vercel deployment
