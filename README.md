@@ -92,3 +92,4 @@ Este proyecto está configurado para funcionar con:
 // Fixed email configuration
 // Using correct email: sistemas3@winston93.edu.mx
 // Using GitHub noreply email
+// Using correct email: winston93-cloud@github.com
