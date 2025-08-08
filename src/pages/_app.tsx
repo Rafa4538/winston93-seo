@@ -19,6 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
     return () => clearTimeout(timer)
   }, [])
 
+  // Force Vercel to use updated code - React error fix
   if (isLoading) {
     return (
       <AnimatePresence mode="wait">
