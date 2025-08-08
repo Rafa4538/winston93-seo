@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 
 const LoadingScreen = () => {
   return (
@@ -154,9 +155,11 @@ const LoadingScreen = () => {
           }}
           className="mb-12"
         >
-          <img
+          <Image
             src="/images/logos/logo_winston.png"
             alt="Instituto Winston Churchill"
+            width={112}
+            height={112}
             className="h-28 w-auto mx-auto drop-shadow-lg"
           />
         </motion.div>
