@@ -124,7 +124,7 @@ const PageLoadingScreen = () => {
               className="mb-4"
             >
               <p className="text-yellow-300 text-sm font-medium italic text-center max-w-sm mx-auto leading-relaxed">
-                "{currentQuote}"
+                &ldquo;{currentQuote}&rdquo;
               </p>
             </motion.div>
           )}

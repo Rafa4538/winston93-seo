@@ -50,7 +50,7 @@ export default function ConveniosSection() {
                     : 'opacity-0 translate-x-8'
                 }`} style={{ transitionDelay: '600ms' }}>
                   <div className="text-white transform rotate-90 origin-center whitespace-nowrap">
-                    <h2 className="text-sm md:text-base lg:text-lg font-bold tracking-widest">
+                    <h2 className="text-xs md:text-sm lg:text-lg font-bold tracking-widest">
                       CONVENIOS Y CERTIFICACIONES
                     </h2>
                   </div>

@@ -49,26 +49,26 @@ export default function OfertaEducativaSection() {
   return (
     <div ref={sectionRef} className="w-full relative h-full">
       {/* Contenido de la sección */}
-      <div className="bg-white py-12 md:py-16 pb-56 md:pb-60">
+      <div className="bg-white py-10 md:py-16 pb-48 md:pb-60">
         <div className="container mx-auto px-4 md:px-8">
-          <div className="text-center mb-10 md:mb-14">
+          <div className="text-center mb-8 md:mb-14">
             {/* Título principal */}
             <div className={`transition-all duration-1000 ease-out ${
               isVisible 
                 ? 'opacity-100 translate-y-0 scale-100' 
                 : 'opacity-0 -translate-y-8 scale-95'
             }`} style={{ transitionDelay: '100ms' }}>
-              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-blue-900 mb-4">
+              <h1 className="text-2xl md:text-5xl lg:text-6xl font-bold text-blue-900 mb-2 md:mb-4">
                 OFERTA
               </h1>
-              <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-blue-600">
+              <h2 className="text-2xl md:text-5xl lg:text-6xl font-bold text-blue-600">
                 EDUCATIVA
               </h2>
             </div>
           </div>
 
           {/* Tarjetas de niveles educativos */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8 max-w-6xl mx-auto">
             {educationalLevels.map((level, index) => (
               <div
                 key={level.name}
@@ -80,22 +80,22 @@ export default function OfertaEducativaSection() {
                 style={{ transitionDelay: level.delay }}
               >
                 {/* Imagen del nivel educativo que ocupa la mayor parte de la tarjeta */}
-                <div className="relative h-56 md:h-64 lg:h-72 overflow-hidden">
+                <div className="relative h-44 md:h-64 lg:h-72 overflow-hidden">
                   <img
                     src={level.image}
                     alt={`Estudiantes de ${level.name} - Instituto Winston Churchill`}
-                    className="w-full h-full object-cover object-center transition-all duration-200 ease-out group-hover:scale-110 group-hover:brightness-110"
+                    className="w-full h-full object-contain md:object-cover object-center transition-all duration-200 ease-out group-hover:scale-110 group-hover:brightness-110"
                     style={{ objectPosition: 'center 0%' }}
                   />
                   
-                  {/* Overlay de hover con efecto brillante */}
+                  {/* Overlay de hover */}
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transition-all duration-300 transform -skew-x-12 -translate-x-full group-hover:translate-x-full"></div>
                 </div>
 
                 {/* Sección inferior con color de fondo y texto */}
-                <div className={`${level.bgColor} px-6 py-4 md:px-8 md:py-5`}>
+                <div className={`${level.bgColor} px-5 py-3 md:px-8 md:py-5`}>
                   <div className="text-center">
-                    <h3 className={`text-2xl md:text-3xl lg:text-4xl font-bold ${level.textColor} tracking-wider transition-all duration-150 group-hover:scale-110 group-hover:tracking-widest`}>
+                    <h3 className={`text-xl md:text-3xl lg:text-4xl font-bold ${level.textColor} tracking-wider transition-all duration-150 group-hover:scale-110 group-hover:tracking-widest`}>
                       {level.name}
                     </h3>
                   </div>

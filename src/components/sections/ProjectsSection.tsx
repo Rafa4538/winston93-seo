@@ -85,37 +85,37 @@ export default function SliderSection() {
           </div>
         ))}
         {/* Overlay oscuro para legibilidad */}
-        <div className="absolute inset-0 z-20 bg-black/10 md:bg-black/15 lg:bg-black/20"></div>
+        <div className="absolute inset-0 z-20 bg-black/30 md:bg-black/15 lg:bg-black/20"></div>
       </div>
 
       {/* Contenido superpuesto */}
       <div className="relative z-30 h-full flex items-center">
-        <div className="container mx-auto px-8">
-          <div className="flex items-start justify-between h-full pt-20">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="flex items-start justify-between h-full pt-16 md:pt-20">
             
             {/* Texto dinámico con posicionamiento condicional */}
             <div className={`${
               currentSlide === 2 
-                ? 'w-1/2 max-w-lg text-white pl-8 ml-auto' // Slide 3: a la derecha
-                : 'w-1/2 max-w-lg text-white pr-8'        // Slides 1 y 2: a la izquierda
+                ? 'w-full md:w-1/2 md:max-w-lg text-white md:pl-8 md:ml-auto' // Slide 3: derecha en desktop
+                : 'w-full md:w-1/2 md:max-w-lg text-white md:pr-8'        // Slides 1 y 2: izquierda en desktop
             }`}>
               {/* Contenedor con animaciones direccionales */}
               <div key={currentSlide}>
                 {/* Título - Entra desde arriba */}
-                <h2 className="text-4xl md:text-5xl font-bold leading-tight mb-8 slide-in-from-top">
+                <h2 className="text-3xl md:text-5xl font-bold leading-tight mb-4 md:mb-8 slide-in-from-top">
                   <span className="block">{slides[currentSlide].title}</span>
                   <span className="block text-yellow-400">{slides[currentSlide].subtitle}</span>
                 </h2>
 
                 {/* Descripción - Entra desde la derecha */}
                 {slides[currentSlide].description && (
-                  <p className="text-lg text-gray-200 mb-10 max-w-md leading-relaxed slide-in-from-right">
+                  <p className="text-base md:text-lg text-gray-200 mb-6 md:mb-10 md:max-w-md leading-relaxed slide-in-from-right line-clamp-3 md:line-clamp-none">
                     {slides[currentSlide].description}
                   </p>
                 )}
 
                 {/* Botón - Entra desde abajo */}
-                <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl slide-in-from-bottom">
+                <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 md:py-4 md:px-8 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl slide-in-from-bottom">
                   AGENDAR CITA
                 </button>
               </div>
@@ -125,27 +125,27 @@ export default function SliderSection() {
         </div>
       </div>
 
-      {/* Controles del slider - Movidos aún más abajo */}
-      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 z-40">
-        <div className="flex space-x-3">
+      {/* Controles del slider */}
+      <div className="absolute bottom-3 md:bottom-2 left-1/2 transform -translate-x-1/2 z-40">
+        <div className="flex space-x-2 md:space-x-3">
           {slides.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`w-4 h-4 rounded-full transition-all duration-300 ${
+              className={`w-3 h-3 md:w-4 md:h-4 rounded-full transition-all duration-300 ${
                 index === currentSlide
                   ? 'bg-yellow-400 scale-125 shadow-lg'
-                  : 'bg-white/50 hover:bg-white/75'
+                  : 'bg-white/60 hover:bg-white/80'
               }`}
             />
           ))}
         </div>
       </div>
 
-      {/* Botones de navegación del slider */}
+      {/* Botones de navegación del slider - ocultar en móvil para limpiar */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 z-40 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-300 shadow-lg"
+        className="hidden md:flex absolute left-4 top-1/2 transform -translate-y-1/2 z-40 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-300 shadow-lg"
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -154,7 +154,7 @@ export default function SliderSection() {
 
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 z-40 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-300 shadow-lg"
+        className="hidden md:flex absolute right-4 top-1/2 transform -translate-y-1/2 z-40 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-300 shadow-lg"
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -162,9 +162,9 @@ export default function SliderSection() {
       </button>
 
       {/* Elementos decorativos adicionales */}
-      <div className="absolute top-20 left-20 w-2 h-2 bg-yellow-300 rounded-full animate-pulse opacity-70 z-30"></div>
-      <div className="absolute bottom-32 right-24 w-3 h-3 bg-blue-400 rounded-full animate-bounce opacity-60 z-30"></div>
-      <div className="absolute top-1/3 right-1/4 w-1 h-1 bg-green-400 rounded-full animate-ping opacity-50 z-30"></div>
+      <div className="hidden md:block absolute top-20 left-20 w-2 h-2 bg-yellow-300 rounded-full animate-pulse opacity-70 z-30"></div>
+      <div className="hidden md:block absolute bottom-32 right-24 w-3 h-3 bg-blue-400 rounded-full animate-bounce opacity-60 z-30"></div>
+      <div className="hidden md:block absolute top-1/3 right-1/4 w-1 h-1 bg-green-400 rounded-full animate-ping opacity-50 z-30"></div>
     </div>
   )
 } 
