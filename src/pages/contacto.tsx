@@ -81,13 +81,15 @@ export default function ContactoPage() {
         <div className="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center">
           <div className="bg-white rounded-2xl p-12 flex flex-col items-center shadow-2xl max-w-lg w-full mx-4">
             <div className="relative mb-6">
-              <Image 
-                src="/images/logos/logo_winston.png" 
-                alt="Winston Churchill" 
-                width={96}
-                height={96}
-                className="w-24 h-24 animate-pulse"
-              />
+                          <Image 
+              src="/images/logos/logo_winston.png" 
+              alt="Winston Churchill" 
+              width={400}
+              height={100}
+              className="w-24 h-24 animate-pulse"
+              priority
+              quality={100}
+            />
               <div className="absolute -top-3 -right-3 w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
             </div>
             <h3 className="text-xl font-bold text-gray-800 mb-2">Enviando mensaje</h3>

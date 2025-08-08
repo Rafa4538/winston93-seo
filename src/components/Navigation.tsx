@@ -31,9 +31,11 @@ export default function Navigation({ currentSection = 0 }: NavigationProps) {
               <Image 
                 src="/images/logos/logo_winston.png" 
                 alt="Instituto Winston Churchill" 
-                width={40}
-                height={40}
+                width={120}
+                height={30}
                 className="h-10 w-auto"
+                priority
+                quality={100}
               />
             </Link>
           </div>

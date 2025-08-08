@@ -158,9 +158,11 @@ const LoadingScreen = () => {
           <Image
             src="/images/logos/logo_winston.png"
             alt="Winston Churchill"
-            width={96}
-            height={96}
+            width={400}
+            height={100}
             className="h-28 w-auto mx-auto drop-shadow-lg"
+            priority
+            quality={100}
           />
         </motion.div>
         

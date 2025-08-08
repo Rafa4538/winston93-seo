@@ -20,7 +20,7 @@ export default function Footer() {
         <div className="max-w-2xl">
           <AnimatedElement animation="fadeInUp" delay={150}>
             <div className="flex items-center mb-4">
-              <Image src="/images/logos/logo_winston.png" alt="Winston" width={32} height={32} className="h-8 w-auto" />
+              <Image src="/images/logos/logo_winston.png" alt="Winston" width={120} height={30} className="h-8 w-auto" priority quality={100} />
             </div>
             <h2 className="text-xl md:text-2xl font-extrabold tracking-wide uppercase mb-1">
               WORKING FOR BRIGHTER FUTURES
