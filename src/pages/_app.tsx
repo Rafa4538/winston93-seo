@@ -19,17 +19,17 @@ export default function App({ Component, pageProps }: AppProps) {
     return () => clearTimeout(timer)
   }, [])
 
-  return (
-    <>
+  if (isLoading) {
+    return (
       <AnimatePresence mode="wait">
-        {isLoading && <LoadingScreen key="loading" />}
+        <LoadingScreen key="loading" />
       </AnimatePresence>
-      
-      {!isLoading && (
-        <Layout showFooter={router.pathname !== '/'}>
-          <Component {...pageProps} />
-        </Layout>
-      )}
-    </>
+    )
+  }
+
+  return (
+    <Layout showFooter={router.pathname !== '/'}>
+      <Component {...pageProps} />
+    </Layout>
   )
 } 
