@@ -1,7 +1,28 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { useState, useEffect } from 'react'
 
 const PageLoadingScreen = () => {
+  const [currentQuote, setCurrentQuote] = useState('')
+
+  const motivationalQuotes = [
+    "Learning that leaves a mark for life.",
+    "Small steps today, big impact tomorrow.",
+    "Global minds with strong values.",
+    "A school where confidence grows daily.",
+    "Every day is a step toward their future.",
+    "Aquí, el aprendizaje cobra sentido.",
+    "Formamos personas íntegras, seguras y felices.",
+    "Cada alumno es una historia de éxito en proceso.",
+    "Educamos para transformar vidas.",
+    "Creamos experiencias que inspiran a aprender."
+  ]
+
+  useEffect(() => {
+    // Seleccionar una frase aleatoria al cargar
+    const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)]
+    setCurrentQuote(randomQuote)
+  }, [])
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -63,10 +84,10 @@ const PageLoadingScreen = () => {
             opacity: 1,
           }}
           transition={{ 
-            duration: 0.6,
+            duration: 0.4,
             ease: "easeOut",
           }}
-          className="mb-8"
+          className="mb-6"
         >
           <Image
             src="/images/logos/logo_winston.png"
@@ -79,31 +100,45 @@ const PageLoadingScreen = () => {
           />
         </motion.div>
         
-        {/* Texto institucional */}
+        {/* Texto institucional y frase motivacional juntos */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.6 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
           className="mb-6"
         >
           <h1 className="text-white text-lg font-bold mb-1 tracking-wide">
             INSTITUTO WINSTON CHURCHILL
           </h1>
           
-          <p className="text-blue-200 text-sm font-medium">
+          <p className="text-blue-200 text-sm font-medium mb-3">
             Working for a Brighter Future
           </p>
+
+          {/* Frase motivacional aleatoria - aparece inmediatamente */}
+          {currentQuote && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.1, duration: 0.4 }}
+              className="mb-4"
+            >
+              <p className="text-yellow-300 text-sm font-medium italic text-center max-w-sm mx-auto leading-relaxed">
+                "{currentQuote}"
+              </p>
+            </motion.div>
+          )}
         </motion.div>
         
         {/* Barra de progreso rápida */}
-        <div className="w-32 mx-auto mb-6">
+        <div className="w-32 mx-auto mb-4">
           <div className="bg-white bg-opacity-20 rounded-full h-1 overflow-hidden">
             <motion.div
               className="h-full bg-yellow-400 rounded-full"
               initial={{ width: "0%" }}
               animate={{ width: "100%" }}
               transition={{
-                duration: 1.2,
+                duration: 1,
                 ease: "easeInOut",
               }}
             />
@@ -111,7 +146,7 @@ const PageLoadingScreen = () => {
         </div>
         
         {/* Indicadores de carga */}
-        <div className="flex justify-center space-x-2">
+        <div className="flex justify-center space-x-2 mb-3">
           {[...Array(3)].map((_, i) => (
             <motion.div
               key={i}
@@ -120,9 +155,9 @@ const PageLoadingScreen = () => {
                 opacity: [0.4, 1, 0.4],
               }}
               transition={{
-                duration: 1.2,
+                duration: 1,
                 repeat: Infinity,
-                delay: i * 0.2,
+                delay: i * 0.15,
               }}
             />
           ))}
@@ -132,8 +167,8 @@ const PageLoadingScreen = () => {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.4 }}
-          className="text-white mt-4 text-sm font-medium"
+          transition={{ delay: 0.4, duration: 0.3 }}
+          className="text-white text-sm font-medium"
         >
           Cargando página...
         </motion.p>

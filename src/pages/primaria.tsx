@@ -124,6 +124,46 @@ export default function PrimariaPage() {
 
   // Configuración de galerías
   const galleries: Record<string, { title: string; images: string[] }> = {
+    mindfulness: {
+      title: "MINDFULNESS",
+      images: [
+        "/images/extracurriculares/mindfulness.jpg",
+        "/images/entrepreneurs/emprendedores1.JPG",
+        "/images/entrepreneurs/emprendedores2.JPG",
+        "/images/entrepreneurs/emprendedores3.JPG",
+        "/images/entrepreneurs/emprendedores4.JPG"
+      ]
+    },
+    robotica: {
+      title: "ROBÓTICA",
+      images: [
+        "/images/entrepreneurs/emprendedores5.JPG",
+        "/images/entrepreneurs/emprendedores6.JPG",
+        "/images/entrepreneurs/emprendedores7.JPG",
+        "/images/entrepreneurs/emprendedores8.JPG",
+        "/images/entrepreneurs/emprendedores9.JPG"
+      ]
+    },
+    artes: {
+      title: "ARTES",
+      images: [
+        "/images/artes/artes1.jpg",
+        "/images/artes/artes2.jpg",
+        "/images/artes/artes3.JPG",
+        "/images/artes/artes4.jpg",
+        "/images/artes/artes5.jpg"
+      ]
+    },
+    tecnologia: {
+      title: "TECNOLOGÍA",
+      images: [
+        "/images/entrepreneurs/emprendedores5.JPG",
+        "/images/entrepreneurs/emprendedores6.JPG",
+        "/images/entrepreneurs/emprendedores7.JPG",
+        "/images/entrepreneurs/emprendedores8.JPG",
+        "/images/entrepreneurs/emprendedores9.JPG"
+      ]
+    },
     entrepreneurs: {
       title: "ENTREPRENEURS",
       images: [
@@ -137,6 +177,16 @@ export default function PrimariaPage() {
         "/images/entrepreneurs/emprendedores8.JPG",
         "/images/entrepreneurs/emprendedores9.JPG",
         "/images/entrepreneurs/emprendedores10.JPG"
+      ]
+    },
+    fe: {
+      title: "EDUCACIÓN EN LA FE",
+      images: [
+        "/images/entrepreneurs/emprendedores1.JPG",
+        "/images/entrepreneurs/emprendedores2.JPG",
+        "/images/entrepreneurs/emprendedores3.JPG",
+        "/images/entrepreneurs/emprendedores4.JPG",
+        "/images/entrepreneurs/emprendedores5.JPG"
       ]
     }
   }
@@ -309,7 +359,7 @@ export default function PrimariaPage() {
           {/* Grid de materias extracurriculares */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 max-w-7xl mx-auto justify-items-center">
             {/* Mindfulness */}
-            <div className="relative group overflow-hidden rounded-2xl">
+            <div className="relative group overflow-hidden rounded-2xl cursor-pointer" onClick={() => openGallery('mindfulness')}>
               <img
                 src="/images/extracurriculares/mindfulness.jpg"
                 alt="Mindfulness"
@@ -321,7 +371,7 @@ export default function PrimariaPage() {
             </div>
 
             {/* Robótica */}
-            <div className="relative group overflow-hidden rounded-2xl">
+            <div className="relative group overflow-hidden rounded-2xl cursor-pointer" onClick={() => openGallery('robotica')}>
               <img
                 src="/images/extracurriculares/robotica.jpg"
                 alt="Robótica"
@@ -333,7 +383,7 @@ export default function PrimariaPage() {
             </div>
 
             {/* Artes */}
-            <div className="relative group overflow-hidden rounded-2xl">
+            <div className="relative group overflow-hidden rounded-2xl cursor-pointer" onClick={() => openGallery('artes')}>
               <img
                 src="/images/extracurriculares/artes.jpg"
                 alt="Artes"
@@ -348,7 +398,7 @@ export default function PrimariaPage() {
           {/* Segunda fila */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto justify-items-center">
             {/* Tecnología */}
-            <div className="relative group overflow-hidden rounded-2xl">
+            <div className="relative group overflow-hidden rounded-2xl cursor-pointer" onClick={() => openGallery('tecnologia')}>
               <img
                 src="/images/extracurriculares/tecnologia.jpg"
                 alt="Tecnología"
@@ -372,7 +422,7 @@ export default function PrimariaPage() {
             </div>
 
             {/* Educación en la Fe */}
-            <div className="relative group overflow-hidden rounded-2xl">
+            <div className="relative group overflow-hidden rounded-2xl cursor-pointer" onClick={() => openGallery('fe')}>
               <img
                 src="/images/extracurriculares/fe.jpg"
                 alt="Educación en la Fe"
