@@ -91,3 +91,4 @@ Este proyecto está configurado para funcionar con:
 # Fixed email configuration
 // Fixed email configuration
 // Using correct email: sistemas3@winston93.edu.mx
+// Using GitHub noreply email
