@@ -89,3 +89,4 @@ Este proyecto está configurado para funcionar con:
 
 ¡Feliz codificación! 🎉 # Updated for Vercel deployment
 # Fixed email configuration
+// Fixed email configuration
