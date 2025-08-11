@@ -9,6 +9,7 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
   const [currentSection, setCurrentSection] = useState(0)
   const [isScrolling, setIsScrolling] = useState(false)
   const [windowHeight, setWindowHeight] = useState(0)
+  const [isAndroid, setIsAndroid] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const touchStartY = useRef(0)
 
@@ -22,6 +23,11 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
         setWindowHeight(window.innerHeight)
       }
     }
+    
+    // Detectar si es Android
+    const userAgent = navigator.userAgent.toLowerCase()
+    const isAndroidDevice = /android/.test(userAgent)
+    setIsAndroid(isAndroidDevice)
     
     updateHeight()
     window.addEventListener('resize', updateHeight)
@@ -197,6 +203,14 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
                 height: '100vh',
                 minHeight: '100vh',
                 maxHeight: '100vh'
+              }),
+              // Ajustes específicos para Android
+              ...(isAndroid && {
+                height: '100vh',
+                minHeight: '100vh',
+                maxHeight: '100vh',
+                transform: 'translateZ(0)', // Forzar aceleración por hardware
+                willChange: 'transform'
               })
             }}
           >
