@@ -84,12 +84,12 @@ export default function OfertaEducativaSection() {
                   <img
                     src={level.image}
                     alt={`Estudiantes de ${level.name} - Instituto Winston Churchill`}
-                    className="w-full h-full object-contain md:object-cover object-center transition-all duration-200 ease-out group-hover:scale-110 group-hover:brightness-110"
+                    className="w-full h-full object-contain md:object-cover object-center transition-all duration-200 ease-out group-hover:scale-105 group-hover:brightness-105"
                     style={{ objectPosition: 'center 0%' }}
                   />
                   
-                  {/* Overlay de hover */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transition-all duration-300 transform -skew-x-12 -translate-x-full group-hover:translate-x-full"></div>
+                  {/* Overlay de hover - Color sólido transparente que abarca toda la imagen */}
+                  <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-all duration-300"></div>
                 </div>
 
                 {/* Sección inferior con color de fondo y texto */}

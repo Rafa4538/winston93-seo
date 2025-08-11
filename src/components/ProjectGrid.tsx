@@ -79,7 +79,7 @@ export default function ProjectGrid() {
             >
               {/* Image Container */}
               <div className="relative h-64 bg-gradient-to-br from-blue-400 to-purple-600 overflow-hidden">
-                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-15 transition-opacity duration-300"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-20 h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
                     <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">

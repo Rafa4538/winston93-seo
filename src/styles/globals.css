@@ -641,3 +641,149 @@ body {
   animation: slideInFromBottom 0.8s ease-out 0.4s forwards;
   opacity: 0;
 } 
+
+/* Media queries para pantallas de alta resolución (4K, 5K, etc.) */
+/* Solo se aplican a pantallas con resolución superior a 1920px */
+
+/* Pantallas 4K (2560x1440) y superiores */
+@media screen and (min-width: 2560px) {
+  /* Ajustes para el grid de materias extracurriculares */
+  .grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3 {
+    max-width: 90rem; /* 1440px */
+    gap: 3rem; /* 48px */
+  }
+  
+  /* Ajustes para las imágenes de las tarjetas */
+  .max-h-80 {
+    max-height: 24rem; /* 384px */
+  }
+  
+  /* Ajustes para los títulos de las tarjetas */
+  .text-xl {
+    font-size: 1.5rem; /* 24px */
+  }
+  
+  .text-2xl {
+    font-size: 1.875rem; /* 30px */
+  }
+  
+  /* Ajustes para el padding de las tarjetas */
+  .p-3 {
+    padding: 1rem; /* 16px */
+  }
+  
+  /* Ajustes para el gap entre filas */
+  .gap-8 {
+    gap: 3rem; /* 48px */
+  }
+  
+  /* Ajustes para el margen inferior */
+  .mb-16 {
+    margin-bottom: 6rem; /* 96px */
+  }
+}
+
+/* Pantallas 5K (3440x1440) y superiores */
+@media screen and (min-width: 3440px) {
+  /* Ajustes para el grid de materias extracurriculares */
+  .grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3 {
+    max-width: 100rem; /* 1600px */
+    gap: 4rem; /* 64px */
+  }
+  
+  /* Ajustes para las imágenes de las tarjetas */
+  .max-h-80 {
+    max-height: 28rem; /* 448px */
+  }
+  
+  /* Ajustes para los títulos de las tarjetas */
+  .text-xl {
+    font-size: 1.75rem; /* 28px */
+  }
+  
+  .text-2xl {
+    font-size: 2.25rem; /* 36px */
+  }
+  
+  /* Ajustes para el padding de las tarjetas */
+  .p-3 {
+    padding: 1.5rem; /* 24px */
+  }
+  
+  /* Ajustes para el gap entre filas */
+  .gap-8 {
+    gap: 4rem; /* 64px */
+  }
+  
+  /* Ajustes para el margen inferior */
+  .mb-16 {
+    margin-bottom: 8rem; /* 128px */
+  }
+}
+
+/* Pantallas 6K (5120x2880) y superiores */
+@media screen and (min-width: 5120px) {
+  /* Ajustes para el grid de materias extracurriculares */
+  .grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3 {
+    max-width: 120rem; /* 1920px */
+    gap: 5rem; /* 80px */
+  }
+  
+  /* Ajustes para las imágenes de las tarjetas */
+  .max-h-80 {
+    max-height: 32rem; /* 512px */
+  }
+  
+  /* Ajustes para los títulos de las tarjetas */
+  .text-xl {
+    font-size: 2rem; /* 32px */
+  }
+  
+  .text-2xl {
+    font-size: 2.5rem; /* 40px */
+  }
+  
+  /* Ajustes para el padding de las tarjetas */
+  .p-3 {
+    padding: 2rem; /* 32px */
+  }
+  
+  /* Ajustes para el gap entre filas */
+  .gap-8 {
+    gap: 5rem; /* 80px */
+  }
+  
+  /* Ajustes para el margen inferior */
+  .mb-16 {
+    margin-bottom: 10rem; /* 160px */
+  }
+}
+
+/* Ajustes específicos para pantallas ultra-wide (21:9 y superiores) */
+@media screen and (min-aspect-ratio: 21/9) and (min-width: 2560px) {
+  /* Ajustes para el grid en pantallas ultra-wide */
+  .grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3 {
+    max-width: 140rem; /* 2240px */
+    gap: 3.5rem; /* 56px */
+  }
+  
+  /* Ajustes para el container principal */
+  .container.mx-auto {
+    max-width: 140rem; /* 2240px */
+  }
+}
+
+/* Ajustes para pantallas con densidad de píxeles alta (HiDPI) */
+@media screen and (-webkit-min-device-pixel-ratio: 2), 
+       screen and (min-resolution: 192dpi) {
+  /* Mejoras de calidad para pantallas HiDPI */
+  img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+  
+  /* Mejoras en las transiciones para pantallas de alta frecuencia */
+  .transition-all {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+} 

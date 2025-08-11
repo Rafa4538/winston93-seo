@@ -167,26 +167,26 @@ export default function PrimariaPage() {
     entrepreneurs: {
       title: "ENTREPRENEURS",
       images: [
-        "/images/entrepreneurs/emprendedores1.JPG",
-        "/images/entrepreneurs/emprendedores2.JPG",
-        "/images/entrepreneurs/emprendedores3.JPG",
-        "/images/entrepreneurs/emprendedores4.JPG",
-        "/images/entrepreneurs/emprendedores5.JPG",
-        "/images/entrepreneurs/emprendedores6.JPG",
-        "/images/entrepreneurs/emprendedores7.JPG",
-        "/images/entrepreneurs/emprendedores8.JPG",
-        "/images/entrepreneurs/emprendedores9.JPG",
-        "/images/entrepreneurs/emprendedores10.JPG"
+        "/images/entrepreneurs/emprendedores1.jpg",
+        "/images/entrepreneurs/emprendedores2.png",
+        "/images/entrepreneurs/emprendedores3.jpg",
+        "/images/entrepreneurs/emprendedores4.jpg",
+        "/images/entrepreneurs/emprendedores5.jpg",
+        "/images/entrepreneurs/emprendedores6.jpg",
+        "/images/entrepreneurs/emprendedores7.jpg",
+        "/images/entrepreneurs/emprendedores8.jpg",
+        "/images/entrepreneurs/emprendedores9.jpg",
+        "/images/entrepreneurs/emprendedores10.jpg"
       ]
     },
     fe: {
       title: "EDUCACIÓN EN LA FE",
       images: [
-        "/images/entrepreneurs/emprendedores1.JPG",
-        "/images/entrepreneurs/emprendedores2.JPG",
-        "/images/entrepreneurs/emprendedores3.JPG",
-        "/images/entrepreneurs/emprendedores4.JPG",
-        "/images/entrepreneurs/emprendedores5.JPG"
+        "/images/fe/fe1.jpg",
+        "/images/fe/fe2.jpg",
+        "/images/fe/fe3.jpg",
+        "/images/fe/fe4.jpg",
+        "/images/fe/fe5.jpg"
       ]
     }
   }
@@ -373,11 +373,11 @@ export default function PrimariaPage() {
             {/* Robótica */}
             <div className="relative group overflow-hidden rounded-2xl cursor-pointer" onClick={() => openGallery('robotica')}>
               <img
-                src="/images/extracurriculares/robotica.jpg"
+                src="/images/extracurriculares/robotica.png"
                 alt="Robótica"
                 className="w-auto h-auto max-h-80 object-contain transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute bottom-0 left-0 right-0 bg-opacity-60 p-3 transition-all duration-700 ease-in-out group-hover:bottom-0 group-hover:top-0 group-hover:bg-opacity-90 group-hover:flex group-hover:items-center group-hover:justify-center" style={{ backgroundColor: '#dbfb04' }}>
+              <div className="absolute bottom-0 left-0 right-0 bg-yellow-400 bg-opacity-60 p-3 transition-all duration-700 ease-in-out group-hover:bottom-0 group-hover:top-0 group-hover:bg-opacity-90 group-hover:flex group-hover:items-center group-hover:justify-center">
                 <h4 className="text-black text-xl font-bold transition-all duration-700 group-hover:text-2xl">ROBÓTICA</h4>
               </div>
             </div>
@@ -400,11 +400,11 @@ export default function PrimariaPage() {
             {/* Tecnología */}
             <div className="relative group overflow-hidden rounded-2xl cursor-pointer" onClick={() => openGallery('tecnologia')}>
               <img
-                src="/images/extracurriculares/tecnologia.jpg"
+                src="/images/extracurriculares/tecnologia.png"
                 alt="Tecnología"
                 className="w-auto h-auto max-h-80 object-contain transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute bottom-0 left-0 right-0 bg-opacity-60 p-3 transition-all duration-700 ease-in-out group-hover:bottom-0 group-hover:top-0 group-hover:bg-opacity-90 group-hover:flex group-hover:items-center group-hover:justify-center" style={{ backgroundColor: '#dbfb04' }}>
+              <div className="absolute bottom-0 left-0 right-0 bg-yellow-400 bg-opacity-60 p-3 transition-all duration-700 ease-in-out group-hover:bottom-0 group-hover:top-0 group-hover:bg-opacity-90 group-hover:flex group-hover:items-center group-hover:justify-center">
                 <h4 className="text-black text-xl font-bold transition-all duration-700 group-hover:text-2xl">TECNOLOGÍA</h4>
               </div>
             </div>
@@ -424,11 +424,11 @@ export default function PrimariaPage() {
             {/* Educación en la Fe */}
             <div className="relative group overflow-hidden rounded-2xl cursor-pointer" onClick={() => openGallery('fe')}>
               <img
-                src="/images/extracurriculares/fe.jpg"
+                src="/images/extracurriculares/fe.png"
                 alt="Educación en la Fe"
                 className="w-auto h-auto max-h-80 object-contain transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute bottom-0 left-0 right-0 bg-opacity-60 p-3 transition-all duration-700 ease-in-out group-hover:bottom-0 group-hover:top-0 group-hover:bg-opacity-90 group-hover:flex group-hover:items-center group-hover:justify-center" style={{ backgroundColor: '#dbfb04' }}>
+              <div className="absolute bottom-0 left-0 right-0 bg-yellow-400 bg-opacity-60 p-3 transition-all duration-700 ease-in-out group-hover:bottom-0 group-hover:top-0 group-hover:bg-opacity-90 group-hover:flex group-hover:items-center group-hover:justify-center">
                 <h4 className="text-black text-lg font-bold transition-all duration-700 group-hover:text-xl">EDUCACIÓN EN LA FE</h4>
                 <span className="text-black text-xs ml-2 transition-all duration-700 group-hover:text-sm">(OPCIONAL)</span>
               </div>
