@@ -16,7 +16,7 @@ export default function Navigation({ currentSection = 0 }: NavigationProps) {
   return (
     <nav className={`${isTransparent ? 'absolute' : 'sticky'} top-0 left-0 right-0 z-50 transition-all duration-500 ${
       isTransparent 
-        ? 'bg-transparent' 
+        ? 'bg-transparent !bg-transparent' 
         : 'bg-[#0038e4] shadow-lg backdrop-blur-sm'
     }`}>
       <div className="container mx-auto px-2">

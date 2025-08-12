@@ -64,11 +64,9 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
       
       if (index === 0) {
         translateY = 0
-      } else if (index === 1) {
-        translateY = windowHeight // Primera sección completa
       } else {
         // Usar altura exacta para evitar acumulación de espacio
-        const sectionHeight = isMobile ? windowHeight : (windowHeight - 64)
+        const sectionHeight = windowHeight
         translateY = index * sectionHeight
       }
       containerRef.current.style.transform = `translateY(-${translateY}px)`
@@ -195,23 +193,9 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
             key={index}
             className="w-full flex-shrink-0 relative"
             style={{ 
-              height: index === 0 ? '100vh' : 'calc(100vh - 4rem)',
-              minHeight: index === 0 ? '100vh' : 'calc(100vh - 4rem)',
-              maxHeight: index === 0 ? '100vh' : 'calc(100vh - 4rem)',
-              // Para móvil, usar altura exacta sin acumulación
-              ...(window.innerWidth < 768 && {
-                height: '100vh',
-                minHeight: '100vh',
-                maxHeight: '100vh'
-              }),
-              // Ajustes específicos para Android
-              ...(isAndroid && {
-                height: '100vh',
-                minHeight: '100vh',
-                maxHeight: '100vh',
-                transform: 'translateZ(0)', // Forzar aceleración por hardware
-                willChange: 'transform'
-              })
+              height: '100vh',
+              minHeight: '100vh',
+              maxHeight: '100vh'
             }}
           >
             {child}
