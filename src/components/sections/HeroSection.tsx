@@ -16,23 +16,29 @@ export default function HeroSection() {
     <div className="h-full w-full relative overflow-hidden">
       {/* Indicador de carga con espacio reservado */}
       {!videoLoaded && (
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+        <div className="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center z-20">
           <div className="text-center">
-            <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="text-white text-lg font-semibold">Cargando video...</p>
-            <div className="w-64 bg-gray-700 rounded-full h-2 mt-4">
+            <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-gray-800 text-lg font-semibold">Cargando video...</p>
+            <div className="w-64 bg-gray-200 rounded-full h-2 mt-4">
               <div 
-                className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+                className="bg-blue-600 h-2 rounded-full transition-all duration-300"
                 style={{ width: `${loadingProgress}%` }}
               ></div>
             </div>
-            <p className="text-white text-sm mt-2">{Math.round(loadingProgress)}% cargado</p>
+            <p className="text-gray-600 text-sm mt-2">{Math.round(loadingProgress)}% cargado</p>
           </div>
         </div>
       )}
       
-      {/* Espacio reservado para el video - siempre visible */}
-      <div className="absolute inset-0 bg-black z-10" style={{ minHeight: '100vh' }}></div>
+      {/* Fundido blanco con transición suave */}
+      <div 
+        className={`absolute inset-0 bg-white z-10 transition-opacity duration-1000 ease-in-out`}
+        style={{ 
+          minHeight: '100vh',
+          opacity: videoLoaded ? 0 : 1
+        }}
+      ></div>
       
       {/* Video de fondo con reproducción progresiva */}
               <video
@@ -42,12 +48,13 @@ export default function HeroSection() {
           playsInline
           preload="metadata"
           poster="/images/slider/SLIDE_INICIO_1.jpg"
-        className="absolute inset-0 w-full h-full object-cover z-20"
+        className={`absolute inset-0 w-full h-full object-cover z-20 transition-opacity duration-1000 ease-in-out`}
         style={{
           width: '100%',
           height: '100%',
           objectFit: 'cover',
           objectPosition: 'center',
+          opacity: videoLoaded ? 1 : 0,
           // Ajustes específicos para Android
           ...(isAndroid && {
             position: 'absolute',
