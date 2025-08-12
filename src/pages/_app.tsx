@@ -51,8 +51,10 @@ export default function App({ Component, pageProps }: AppProps) {
         <LoadingScreen key="initial-loading" />
       ) : isPageLoading ? (
         <PageLoadingScreen key="page-loading" />
+      ) : router.pathname === '/' ? (
+        <Component {...pageProps} />
       ) : (
-        <Layout key="layout" showFooter={router.pathname !== '/'}>
+        <Layout key="layout" showFooter={true}>
           <Component {...pageProps} />
         </Layout>
       )}

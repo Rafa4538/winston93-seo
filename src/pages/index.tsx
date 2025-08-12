@@ -7,6 +7,7 @@ import SliderSection from '@/components/sections/ProjectsSection'
 import EducationalOfferSection from '@/components/sections/ServicesSection'
 import ConveniosSection from '@/components/sections/ConveniosSection'
 import OfertaEducativaSection from '@/components/sections/OfertaEducativaSection'
+import Footer from '@/components/Footer'
 
 export default function Home() {
   const [currentSection, setCurrentSection] = useState(0)
@@ -35,6 +36,11 @@ export default function Home() {
         <ConveniosSection />
         <OfertaEducativaSection />
       </FullPageScroll>
+      
+      {/* Footer separado del FullPageScroll */}
+      <div className="mt-16">
+        <Footer />
+      </div>
     </>
   )
 } 

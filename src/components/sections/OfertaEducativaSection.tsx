@@ -33,8 +33,8 @@ export default function OfertaEducativaSection() {
     {
       name: 'PRIMARIA',
       image: '/images/education/primaria.png',
-      bgColor: 'bg-yellow-400',
-      textColor: 'text-white',
+      bgColor: 'bg-[#dafb00]',
+      textColor: 'text-black',
       delay: '400ms'
     },
     {

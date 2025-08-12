@@ -376,7 +376,7 @@ export default function PrimariaPage() {
                 alt="Robótica"
                 className="w-auto h-auto max-h-80 object-contain transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute bottom-0 left-0 right-0 bg-yellow-400 bg-opacity-60 p-3 transition-all duration-700 ease-in-out group-hover:bottom-0 group-hover:top-0 group-hover:bg-opacity-90 group-hover:flex group-hover:items-center group-hover:justify-center">
+              <div className="absolute bottom-0 left-0 right-0 bg-[#dafb00] bg-opacity-60 p-3 transition-all duration-700 ease-in-out group-hover:bottom-0 group-hover:top-0 group-hover:bg-opacity-90 group-hover:flex group-hover:items-center group-hover:justify-center">
                 <h4 className="text-black text-xl font-bold transition-all duration-700 group-hover:text-2xl">ROBÓTICA</h4>
               </div>
             </div>
@@ -403,7 +403,7 @@ export default function PrimariaPage() {
                 alt="Tecnología"
                 className="w-auto h-auto max-h-80 object-contain transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute bottom-0 left-0 right-0 bg-yellow-400 bg-opacity-60 p-3 transition-all duration-700 ease-in-out group-hover:bottom-0 group-hover:top-0 group-hover:bg-opacity-90 group-hover:flex group-hover:items-center group-hover:justify-center">
+              <div className="absolute bottom-0 left-0 right-0 bg-[#dafb00] bg-opacity-60 p-3 transition-all duration-700 ease-in-out group-hover:bottom-0 group-hover:top-0 group-hover:bg-opacity-90 group-hover:flex group-hover:items-center group-hover:justify-center">
                 <h4 className="text-black text-xl font-bold transition-all duration-700 group-hover:text-2xl">TECNOLOGÍA</h4>
               </div>
             </div>
@@ -427,9 +427,9 @@ export default function PrimariaPage() {
                 alt="Educación en la Fe"
                 className="w-auto h-auto max-h-80 object-contain transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute bottom-0 left-0 right-0 bg-yellow-400 bg-opacity-60 p-3 transition-all duration-700 ease-in-out group-hover:bottom-0 group-hover:top-0 group-hover:bg-opacity-90 group-hover:flex group-hover:items-center group-hover:justify-center">
-                <h4 className="text-black text-lg font-bold transition-all duration-700 group-hover:text-xl">EDUCACIÓN EN LA FE</h4>
-                <span className="text-black text-xs ml-2 transition-all duration-700 group-hover:text-sm">(OPCIONAL)</span>
+              <div className="absolute bottom-0 left-0 right-0 bg-[#dafb00] bg-opacity-60 p-3 transition-all duration-700 ease-in-out group-hover:bottom-0 group-hover:top-0 group-hover:bg-opacity-90 group-hover:flex group-hover:items-center group-hover:justify-center">
+                <h4 className="text-lg font-bold transition-all duration-700 group-hover:text-xl">EDUCACIÓN EN LA FE</h4>
+                <span className="text-xs ml-2 transition-all duration-700 group-hover:text-sm">(OPCIONAL)</span>
               </div>
             </div>
           </div>
@@ -456,7 +456,7 @@ export default function PrimariaPage() {
             </div>
 
             {/* Servicio de Estancia */}
-            <div className="bg-yellow-400 text-black p-8 rounded-2xl">
+            <div className="bg-[#dafb00] text-black p-8 rounded-2xl">
               <h3 className="text-2xl font-bold mb-4">SERVICIO DE ESTANCIA</h3>
               <p className="mb-4 leading-relaxed">
                 <strong>FLEXIBILIDAD PARA EL ACOMPAÑAMIENTO PARA ELLOS</strong>

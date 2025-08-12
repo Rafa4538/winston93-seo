@@ -317,7 +317,7 @@ export default function SecundariaPage() {
       </section>
 
       {/* Sección de Materias Extracurriculares y Francés con imagen de fondo */}
-      <div className="relative overflow-hidden bg-blue-50">
+      <div className="relative overflow-hidden bg-white">
         {/* Imagen de fondo del león - solo mitad derecha */}
         <motion.div 
           className="absolute inset-0"
@@ -329,8 +329,7 @@ export default function SecundariaPage() {
             className="absolute inset-0 bg-cover bg-center"
             style={{
               backgroundImage: `url('/images/secundaria/leon_cabeza_gris.png')`,
-              backgroundPosition: 'calc(100% + 500px) center',
-              backgroundColor: 'rgba(255, 255, 255, 0)',
+              backgroundPosition: 'calc(100% + 530px) center',
               backgroundSize: 'auto 120%',
               backgroundRepeat: 'no-repeat'
             }}
@@ -340,11 +339,11 @@ export default function SecundariaPage() {
         {/* Sección de Materias Extracurriculares */}
         <section className="py-20 relative z-10">
           <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4">
+          <div className="text-center mb-16 flex flex-col items-center justify-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4 text-center">
               Materias extracurriculares que
             </h2>
-            <h3 className="text-3xl md:text-4xl font-bold text-blue-600">
+            <h3 className="text-3xl md:text-4xl font-bold text-blue-600 text-center">
               enriquecen su formación:
             </h3>
           </div>
@@ -354,7 +353,7 @@ export default function SecundariaPage() {
             {/* Educación Financiera */}
             <div className="relative group overflow-hidden rounded-2xl cursor-pointer" onClick={() => openGallery('educacionFinanciera')}>
               <img
-                src="/images/entrepreneurs/emprendedores1.jpg"
+                src="/images/extracurriculares/entrepreneurs.jpg"
                 alt="Educación Financiera"
                 className="w-auto h-auto max-h-80 object-contain transition-transform duration-500 group-hover:scale-105"
               />
@@ -367,11 +366,11 @@ export default function SecundariaPage() {
             {/* Robótica */}
             <div className="relative group overflow-hidden rounded-2xl cursor-pointer" onClick={() => openGallery('robotica')}>
               <img
-                src="/images/extracurriculares/robotica.png"
+                src="/images/secundaria/robotica.png"
                 alt="Robótica"
                 className="w-auto h-auto max-h-80 object-contain transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute bottom-0 left-0 right-0 bg-orange-500 bg-opacity-60 p-3 transition-all duration-700 ease-in-out group-hover:bottom-0 group-hover:top-0 group-hover:bg-opacity-90 group-hover:flex group-hover:items-center group-hover:justify-center">
+              <div className="absolute bottom-0 left-0 right-0 bg-[#ff9d49] bg-opacity-60 p-3 transition-all duration-700 ease-in-out group-hover:bottom-0 group-hover:top-0 group-hover:bg-opacity-90 group-hover:flex group-hover:items-center group-hover:justify-center">
                 <h4 className="text-black text-xl font-bold transition-all duration-700 group-hover:text-2xl">ROBÓTICA</h4>
               </div>
 
@@ -380,7 +379,7 @@ export default function SecundariaPage() {
             {/* Artes */}
             <div className="relative group overflow-hidden rounded-2xl cursor-pointer" onClick={() => openGallery('artes')}>
               <img
-                src="/images/extracurriculares/artes.jpg"
+                src="/images/secundaria/artes.png"
                 alt="Artes"
                 className="w-auto h-auto max-h-80 object-contain transition-transform duration-500 group-hover:scale-105"
               />
@@ -396,11 +395,11 @@ export default function SecundariaPage() {
             {/* Tecnología */}
             <div className="relative group overflow-hidden rounded-2xl cursor-pointer" onClick={() => openGallery('tecnologia')}>
               <img
-                src="/images/extracurriculares/tecnologia.png"
+                src="/images/secundaria/TECNOLOGIA.png"
                 alt="Tecnología"
                 className="w-auto h-auto max-h-80 object-contain transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute bottom-0 left-0 right-0 bg-orange-500 bg-opacity-60 p-3 transition-all duration-700 ease-in-out group-hover:bottom-0 group-hover:top-0 group-hover:bg-opacity-90 group-hover:flex group-hover:items-center group-hover:justify-center">
+              <div className="absolute bottom-0 left-0 right-0 bg-[#ff9d49] bg-opacity-60 p-3 transition-all duration-700 ease-in-out group-hover:bottom-0 group-hover:top-0 group-hover:bg-opacity-90 group-hover:flex group-hover:items-center group-hover:justify-center">
                 <h4 className="text-black text-xl font-bold transition-all duration-700 group-hover:text-2xl">TECNOLOGÍA</h4>
               </div>
 
@@ -422,11 +421,11 @@ export default function SecundariaPage() {
             {/* Formación Social y Humana */}
             <div className="relative group overflow-hidden rounded-2xl cursor-pointer" onClick={() => openGallery('formacionSocial')}>
               <img
-                src="/images/entrepreneurs/emprendedores2.png"
+                src="/images/secundaria/emprende.png"
                 alt="Formación Social y Humana"
                 className="w-auto h-auto max-h-80 object-contain transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute bottom-0 left-0 right-0 bg-orange-500 bg-opacity-60 p-3 transition-all duration-700 ease-in-out group-hover:bottom-0 group-hover:top-0 group-hover:bg-opacity-90 group-hover:flex group-hover:items-center group-hover:justify-center">
+              <div className="absolute bottom-0 left-0 right-0 bg-[#ff9d49] bg-opacity-60 p-3 transition-all duration-700 ease-in-out group-hover:bottom-0 group-hover:top-0 group-hover:bg-opacity-90 group-hover:flex group-hover:items-center group-hover:justify-center">
               <h4 className="text-black text-lg font-bold transition-all duration-700 group-hover:text-xl">FORMACIÓN SOCIAL Y HUMANA</h4>
               </div>
 
@@ -438,17 +437,26 @@ export default function SecundariaPage() {
       {/* Sección de Francés */}
       <section className="py-16 relative z-10">
         <div className="container mx-auto px-6">
-          <div className="max-w-2xl mx-auto bg-blue-800 rounded-2xl px-8 py-6 shadow-xl border-2 border-blue-900">
-            <div className="flex items-center justify-center space-x-8">
-              <div className="flex-shrink-0">
-                <img
-                  src="/images/entrepreneurs/emprendedores3.jpg"
-                  alt="Estudiante con bandera francesa"
-                  className="w-24 h-24 rounded-full object-cover"
-                />
-              </div>
-              <div>
-                <h2 className="text-3xl md:text-4xl font-bold text-white">FRANCÉS</h2>
+          <div className="max-w-6xl mx-auto relative overflow-hidden rounded-2xl shadow-xl group cursor-pointer transition-all duration-500 hover:shadow-2xl">
+            {/* Imagen de fondo que abarca todo el contenedor */}
+            <div className="absolute inset-0">
+              <img
+                src="/images/entrepreneurs/emprendedores3.jpg"
+                alt="Estudiante con bandera francesa"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              {/* Overlay para mejorar la legibilidad del texto */}
+              <div className="absolute inset-0 bg-black bg-opacity-20 transition-all duration-500 group-hover:bg-opacity-10"></div>
+              {/* Filtro naranja siempre presente */}
+              <div className="absolute inset-0 bg-[#ff9d49] bg-opacity-30 transition-all duration-500 group-hover:bg-opacity-40"></div>
+            </div>
+            
+            {/* Contenido superpuesto */}
+            <div className="relative z-10 flex items-center justify-center px-16 py-20">
+              <div className="text-center">
+                <h2 className="text-5xl md:text-7xl font-bold text-white drop-shadow-lg transition-all duration-500 group-hover:scale-105">
+                  FRANCÉS
+                </h2>
               </div>
             </div>
           </div>
@@ -476,7 +484,7 @@ export default function SecundariaPage() {
             </div>
 
             {/* Servicio de Estancia */}
-            <div className="bg-orange-400 text-black p-8 rounded-2xl">
+            <div className="bg-[#ff9d49] text-black p-8 rounded-2xl">
               <h3 className="text-2xl font-bold mb-4">SERVICIO DE ESTANCIA</h3>
               <p className="mb-4 leading-relaxed">
                 <strong>FLEXIBILIDAD PARA TI, ACOMPAÑAMIENTO PARA ELLOS</strong>

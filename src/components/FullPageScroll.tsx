@@ -140,8 +140,8 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
 
     // Solo agregar listeners si estamos en el cliente
     if (typeof window !== 'undefined') {
-      // Prevenir el scroll normal
-      document.body.style.overflow = 'hidden'
+      // Permitir scroll normal para que el footer sea visible
+      document.body.style.overflow = 'auto'
       
       window.addEventListener('wheel', handleWheel, { passive: false })
       window.addEventListener('keydown', handleKeyDown)
@@ -202,6 +202,9 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
           </div>
         ))}
       </div>
+      
+      {/* Espacio para el footer */}
+      <div className="w-full h-64"></div>
 
       {/* Indicador de scroll */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-50 text-white animate-bounce">
