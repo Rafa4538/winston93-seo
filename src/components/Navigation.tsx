@@ -86,7 +86,7 @@ export default function Navigation({ currentSection = 0 }: NavigationProps) {
                     <Link href="/primaria" className="block px-4 py-2 text-black hover:text-white hover:bg-black hover:bg-opacity-20 transition-colors duration-200 text-sm uppercase tracking-wide font-medium">
                       PRIMARIA
                     </Link>
-                    <Link href="#secundaria" className="block px-4 py-2 text-black hover:text-white hover:bg-black hover:bg-opacity-20 transition-colors duration-200 text-sm uppercase tracking-wide font-medium">
+                    <Link href="/secundaria" className="block px-4 py-2 text-black hover:text-white hover:bg-black hover:bg-opacity-20 transition-colors duration-200 text-sm uppercase tracking-wide font-medium">
                       SECUNDARIA
                     </Link>
                   </div>

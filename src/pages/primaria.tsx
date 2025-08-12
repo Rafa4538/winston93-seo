@@ -127,11 +127,10 @@ export default function PrimariaPage() {
     mindfulness: {
       title: "MINDFULNESS",
       images: [
-        "/images/extracurriculares/mindfulness.jpg",
-        "/images/entrepreneurs/emprendedores1.JPG",
-        "/images/entrepreneurs/emprendedores2.JPG",
-        "/images/entrepreneurs/emprendedores3.JPG",
-        "/images/entrepreneurs/emprendedores4.JPG"
+        "/images/mindfulness/mindfulness1.jpg",
+        "/images/mindfulness/mindfulness2.png",
+        "/images/mindfulness/mindfulness3.jpg",
+        "/images/mindfulness/mindfulness4.jpg"
       ]
     },
     robotica: {
