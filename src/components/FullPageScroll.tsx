@@ -140,8 +140,8 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
 
     // Solo agregar listeners si estamos en el cliente
     if (typeof window !== 'undefined') {
-      // Permitir scroll normal para que el footer sea visible
-      document.body.style.overflow = 'auto'
+      // Ocultar scroll nativo para usar solo navegación por secciones
+      document.body.style.overflow = 'hidden'
       
       window.addEventListener('wheel', handleWheel, { passive: false })
       window.addEventListener('keydown', handleKeyDown)
@@ -151,7 +151,7 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
 
     return () => {
       if (typeof window !== 'undefined') {
-        document.body.style.overflow = 'auto'
+        document.body.style.overflow = 'hidden'
         window.removeEventListener('wheel', handleWheel)
         window.removeEventListener('keydown', handleKeyDown)
         window.removeEventListener('touchstart', handleTouchStart)
@@ -167,21 +167,7 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
 
   return (
     <div className="relative overflow-hidden bg-transparent">
-      {/* Indicadores de navegación */}
-      <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50 space-y-3">
-        {children.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => scrollToSection(index)}
-            className={`w-3 h-3 rounded-full border-2 border-white transition-all duration-300 ${
-              currentSection === index 
-                ? 'bg-white scale-125' 
-                : 'bg-transparent hover:bg-white/50'
-            }`}
-            disabled={isScrolling}
-          />
-        ))}
-      </div>
+
 
       {/* Contenedor de secciones */}
       <div
@@ -203,8 +189,8 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
         ))}
       </div>
       
-      {/* Espacio para el footer */}
-      <div className="w-full h-64"></div>
+      {/* Espacio mínimo para el footer */}
+      <div className="w-full h-16"></div>
 
       {/* Indicador de scroll */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-50 text-white animate-bounce">

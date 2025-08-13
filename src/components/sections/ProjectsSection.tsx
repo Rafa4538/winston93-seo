@@ -125,22 +125,7 @@ export default function SliderSection() {
         </div>
       </div>
 
-      {/* Controles del slider */}
-      <div className="absolute bottom-3 md:bottom-2 left-1/2 transform -translate-x-1/2 z-40">
-        <div className="flex space-x-2 md:space-x-3">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`w-3 h-3 md:w-4 md:h-4 rounded-full transition-all duration-300 ${
-                index === currentSlide
-                  ? 'bg-yellow-400 scale-125 shadow-lg'
-                  : 'bg-white/60 hover:bg-white/80'
-              }`}
-            />
-          ))}
-        </div>
-      </div>
+
 
       {/* Botones de navegación del slider - ocultar en móvil para limpiar */}
       <button

@@ -86,21 +86,7 @@ const GalleryModal = ({
             </button>
           </div>
 
-          {/* Indicadores */}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-            {images.map((_, index) => (
-              <button
-                key={index}
-                onClick={(e) => {
-                  e.stopPropagation()
-                  // Aquí necesitarías una función para ir a una imagen específica
-                }}
-                className={`w-3 h-3 rounded-full transition-all ${
-                  index === currentIndex ? 'bg-white' : 'bg-white bg-opacity-50'
-                }`}
-              />
-            ))}
-          </div>
+
 
           {/* Contador */}
           <div className="absolute bottom-4 right-4 text-white text-lg">

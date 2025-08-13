@@ -43,14 +43,14 @@ export default function ConveniosSection() {
                   style={{ maxHeight: '80vh', maxWidth: '95vw' }}
                 />
                 
-                {/* Texto vertical volteado DENTRO del contorno azul - Un poco más a la derecha */}
-                <div className={`absolute right-[5%] md:right-[6%] lg:right-[7%] top-1/2 transform -translate-y-1/2 transition-all duration-1000 ease-out ${
+                {/* Texto vertical volteado DENTRO del contorno azul - Ligeramente más centrado */}
+                <div className={`absolute right-[6%] md:right-[8%] lg:right-[5%] top-1/2 transform -translate-y-1/2 transition-all duration-1000 ease-out ${
                   isVisible 
                     ? 'opacity-100 translate-x-0' 
                     : 'opacity-0 translate-x-8'
                 }`} style={{ transitionDelay: '600ms' }}>
                   <div className="text-white transform rotate-90 origin-center whitespace-nowrap">
-                    <h2 className="text-xs md:text-sm lg:text-lg font-bold tracking-widest">
+                    <h2 className="text-sm md:text-base lg:text-xl xl:text-2xl font-bold tracking-widest">
                       CONVENIOS Y CERTIFICACIONES
                     </h2>
                   </div>

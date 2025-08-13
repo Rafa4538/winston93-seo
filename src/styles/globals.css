@@ -19,6 +19,28 @@
 html {
   background: transparent;
   scroll-behavior: smooth;
+  /* Ocultar barra de scroll en todos los navegadores */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+/* Ocultar barra de scroll en WebKit (Chrome, Safari, Edge) */
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  /* Ocultar barra de scroll en el body también */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 body {
