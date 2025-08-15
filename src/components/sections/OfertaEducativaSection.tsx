@@ -4,7 +4,23 @@ import AnimatedElement from '@/components/AnimatedElement'
 
 export default function OfertaEducativaSection() {
   const [isVisible, setIsVisible] = useState(false)
+  const [isTablet, setIsTablet] = useState(false)
   const sectionRef = useRef<HTMLDivElement>(null)
+
+  // Detectar si es tablet
+  useEffect(() => {
+    const updateDeviceType = () => {
+      const width = window.innerWidth
+      setIsTablet(width >= 768 && width < 1024)
+    }
+    
+    updateDeviceType()
+    window.addEventListener('resize', updateDeviceType)
+    
+    return () => {
+      window.removeEventListener('resize', updateDeviceType)
+    }
+  }, [])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -51,28 +67,42 @@ export default function OfertaEducativaSection() {
   ]
 
   return (
-    <div ref={sectionRef} className="w-full relative h-screen flex flex-col">
+    <div ref={sectionRef} className="w-full relative h-full flex flex-col">
       {/* Contenido de la sección */}
-      <div className="bg-white py-3 sm:py-4 md:py-6 flex-1 flex flex-col justify-center">
+      <div className={`bg-white flex-1 flex flex-col justify-center ${
+        isTablet ? 'py-2' : 'py-3 sm:py-4 md:py-6'
+      }`}>
         <div className="container mx-auto px-4 md:px-8">
-          <div className="text-center mb-6 sm:mb-8 md:mb-14">
+          <div className={`text-center ${
+            isTablet ? 'mb-4' : 'mb-6 sm:mb-8 md:mb-14'
+          }`}>
             {/* Título principal */}
             <div className={`transition-all duration-1000 ease-out ${
               isVisible 
                 ? 'opacity-100 translate-y-0 scale-100' 
                 : 'opacity-0 -translate-y-8 scale-95'
             }`} style={{ transitionDelay: '100ms' }}>
-              <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-blue-900 mb-1 sm:mb-2 md:mb-4">
+              <h1 className={`font-bold text-blue-900 ${
+                isTablet 
+                  ? 'text-2xl mb-1' 
+                  : 'text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl mb-1 sm:mb-2 md:mb-4'
+              }`}>
                 OFERTA
               </h1>
-              <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-blue-600">
+              <h2 className={`font-bold text-blue-600 ${
+                isTablet 
+                  ? 'text-2xl' 
+                  : 'text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl'
+              }`}>
                 EDUCATIVA
               </h2>
             </div>
           </div>
 
           {/* Tarjetas de niveles educativos - Grid responsive */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-5 lg:gap-8 max-w-6xl mx-auto">
+          <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 max-w-6xl mx-auto ${
+            isTablet ? 'gap-3' : 'gap-3 sm:gap-4 md:gap-5 lg:gap-8'
+          }`}>
             {educationalLevels.map((level, index) => {
               // Función para manejar la navegación
               const handleNavigation = () => {
@@ -97,7 +127,11 @@ export default function OfertaEducativaSection() {
                   style={{ transitionDelay: level.delay }}
                 >
                   {/* Imagen del nivel educativo que ocupa la mayor parte de la tarjeta */}
-                  <div className="relative h-32 sm:h-36 md:h-44 lg:h-56 xl:h-64 2xl:h-72 overflow-hidden">
+                  <div className={`relative overflow-hidden ${
+                    isTablet 
+                      ? 'h-24' 
+                      : 'h-32 sm:h-36 md:h-44 lg:h-56 xl:h-64 2xl:h-72'
+                  }`}>
                     <img
                       src={level.image}
                       alt={`Estudiantes de ${level.name} - Instituto Winston Churchill`}
@@ -110,9 +144,17 @@ export default function OfertaEducativaSection() {
                   </div>
 
                   {/* Sección inferior con color de fondo y texto */}
-                  <div className={`${level.bgColor} px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-4 lg:px-8 lg:py-5`}>
+                  <div className={`${level.bgColor} ${
+                    isTablet 
+                      ? 'px-2 py-1' 
+                      : 'px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-4 lg:px-8 lg:py-5'
+                  }`}>
                     <div className="text-center">
-                      <h3 className={`text-sm sm:text-base md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-bold ${level.textColor} tracking-wider transition-all duration-150 group-hover:scale-110 group-hover:tracking-widest`}>
+                      <h3 className={`font-bold ${level.textColor} tracking-wider transition-all duration-150 group-hover:scale-110 group-hover:tracking-widest ${
+                        isTablet 
+                          ? 'text-sm' 
+                          : 'text-sm sm:text-base md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl'
+                      }`}>
                         {level.name}
                       </h3>
                     </div>
@@ -124,10 +166,10 @@ export default function OfertaEducativaSection() {
         </div>
 
         {/* Elementos decorativos adicionales */}
-        <div className="hidden md:block absolute top-20 left-20 w-4 h-4 bg-cyan-400 rounded-full animate-bounce opacity-60"></div>
-        <div className="hidden md:block absolute bottom-56 right-32 w-3 h-3 bg-yellow-400 rounded-full animate-pulse opacity-70"></div>
-        <div className="hidden md:block absolute top-1/3 right-1/4 w-2 h-2 bg-blue-400 rounded-full animate-ping opacity-50"></div>
-        <div className="hidden md:block absolute bottom-[30%] left-1/4 w-2 h-2 bg-green-400 rounded-full animate-bounce opacity-40"></div>
+        <div className="hidden lg:block absolute top-20 left-20 w-4 h-4 bg-cyan-400 rounded-full animate-bounce opacity-60"></div>
+        <div className="hidden lg:block absolute bottom-56 right-32 w-3 h-3 bg-yellow-400 rounded-full animate-pulse opacity-70"></div>
+        <div className="hidden lg:block absolute top-1/3 right-1/4 w-2 h-2 bg-blue-400 rounded-full animate-ping opacity-50"></div>
+        <div className="hidden lg:block absolute bottom-[30%] left-1/4 w-2 h-2 bg-green-400 rounded-full animate-bounce opacity-40"></div>
       </div>
 
       {/* Footer anclado al fondo de esta sección */}

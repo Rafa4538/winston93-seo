@@ -2,7 +2,23 @@ import { useEffect, useRef, useState } from 'react'
 
 export default function ConveniosSection() {
   const [isVisible, setIsVisible] = useState(false)
+  const [isTablet, setIsTablet] = useState(false)
   const sectionRef = useRef<HTMLDivElement>(null)
+
+  // Detectar si es tablet
+  useEffect(() => {
+    const updateDeviceType = () => {
+      const width = window.innerWidth
+      setIsTablet(width >= 768 && width < 1024)
+    }
+    
+    updateDeviceType()
+    window.addEventListener('resize', updateDeviceType)
+    
+    return () => {
+      window.removeEventListener('resize', updateDeviceType)
+    }
+  }, [])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -22,9 +38,11 @@ export default function ConveniosSection() {
   }, [])
 
   return (
-    <div ref={sectionRef} className="h-screen w-full relative overflow-hidden bg-white">
+    <div ref={sectionRef} className="h-full w-full relative overflow-hidden bg-white">
       {/* Contenido principal */}
-      <div className="h-full flex items-center justify-center py-2 md:py-4">
+      <div className={`h-full flex items-center justify-center ${
+        isTablet ? 'py-1 -mt-8' : 'py-2 md:py-4'
+      }`}>
         <div className="w-full px-2 md:px-4">
           <div className="flex items-center justify-center h-full">
             
@@ -39,7 +57,9 @@ export default function ConveniosSection() {
                 <img
                   src="/images/logos/convenios.png"
                   alt="Convenios y Alianzas Académicas - Instituto Winston Churchill"
-                  className="w-full h-auto object-contain max-h-[70vh] md:max-h-[80vh] max-w-[98vw] md:max-w-[95vw]"
+                  className={`w-full h-auto object-contain max-w-[98vw] md:max-w-[95vw] ${
+                    isTablet ? 'max-h-[75vh]' : 'max-h-[70vh] md:max-h-[80vh]'
+                  }`}
                 />
                 
                 {/* Texto vertical volteado DENTRO del contorno azul - Responsive */}
@@ -49,7 +69,11 @@ export default function ConveniosSection() {
                     : 'opacity-0 translate-x-8'
                 }`} style={{ transitionDelay: '600ms' }}>
                   <div className="text-white transform rotate-90 origin-center whitespace-nowrap">
-                    <h2 className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl font-bold tracking-widest">
+                    <h2 className={`font-bold tracking-widest ${
+                      isTablet 
+                        ? 'text-sm' 
+                        : 'text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-2xl'
+                    }`}>
                       CONVENIOS Y CERTIFICACIONES
                     </h2>
                   </div>
@@ -61,10 +85,10 @@ export default function ConveniosSection() {
         </div>
       </div>
 
-      {/* Elementos decorativos adicionales */}
-      <div className="hidden md:block absolute top-20 left-20 w-3 h-3 bg-blue-400 rounded-full animate-bounce opacity-60"></div>
-      <div className="hidden md:block absolute bottom-32 right-32 w-2 h-2 bg-green-400 rounded-full animate-pulse opacity-70"></div>
-      <div className="hidden md:block absolute top-1/3 left-1/4 w-1 h-1 bg-yellow-400 rounded-full animate-ping opacity-50"></div>
+      {/* Elementos decorativos adicionales - Solo en desktop */}
+      <div className="hidden lg:block absolute top-20 left-20 w-3 h-3 bg-blue-400 rounded-full animate-bounce opacity-60"></div>
+      <div className="hidden lg:block absolute bottom-32 right-32 w-2 h-2 bg-green-400 rounded-full animate-pulse opacity-70"></div>
+      <div className="hidden lg:block absolute top-1/3 left-1/4 w-1 h-1 bg-yellow-400 rounded-full animate-ping opacity-50"></div>
     </div>
   )
 } 
