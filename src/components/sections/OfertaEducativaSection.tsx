@@ -96,13 +96,16 @@ export default function OfertaEducativaSection() {
       
       {/* Contenido de la sección */}
       <div className={`bg-white flex-1 flex flex-col justify-center ${
-        isMobile ? 'py-0' : 'py-3 sm:py-4 md:py-6'
+        // Móvil: padding normal, Tablet horizontal: sin padding, Desktop: padding normal
+        isTabletHorizontal ? 'py-0' : isMobile ? 'py-2' : 'py-3 sm:py-4 md:py-6'
       }`}>
         <div className={`container mx-auto ${
-          isMobile ? 'px-1' : 'px-4 md:px-8'
+          // Móvil: padding normal, Tablet horizontal: mínimo, Desktop: normal
+          isTabletHorizontal ? 'px-1' : isMobile ? 'px-3' : 'px-4 md:px-8'
         }`}>
           <div className={`text-center ${
-            isMobile ? 'mb-0' : 'mb-6 sm:mb-8 md:mb-14'
+            // Móvil: margen normal, Tablet horizontal: sin margen, Desktop: margen normal
+            isTabletHorizontal ? 'mb-0' : isMobile ? 'mb-3' : 'mb-6 sm:mb-8 md:mb-14'
           }`}>
             {/* Título principal */}
             <div className={`transition-all duration-1000 ease-out ${
@@ -111,16 +114,22 @@ export default function OfertaEducativaSection() {
                 : 'opacity-0 -translate-y-8 scale-95'
             }`} style={{ transitionDelay: '100ms' }}>
               <h1 className={`font-bold text-blue-900 ${
-                isMobile 
+                // Móvil: text-lg (más grande), Tablet horizontal: text-sm (pequeño), Desktop: text-xl+
+                isTabletHorizontal 
                   ? 'text-sm mb-0' 
-                  : 'text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl mb-1 sm:mb-2 md:mb-4'
+                  : isMobile 
+                    ? 'text-lg mb-1' 
+                    : 'text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl mb-1 sm:mb-2 md:mb-4'
               }`}>
                 OFERTA
               </h1>
               <h2 className={`font-bold text-blue-600 ${
-                isMobile 
+                // Móvil: text-lg (más grande), Tablet horizontal: text-sm (pequeño), Desktop: text-xl+
+                isTabletHorizontal 
                   ? 'text-sm' 
-                  : 'text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl'
+                  : isMobile 
+                    ? 'text-lg' 
+                    : 'text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl'
               }`}>
                 EDUCATIVA
               </h2>
@@ -129,7 +138,8 @@ export default function OfertaEducativaSection() {
 
           {/* Tarjetas de niveles educativos - Grid responsive */}
           <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 max-w-6xl mx-auto ${
-            isMobile ? 'gap-0.5' : 'gap-3 sm:gap-4 md:gap-5 lg:gap-8'
+            // Móvil: gap normal, Tablet horizontal: gap mínimo, Desktop: gap normal
+            isTabletHorizontal ? 'gap-0.5' : isMobile ? 'gap-2' : 'gap-3 sm:gap-4 md:gap-5 lg:gap-8'
           }`}>
             {educationalLevels.map((level, index) => {
               // Función para manejar la navegación
@@ -148,7 +158,7 @@ export default function OfertaEducativaSection() {
                   key={level.name}
                   onClick={handleNavigation}
                   className={`bg-white overflow-hidden shadow-lg transition-all duration-1000 ease-out transform cursor-pointer group hover:scale-105 hover:shadow-2xl hover:-translate-y-2 ${
-                    isMobile ? 'rounded-md' : 'rounded-2xl sm:rounded-3xl'
+                    isTabletHorizontal ? 'rounded-md' : isMobile ? 'rounded-lg' : 'rounded-2xl sm:rounded-3xl'
                   } ${
                     isVisible 
                       ? 'opacity-100 translate-y-0 scale-100' 
@@ -158,9 +168,12 @@ export default function OfertaEducativaSection() {
                 >
                   {/* Imagen del nivel educativo que ocupa la mayor parte de la tarjeta */}
                   <div className={`relative overflow-hidden ${
-                    isMobile 
+                    // Móvil: h-16 (más grande), Tablet horizontal: h-8 (pequeño), Desktop: h-32+
+                    isTabletHorizontal 
                       ? 'h-8' 
-                      : 'h-32 sm:h-36 md:h-44 lg:h-56 xl:h-64 2xl:h-72'
+                      : isMobile 
+                        ? 'h-16' 
+                        : 'h-32 sm:h-36 md:h-44 lg:h-56 xl:h-64 2xl:h-72'
                   }`}>
                     <img
                       src={level.image}
@@ -175,15 +188,21 @@ export default function OfertaEducativaSection() {
 
                   {/* Sección inferior con color de fondo y texto */}
                   <div className={`${level.bgColor} ${
-                    isMobile 
+                    // Móvil: padding normal, Tablet horizontal: padding mínimo, Desktop: padding normal
+                    isTabletHorizontal 
                       ? 'px-0.5 py-0' 
-                      : 'px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-4 lg:px-8 lg:py-5'
+                      : isMobile 
+                        ? 'px-2 py-1' 
+                        : 'px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-4 lg:px-8 lg:py-5'
                   }`}>
                     <div className="text-center">
                       <h3 className={`font-bold ${level.textColor} tracking-wider transition-all duration-150 group-hover:scale-110 group-hover:tracking-widest ${
-                        isMobile 
+                        // Móvil: text-sm (más grande), Tablet horizontal: text-xs (pequeño), Desktop: text-sm+
+                        isTabletHorizontal 
                           ? 'text-xs' 
-                          : 'text-sm sm:text-base md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl'
+                          : isMobile 
+                            ? 'text-sm' 
+                            : 'text-sm sm:text-base md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl'
                       }`}>
                         {level.name}
                       </h3>
