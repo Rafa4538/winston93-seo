@@ -5,6 +5,7 @@ import AnimatedElement from '@/components/AnimatedElement'
 export default function OfertaEducativaSection() {
   const [isVisible, setIsVisible] = useState(false)
   const [isTabletOrMobile, setIsTabletOrMobile] = useState(false)
+  const [debugInfo, setDebugInfo] = useState('')
   const sectionRef = useRef<HTMLDivElement>(null)
 
   // Detectar si es tablet horizontal o móvil
@@ -18,7 +19,14 @@ export default function OfertaEducativaSection() {
       const isTabletLandscape = width >= 768 && width < 1024 && isLandscape
       const isMobile = width < 768
       
-      setIsTabletOrMobile(isTabletLandscape || isMobile)
+      const newIsTabletOrMobile = isTabletLandscape || isMobile
+      
+      // Debug info
+      const debug = `Width: ${width}, Height: ${height}, Landscape: ${isLandscape}, TabletLandscape: ${isTabletLandscape}, Mobile: ${isMobile}, IsTabletOrMobile: ${newIsTabletOrMobile}`
+      setDebugInfo(debug)
+      console.log('OfertaEducativa Debug:', debug)
+      
+      setIsTabletOrMobile(newIsTabletOrMobile)
     }
     
     updateDeviceType()
@@ -77,6 +85,13 @@ export default function OfertaEducativaSection() {
 
   return (
     <div ref={sectionRef} className="w-full relative h-full flex flex-col">
+      {/* Debug info - solo en desarrollo */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="fixed top-0 left-0 bg-black text-white p-2 text-xs z-50">
+          {debugInfo}
+        </div>
+      )}
+      
       {/* Contenido de la sección */}
       <div className={`bg-white flex-1 flex flex-col justify-center ${
         isTabletOrMobile ? 'py-0' : 'py-3 sm:py-4 md:py-6'
