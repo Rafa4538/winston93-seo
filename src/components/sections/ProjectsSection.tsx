@@ -90,7 +90,7 @@ export default function SliderSection() {
   }, [currentSlide])
 
   return (
-    <div className="h-screen w-full relative overflow-hidden">
+    <div className="w-full h-full relative overflow-hidden">
       {/* Slider de imágenes de fondo */}
       <div className="absolute inset-0">
         {slides.map((slide, index) => (

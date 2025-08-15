@@ -56,10 +56,14 @@ body {
 }
 
 /* Asegurar que el contenido de las secciones se ajuste correctamente */
-.home-page section,
+.home-page section {
+  box-sizing: border-box;
+  margin-top: 0 !important;
+}
+
+/* Permitir que el slider mantenga su padding específico */
 .home-page .h-screen {
   box-sizing: border-box;
-  padding-top: 0 !important;
   margin-top: 0 !important;
 }
 
