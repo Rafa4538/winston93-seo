@@ -1109,6 +1109,57 @@ body {
   /* La barra de desplazamiento se mostrará con los estilos por defecto */
 }
 
+/* Responsividad mejorada para tablet y mobile */
+@media (max-width: 1023px) {
+  /* Ajustes para tablet */
+  .programas-section {
+    min-height: 100vh !important;
+    height: 100vh !important;
+  }
+  
+  .image-fragments-container {
+    flex-direction: column;
+  }
+  
+  .image-fragment {
+    width: 100% !important;
+    height: auto !important;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Ajustes para mobile */
+  .programas-section {
+    min-height: 100vh !important;
+    height: 100vh !important;
+  }
+  
+  .image-fragments-container {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .image-fragment {
+    width: 100% !important;
+    height: auto !important;
+    transform: scale(1) !important;
+  }
+  
+  /* Mejorar legibilidad en mobile */
+  .text-center {
+    text-align: center !important;
+  }
+  
+  /* Ajustar espaciado en mobile */
+  .p-6 {
+    padding: 1rem !important;
+  }
+  
+  .mb-4 {
+    margin-bottom: 1rem !important;
+  }
+}
+
 /* Ocultar barra de desplazamiento en el html y body solo para estas páginas */
 .home-page html,
 .programas-page html {

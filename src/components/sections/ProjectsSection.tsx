@@ -3,6 +3,8 @@ import AnimatedElement from '@/components/AnimatedElement'
 
 export default function SliderSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
+  const [isTablet, setIsTablet] = useState(false)
   
   const slides = [
     {
@@ -24,6 +26,24 @@ export default function SliderSection() {
       description: 'Más que conocimientos, formamos personas íntegras con valores sólidos y visión global para transformar el mundo.'
     }
   ]
+
+  // Detectar tipo de dispositivo
+  useEffect(() => {
+    const updateDeviceType = () => {
+      const width = window.innerWidth
+      setIsMobile(width < 768)
+      setIsTablet(width >= 768 && width < 1024)
+    }
+    
+    updateDeviceType()
+    window.addEventListener('resize', updateDeviceType)
+    window.addEventListener('orientationchange', updateDeviceType)
+    
+    return () => {
+      window.removeEventListener('resize', updateDeviceType)
+      window.removeEventListener('orientationchange', updateDeviceType)
+    }
+  }, [])
 
   // Auto-advance slider every 5 seconds
   useEffect(() => {
@@ -99,57 +119,99 @@ export default function SliderSection() {
                 ? 'w-full md:w-1/2 md:max-w-lg text-white md:pl-8 md:ml-auto' // Slide 3: derecha en desktop
                 : 'w-full md:w-1/2 md:max-w-lg text-white md:pr-8'        // Slides 1 y 2: izquierda en desktop
             }`}>
-              {/* Contenedor con animaciones direccionales */}
-              <div key={currentSlide}>
-                {/* Título - Entra desde arriba */}
-                <h2 className="text-3xl md:text-5xl font-bold leading-tight mb-4 md:mb-8 slide-in-from-top">
-                  <span className="block">{slides[currentSlide].title}</span>
-                  <span className="block text-yellow-400">{slides[currentSlide].subtitle}</span>
+              <AnimatedElement>
+                <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-2 md:mb-4 tracking-wide">
+                  {slides[currentSlide].title}
                 </h2>
-
-                {/* Descripción - Entra desde la derecha */}
-                {slides[currentSlide].description && (
-                  <p className="text-base md:text-lg text-gray-200 mb-6 md:mb-10 md:max-w-md leading-relaxed slide-in-from-right line-clamp-3 md:line-clamp-none">
-                    {slides[currentSlide].description}
-                  </p>
-                )}
-
-                {/* Botón - Entra desde abajo */}
-                <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 md:py-4 md:px-8 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl slide-in-from-bottom">
-                  AGENDAR CITA
+                <h3 className="text-xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6 text-blue-300">
+                  {slides[currentSlide].subtitle}
+                </h3>
+                <p className="text-sm md:text-base lg:text-lg text-gray-200 leading-relaxed mb-6 md:mb-8">
+                  {slides[currentSlide].description}
+                </p>
+                <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 md:px-6 md:py-3 rounded-lg font-semibold transition-colors duration-300 text-sm md:text-base">
+                  Saber más
                 </button>
-              </div>
+              </AnimatedElement>
             </div>
 
+            {/* Controles de navegación */}
+            <div className="hidden md:flex flex-col items-center justify-center space-y-4">
+              {/* Botón anterior */}
+              <button
+                onClick={prevSlide}
+                className="w-12 h-12 md:w-14 md:h-14 bg-white/20 hover:bg-white/30 text-white rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+
+              {/* Indicadores de slide */}
+              <div className="flex flex-col space-y-2">
+                {slides.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToSlide(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      index === currentSlide 
+                        ? 'bg-white scale-125' 
+                        : 'bg-white/50 hover:bg-white/75'
+                    }`}
+                  />
+                ))}
+              </div>
+
+              {/* Botón siguiente */}
+              <button
+                onClick={nextSlide}
+                className="w-12 h-12 md:w-14 md:h-14 bg-white/20 hover:bg-white/30 text-white rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
+      {/* Controles móviles */}
+      <div className="md:hidden absolute bottom-4 left-1/2 transform -translate-x-1/2 z-40">
+        <div className="flex space-x-2">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                index === currentSlide 
+                  ? 'bg-white scale-125' 
+                  : 'bg-white/50'
+              }`}
+            />
+          ))}
+        </div>
+      </div>
 
-
-      {/* Botones de navegación del slider - ocultar en móvil para limpiar */}
-      <button
-        onClick={prevSlide}
-        className="hidden md:flex absolute left-4 top-1/2 transform -translate-y-1/2 z-40 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-300 shadow-lg"
-      >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-
-      <button
-        onClick={nextSlide}
-        className="hidden md:flex absolute right-4 top-1/2 transform -translate-y-1/2 z-40 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-300 shadow-lg"
-      >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
-
-      {/* Elementos decorativos adicionales */}
-      <div className="hidden md:block absolute top-20 left-20 w-2 h-2 bg-yellow-300 rounded-full animate-pulse opacity-70 z-30"></div>
-      <div className="hidden md:block absolute bottom-32 right-24 w-3 h-3 bg-blue-400 rounded-full animate-bounce opacity-60 z-30"></div>
-      <div className="hidden md:block absolute top-1/3 right-1/4 w-1 h-1 bg-green-400 rounded-full animate-ping opacity-50 z-30"></div>
+      {/* Botones de navegación móviles */}
+      <div className="md:hidden absolute inset-x-0 top-1/2 transform -translate-y-1/2 z-40 flex justify-between px-4">
+        <button
+          onClick={prevSlide}
+          className="w-10 h-10 bg-white/20 hover:bg-white/30 text-white rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button
+          onClick={nextSlide}
+          className="w-10 h-10 bg-white/20 hover:bg-white/30 text-white rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
     </div>
   )
 } 

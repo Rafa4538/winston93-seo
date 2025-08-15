@@ -291,9 +291,9 @@ export default function ProgramasPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -50 }}
             transition={{ duration: 0.8 }}
-            className="fixed top-24 left-1/2 transform -translate-x-1/2 z-30 bg-blue-900 text-white px-6 py-3 rounded-full shadow-lg"
+            className="fixed top-16 md:top-24 left-1/2 transform -translate-x-1/2 z-30 bg-blue-900 text-white px-4 md:px-6 py-2 md:py-3 rounded-full shadow-lg"
           >
-            <h1 className="text-lg font-bold">PROGRAMAS ESPECIALIZADOS</h1>
+            <h1 className="text-sm md:text-lg font-bold">PROGRAMAS ESPECIALIZADOS</h1>
           </motion.div>
         )}
       </AnimatePresence>
@@ -311,9 +311,9 @@ export default function ProgramasPage() {
             style={{ border: 'none', outline: 'none', boxShadow: 'none' }}
           >
             {/* Contenedor unificado para imagen y texto */}
-            <div className="h-full w-full relative flex" style={{ border: 'none', outline: 'none', boxShadow: 'none' }}>
+            <div className="h-full w-full relative flex flex-col md:flex-row" style={{ border: 'none', outline: 'none', boxShadow: 'none' }}>
               {/* Imagen de fondo con overlay */}
-              <div className="w-2/3 h-full relative" style={{ border: 'none', outline: 'none', boxShadow: 'none' }}>
+              <div className="w-full md:w-2/3 h-1/2 md:h-full relative" style={{ border: 'none', outline: 'none', boxShadow: 'none' }}>
               <motion.div
                 initial={{ opacity: 0, scale: 1.1 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -389,7 +389,7 @@ export default function ProgramasPage() {
 
             {/* Panel de texto derecho */}
             <div 
-              className={`w-1/3 h-full bg-gradient-to-b ${section.bgColor} relative flex items-center justify-center p-12`}
+              className={`w-full md:w-1/3 h-1/2 md:h-full bg-gradient-to-b ${section.bgColor} relative flex items-center justify-center p-6 md:p-12`}
               style={{
                 border: 'none',
                 outline: 'none',
@@ -409,7 +409,7 @@ export default function ProgramasPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
                   viewport={{ once: true }}
-                  className={`text-4xl md:text-5xl font-bold mb-2 ${section.textColor}`}
+                  className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 ${section.textColor}`}
                 >
                   {section.title}
                 </motion.h2>
@@ -420,7 +420,7 @@ export default function ProgramasPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.4 }}
                   viewport={{ once: true }}
-                  className={`text-3xl md:text-4xl font-bold mb-6 ${section.textColor}`}
+                  className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6 ${section.textColor}`}
                 >
                   {section.subtitle}
                 </motion.h3>
@@ -431,9 +431,9 @@ export default function ProgramasPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.6 }}
                   viewport={{ once: true }}
-                  className={`${section.accentColor} bg-opacity-20 border border-current border-opacity-30 rounded-lg p-4 mb-6`}
+                  className={`${section.accentColor} bg-opacity-20 border border-current border-opacity-30 rounded-lg p-3 md:p-4 mb-4 md:mb-6`}
                 >
-                  <p className={`text-lg ${section.textColor} font-medium`}>
+                  <p className={`text-sm md:text-lg ${section.textColor} font-medium`}>
                     {section.description}
                   </p>
                 </motion.div>
@@ -444,7 +444,7 @@ export default function ProgramasPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.8 }}
                   viewport={{ once: true }}
-                  className={`text-base leading-relaxed ${section.textColor} opacity-90`}
+                  className={`text-sm md:text-base leading-relaxed ${section.textColor} opacity-90`}
                 >
                   {section.longDescription}
                 </motion.p>

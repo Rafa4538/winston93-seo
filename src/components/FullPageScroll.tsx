@@ -10,6 +10,8 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
   const [isScrolling, setIsScrolling] = useState(false)
   const [windowHeight, setWindowHeight] = useState(0)
   const [isAndroid, setIsAndroid] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const [isTablet, setIsTablet] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const touchStartY = useRef(0)
 
@@ -24,14 +26,32 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
       }
     }
     
-    // Detectar si es Android
-    const userAgent = navigator.userAgent.toLowerCase()
-    const isAndroidDevice = /android/.test(userAgent)
-    setIsAndroid(isAndroidDevice)
+    const updateDeviceType = () => {
+      const width = window.innerWidth
+      const userAgent = navigator.userAgent.toLowerCase()
+      
+      // Detectar si es Android
+      const isAndroidDevice = /android/.test(userAgent)
+      setIsAndroid(isAndroidDevice)
+      
+      // Detectar tipo de dispositivo
+      setIsMobile(width < 768)
+      setIsTablet(width >= 768 && width < 1024)
+    }
     
     updateHeight()
-    window.addEventListener('resize', updateHeight)
-    window.addEventListener('orientationchange', updateHeight)
+    updateDeviceType()
+    
+    window.addEventListener('resize', () => {
+      updateHeight()
+      updateDeviceType()
+    })
+    window.addEventListener('orientationchange', () => {
+      setTimeout(() => {
+        updateHeight()
+        updateDeviceType()
+      }, 100)
+    })
     
     // Para móvil, también escuchar cambios en visualViewport
     if (window.visualViewport) {
@@ -60,7 +80,6 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
     
     if (containerRef.current) {
       let translateY = 0
-      const isMobile = window.innerWidth < 768
       
       if (index === 0) {
         translateY = 0
@@ -72,9 +91,11 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
       containerRef.current.style.transform = `translateY(-${translateY}px)`
     }
     
+    // Ajustar tiempo de bloqueo según el dispositivo
+    const scrollDelay = isMobile ? 800 : 1000
     setTimeout(() => {
       setIsScrolling(false)
-    }, 1000)
+    }, scrollDelay)
   }
 
   useEffect(() => {
@@ -83,10 +104,13 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
       
       if (isScrolling) return
       
-      if (e.deltaY > 0) {
+      // Ajustar sensibilidad según el dispositivo
+      const sensitivity = isMobile ? 30 : 50
+      
+      if (e.deltaY > sensitivity) {
         // Scroll hacia abajo
         scrollToSection(currentSection + 1)
-      } else {
+      } else if (e.deltaY < -sensitivity) {
         // Scroll hacia arriba
         scrollToSection(currentSection - 1)
       }
@@ -127,7 +151,10 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
       const touchEndY = e.changedTouches[0].clientY
       const diff = touchStartY.current - touchEndY
       
-      if (Math.abs(diff) > 50) {
+      // Ajustar sensibilidad del touch según el dispositivo
+      const touchSensitivity = isMobile ? 40 : 50
+      
+      if (Math.abs(diff) > touchSensitivity) {
         if (diff > 0) {
           // Swipe hacia arriba (scroll hacia abajo)
           scrollToSection(currentSection + 1)
@@ -158,17 +185,15 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
         window.removeEventListener('touchend', handleTouchEnd)
       }
     }
-  }, [currentSection, isScrolling, children.length, windowHeight, scrollToSection])
+  }, [currentSection, isScrolling, children.length, windowHeight, isMobile, scrollToSection])
 
   // No renderizar hasta que tengamos la altura de la ventana
   if (windowHeight === 0) {
-    return <div>Cargando...</div>
+    return <div className="h-screen flex items-center justify-center">Cargando...</div>
   }
 
   return (
     <div className="relative overflow-hidden bg-transparent">
-
-
       {/* Contenedor de secciones */}
       <div
         ref={containerRef}
@@ -192,12 +217,12 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
       {/* Espacio mínimo para el footer */}
       <div className="w-full h-16"></div>
 
-      {/* Indicador de scroll */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-50 text-white animate-bounce">
+      {/* Indicador de scroll - Responsivo */}
+      <div className="absolute bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 z-50 text-white animate-bounce">
         {currentSection < children.length - 1 && (
           <div className="flex flex-col items-center">
-            <span className="text-sm mb-2 opacity-75">Scroll para continuar</span>
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <span className="text-xs md:text-sm mb-1 md:mb-2 opacity-75 hidden sm:block">Scroll para continuar</span>
+            <svg className="w-4 h-4 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
           </div>
