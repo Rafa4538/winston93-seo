@@ -271,7 +271,7 @@ export default function ProgramasPage() {
   }
 
   return (
-    <>
+    <div className="programas-page">
       <Head>
         <title>Programas - Instituto Winston Churchill</title>
         <meta name="description" content="Descubre nuestros programas especializados en formación social, educación financiera y mindfulness en el Instituto Winston Churchill." />
@@ -541,6 +541,6 @@ export default function ProgramasPage() {
       </motion.div>
 
 
-    </>
+    </div>
   )
 } 

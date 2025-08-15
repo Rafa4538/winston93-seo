@@ -68,7 +68,7 @@ export default function ContactoPage() {
   }
 
   return (
-    <>
+    <div className="contacto-page">
       <Head>
         <title>Contáctanos - Instituto Winston Churchill</title>
         <meta name="description" content="Agenda una cita y conoce más sobre el Instituto Winston Churchill. Estamos para ayudarte." />
@@ -241,6 +241,6 @@ export default function ContactoPage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   )
 } 

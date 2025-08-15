@@ -17,7 +17,7 @@ export default function Home() {
   }
 
   return (
-    <>
+    <div className="home-page">
       <Head>
         <title>Instituto Winston Churchill - Working for a Brighter Future</title>
         <meta name="description" content="Instituto educativo con 30 años de experiencia. Educación bilingüe integral: Kínder, Primaria y Secundaria. Respaldados por Oxford University Press y University of Cambridge." />
@@ -38,6 +38,6 @@ export default function Home() {
       </FullPageScroll>
       
 
-    </>
+    </div>
   )
 } 

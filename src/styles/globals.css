@@ -19,14 +19,6 @@
 html {
   background: transparent;
   scroll-behavior: smooth;
-  /* Ocultar barra de scroll en todos los navegadores */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-}
-
-/* Ocultar barra de scroll en WebKit (Chrome, Safari, Edge) */
-html::-webkit-scrollbar {
-  display: none;
 }
 
 body {
@@ -34,13 +26,6 @@ body {
   background: transparent;
   margin: 0;
   padding: 0;
-  /* Ocultar barra de scroll en el body también */
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-body::-webkit-scrollbar {
-  display: none;
 }
 
 body {
@@ -1093,4 +1078,56 @@ body {
     height: 100vh !important;
     min-height: 100vh !important;
   }
+}
+
+/* Ocultar barra de desplazamiento solo en páginas específicas */
+/* Página principal (/) */
+.home-page {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.home-page::-webkit-scrollbar {
+  display: none;
+}
+
+/* Página de programas (/programas) */
+.programas-page {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.programas-page::-webkit-scrollbar {
+  display: none;
+}
+
+/* Mostrar barra de desplazamiento en otras páginas */
+.contacto-page,
+.primaria-page,
+.secundaria-page,
+.servicios-en-linea-page {
+  /* La barra de desplazamiento se mostrará con los estilos por defecto */
+}
+
+/* Ocultar barra de desplazamiento en el html y body solo para estas páginas */
+.home-page html,
+.programas-page html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.home-page html::-webkit-scrollbar,
+.programas-page html::-webkit-scrollbar {
+  display: none;
+}
+
+.home-page body,
+.programas-page body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.home-page body::-webkit-scrollbar,
+.programas-page body::-webkit-scrollbar {
+  display: none;
 } 

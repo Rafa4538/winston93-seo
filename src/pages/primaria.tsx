@@ -228,7 +228,7 @@ export default function PrimariaPage() {
   }, [])
 
   return (
-    <>
+    <div className="primaria-page">
       <Head>
         <title>Primaria - Instituto Winston Churchill</title>
         <meta name="description" content="Educación primaria bilingüe de excelencia en el Instituto Winston Churchill. Formamos estudiantes con pensamiento crítico y valores sólidos." />
@@ -473,6 +473,6 @@ export default function PrimariaPage() {
           title={galleries[currentGallery].title}
         />
       )}
-    </>
+    </div>
   )
 } 

@@ -42,7 +42,7 @@ export default function ServiciosEnLinea() {
   ]
 
   return (
-    <>
+    <div className="servicios-en-linea-page">
       <Head>
         <title>Servicios en Línea - Instituto Winston Churchill</title>
         <meta name="description" content="Accede a nuestros servicios en línea: colegiaturas, inscripciones, tareas y más." />
@@ -118,6 +118,6 @@ export default function ServiciosEnLinea() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 } 

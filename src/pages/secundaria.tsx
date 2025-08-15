@@ -221,7 +221,7 @@ export default function SecundariaPage() {
   }, [])
 
   return (
-    <>
+    <div className="secundaria-page">
       <Head>
         <title>Secundaria - Instituto Winston Churchill</title>
         <meta name="description" content="Educación secundaria bilingüe de excelencia en el Instituto Winston Churchill. Formamos estudiantes con pensamiento crítico y formación integral." />
@@ -501,6 +501,6 @@ export default function SecundariaPage() {
           title={galleries[currentGallery].title}
         />
       )}
-    </>
+    </div>
   )
 } 
