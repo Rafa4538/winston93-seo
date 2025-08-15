@@ -116,29 +116,6 @@ export default function HeroSection() {
         <source src="/videos/winston-video.mp4" type="video/mp4" />
         Tu navegador no soporta videos HTML5.
       </video>
-
-      {/* Overlay responsivo para mejorar legibilidad */}
-      <div className="absolute inset-0 z-30 bg-black/20 md:bg-black/10 lg:bg-black/15"></div>
-
-      {/* Contenido superpuesto responsivo */}
-      <div className="absolute inset-0 z-40 flex items-center justify-center px-4 md:px-8">
-        <div className="text-center text-white">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 tracking-wide">
-            INSTITUTO WINSTON CHURCHILL
-          </h1>
-          <p className="text-lg md:text-xl lg:text-2xl font-medium mb-6 md:mb-8 opacity-90">
-            Working for a Brighter Future
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold transition-colors duration-300">
-              Conoce más
-            </button>
-            <button className="bg-transparent border-2 border-white text-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold hover:bg-white hover:text-black transition-all duration-300">
-              Contáctanos
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
   )
 }

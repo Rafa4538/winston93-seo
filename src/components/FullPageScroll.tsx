@@ -204,18 +204,15 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
             key={index}
             className="w-full flex-shrink-0 relative"
             style={{ 
-              height: '100vh',
+              height: index === children.length - 1 ? 'auto' : '100vh',
               minHeight: '100vh',
-              maxHeight: '100vh'
+              maxHeight: index === children.length - 1 ? 'none' : '100vh'
             }}
           >
             {child}
           </div>
         ))}
       </div>
-      
-      {/* Espacio mínimo para el footer */}
-      <div className="w-full h-16"></div>
 
       {/* Indicador de scroll - Responsivo */}
       <div className="absolute bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 z-50 text-white animate-bounce">

@@ -22,7 +22,7 @@ export default function ConveniosSection() {
   }, [])
 
   return (
-    <div ref={sectionRef} className="min-h-[calc(100vh-4rem)] md:h-[calc(100vh-4rem)] w-full relative overflow-hidden bg-white">
+    <div ref={sectionRef} className="h-screen w-full relative overflow-hidden bg-white">
       {/* Contenido principal */}
       <div className="h-full flex items-center justify-center py-2 md:py-4">
         <div className="w-full px-2 md:px-4">
