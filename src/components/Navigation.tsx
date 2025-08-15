@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 interface NavigationProps {
   currentSection?: number
@@ -8,14 +9,17 @@ interface NavigationProps {
 
 export default function Navigation({ currentSection = 0 }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const router = useRouter()
   
-  // El header será transparente SOLO en la primera sección (index 0)
-  // En las demás secciones será azul
-  const isTransparent = currentSection === 0
+  // El header será sobrepuesto (absolute) SOLO en la primera sección (index 0) de cada página
+  // EXCEPTO en la página de contacto, donde siempre será sticky
+  const isContactPage = router.pathname === '/contacto'
+  const isFirstSection = currentSection === 0
+  const shouldBeAbsolute = !isContactPage && isFirstSection
 
   return (
-    <nav className={`absolute top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      isTransparent 
+    <nav className={`${shouldBeAbsolute ? 'absolute' : 'sticky'} top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      shouldBeAbsolute 
         ? 'bg-transparent !bg-transparent' 
         : 'bg-[#0038e4] shadow-lg backdrop-blur-sm'
     }`}>
