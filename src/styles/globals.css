@@ -1323,16 +1323,16 @@ body {
   z-index: 50 !important;
 } 
 
-/* Estilos específicos para móviles */
+/* Estilos específicos para móviles y tablet vertical */
 @media (max-width: 767px) {
   /* Forzar altura exacta en móviles */
   .home-page .h-screen,
   .home-page section {
     height: 100vh !important;
-    min-height: 100vh !important;
-    max-height: 100vh !important;
     height: 100dvh !important; /* Dynamic viewport height para móviles */
+    min-height: 100vh !important;
     min-height: 100dvh !important;
+    max-height: 100vh !important;
     max-height: 100dvh !important;
   }
   
@@ -1359,5 +1359,48 @@ body {
     min-height: 100dvh !important;
     max-height: 100vh !important;
     max-height: 100dvh !important;
+  }
+}
+
+/* Estilos específicos para tablet en posición horizontal (landscape) */
+@media (min-width: 768px) and (max-width: 1023px) and (orientation: landscape) {
+  /* Tablet horizontal: comportamiento similar a desktop */
+  .home-page .h-screen,
+  .home-page section {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+  }
+  
+  /* Header puede cambiar entre absolute y sticky en tablet horizontal */
+  .home-page nav.absolute {
+    position: absolute !important;
+  }
+  
+  .home-page nav.sticky {
+    position: sticky !important;
+  }
+}
+
+/* Estilos específicos para tablet en posición vertical (portrait) */
+@media (min-width: 768px) and (max-width: 1023px) and (orientation: portrait) {
+  /* Tablet vertical: comportamiento similar a móvil */
+  .home-page .h-screen,
+  .home-page section {
+    height: 100vh !important;
+    height: 100dvh !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    max-height: 100vh !important;
+    max-height: 100dvh !important;
+  }
+  
+  /* Header siempre fixed en tablet vertical */
+  .home-page nav {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 50 !important;
   }
 } 

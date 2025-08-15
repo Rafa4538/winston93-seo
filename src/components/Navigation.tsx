@@ -10,36 +10,50 @@ interface NavigationProps {
 export default function Navigation({ currentSection = 0 }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [isTablet, setIsTablet] = useState(false)
   const router = useRouter()
   
-  // Detectar si es móvil
+  // Detectar si es móvil o tablet
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
+    const checkDevice = () => {
+      const width = window.innerWidth
+      const height = window.innerHeight
+      const isLandscape = width > height
+      
+      // Móvil: < 768px (siempre vertical)
+      setIsMobile(width < 768)
+      
+      // Tablet: 768px - 1024px en posición horizontal (landscape)
+      // En tablet vertical, usar diseño móvil
+      const isTabletLandscape = width >= 768 && width < 1024 && isLandscape
+      setIsTablet(isTabletLandscape)
     }
     
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    window.addEventListener('orientationchange', checkMobile)
+    checkDevice()
+    window.addEventListener('resize', checkDevice)
+    window.addEventListener('orientationchange', checkDevice)
     
     return () => {
-      window.removeEventListener('resize', checkMobile)
-      window.removeEventListener('orientationchange', checkMobile)
+      window.removeEventListener('resize', checkDevice)
+      window.removeEventListener('orientationchange', checkDevice)
     }
   }, [])
   
   // El header será sobrepuesto (absolute) SOLO en la primera sección (index 0) de cada página
   // EXCEPTO en la página de contacto, donde siempre será sticky
-  // En móviles, siempre será fixed para evitar problemas de posicionamiento
+  // En móviles y tablet vertical, siempre será fixed para evitar problemas de posicionamiento
   const isContactPage = router.pathname === '/contacto'
   const isFirstSection = currentSection === 0
   
   let navPosition = 'sticky'
-  if (isMobile) {
+  if (isMobile || (isTablet && window.innerHeight > window.innerWidth)) {
+    // Móvil o tablet en vertical: fixed
     navPosition = 'fixed'
   } else if (!isContactPage && isFirstSection) {
+    // Desktop o tablet horizontal, primera sección: absolute
     navPosition = 'absolute'
   } else {
+    // Resto de casos: sticky
     navPosition = 'sticky'
   }
 
@@ -70,7 +84,7 @@ export default function Navigation({ currentSection = 0 }: NavigationProps) {
             </Link>
           </div>
 
-          {/* Desktop Menu */}
+          {/* Desktop Menu - Solo en desktop y tablet horizontal */}
           <div className="hidden lg:block">
             <div className="flex items-center space-x-2">
                           <Link href="#conocenos" className="text-white hover:text-black font-medium transition-all duration-300 text-sm uppercase tracking-wide px-4 py-2 rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#dafb00'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(218, 251, 0, 0.5), 0 4px 6px -2px rgba(218, 251, 0, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
@@ -126,7 +140,7 @@ export default function Navigation({ currentSection = 0 }: NavigationProps) {
               <Link href="/servicios-en-linea" className="text-white hover:text-black font-medium transition-all duration-300 text-sm uppercase tracking-wide px-4 py-2 rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#dafb00'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(218, 251, 0, 0.5), 0 4px 6px -2px rgba(218, 251, 0, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
                 SERVICIOS EN LÍNEA
               </Link>
-              <Link href="/programas" className="text-white hover:text-black font-medium transition-all duration-300 text-sm uppercase tracking-wide px-4 py-2 rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#dafb00'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(218, 251, 0, 0.5), 0 4px 6px -2px rgba(218, 251, 0, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.boxShadow = 'none'}}>
+              <Link href="/programas" className="text-white hover:text-black font-medium transition-all duration-300 text-sm uppercase tracking-wide px-4 py-2 rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#dafb00'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(218, 251, 0, 0.5), 0 4px 6px -2px rgba(218, 251, 0, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
                 PROGRAMAS
               </Link>
               <Link href="#winston-life" className="text-white hover:text-black font-medium transition-all duration-300 text-sm uppercase tracking-wide px-4 py-2 rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#dafb00'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(218, 251, 0, 0.5), 0 4px 6px -2px rgba(218, 251, 0, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
@@ -138,46 +152,50 @@ export default function Navigation({ currentSection = 0 }: NavigationProps) {
             </div>
           </div>
 
-          {/* Tablet Menu - Mejorado */}
+          {/* Tablet Menu - Solo en tablet horizontal (landscape) */}
           <div className="hidden md:block lg:hidden">
-            <div className="flex items-center space-x-1.5">
-              <Link href="/primaria" className="text-white hover:text-black font-medium transition-all duration-300 text-xs uppercase tracking-wide px-2.5 py-1.5 rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#dafb00'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(218, 251, 0, 0.5), 0 4px 6px -2px rgba(218, 251, 0, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
-                PRIMARIA
-              </Link>
-              <Link href="/secundaria" className="text-white hover:text-black font-medium transition-all duration-300 text-xs uppercase tracking-wide px-2.5 py-1.5 rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#dafb00'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(218, 251, 0, 0.5), 0 4px 6px -2px rgba(218, 251, 0, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
-                SECUNDARIA
-              </Link>
-              <Link href="/programas" className="text-white hover:text-black font-medium transition-all duration-300 text-xs uppercase tracking-wide px-2.5 py-1.5 rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#dafb00'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(218, 251, 0, 0.5), 0 4px 6px -2px rgba(218, 251, 0, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
-                PROGRAMAS
-              </Link>
-              <Link href="/contacto" className="text-white hover:text-black font-medium transition-all duration-300 text-xs uppercase tracking-wide px-4 py-2 rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#dafb00'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(218, 251, 0, 0.5), 0 4px 6px -2px rgba(218, 251, 0, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
-                CONTACTO
-              </Link>
-            </div>
+            {isTablet && (
+              <div className="flex items-center space-x-2">
+                <Link href="/primaria" className="text-white hover:text-black font-medium transition-all duration-300 text-sm uppercase tracking-wide px-3 py-2 rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#dafb00'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(218, 251, 0, 0.5), 0 4px 6px -2px rgba(218, 251, 0, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
+                  PRIMARIA
+                </Link>
+                <Link href="/secundaria" className="text-white hover:text-black font-medium transition-all duration-300 text-sm uppercase tracking-wide px-3 py-2 rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#dafb00'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(218, 251, 0, 0.5), 0 4px 6px -2px rgba(218, 251, 0, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
+                  SECUNDARIA
+                </Link>
+                <Link href="/programas" className="text-white hover:text-black font-medium transition-all duration-300 text-sm uppercase tracking-wide px-3 py-2 rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#dafb00'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(218, 251, 0, 0.5), 0 4px 6px -2px rgba(218, 251, 0, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
+                  PROGRAMAS
+                </Link>
+                <Link href="/contacto" className="text-white hover:text-black font-medium transition-all duration-300 text-sm uppercase tracking-wide px-3 py-2 rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#dafb00'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(218, 251, 0, 0.5), 0 4px 6px -2px rgba(218, 251, 0, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
+                  CONTACTO
+                </Link>
+              </div>
+            )}
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-white hover:text-black focus:outline-none focus:text-black transition-all duration-300 p-2 rounded-md hover:shadow-lg"
-              onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#dafb00'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(218, 251, 0, 0.5), 0 4px 6px -2px rgba(218, 251, 0, 0.3)'}} 
-              onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}
-            >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {isOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
+          {/* Mobile menu button - Solo en móvil y tablet vertical */}
+          <div className="md:hidden lg:hidden">
+            {(isMobile || (isTablet && window.innerHeight > window.innerWidth)) && (
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="text-white hover:text-black focus:outline-none focus:text-black transition-all duration-300 p-2 rounded-md hover:shadow-lg"
+                onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#dafb00'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(218, 251, 0, 0.5), 0 4px 6px -2px rgba(218, 251, 0, 0.3)'}} 
+                onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}
+              >
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  {isOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+                </svg>
+              </button>
+            )}
           </div>
         </div>
 
-        {/* Mobile Menu - Mejorado */}
-        {isOpen && (
-          <div className="md:hidden">
+        {/* Mobile Menu - Solo en móvil y tablet vertical */}
+        {isOpen && (isMobile || (isTablet && window.innerHeight > window.innerWidth)) && (
+          <div className="md:hidden lg:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 bg-black/80 backdrop-blur-sm rounded-lg mt-2">
               <Link href="#conocenos" className="block px-3 py-2 text-white hover:text-black font-medium transition-all duration-300 text-sm uppercase tracking-wide rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#dafb00'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(218, 251, 0, 0.5), 0 4px 6px -2px rgba(218, 251, 0, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
                 CONÓCENOS

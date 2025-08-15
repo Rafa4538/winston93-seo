@@ -12,14 +12,15 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
   const [isAndroid, setIsAndroid] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const [isTablet, setIsTablet] = useState(false)
+  const [isTabletLandscape, setIsTabletLandscape] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const touchStartY = useRef(0)
 
   // Función para actualizar altura de ventana
   const updateHeight = () => {
     if (typeof window !== 'undefined') {
-      // En móviles, usar innerHeight para mejor compatibilidad
-      if (isMobile && window.innerHeight) {
+      // En móviles y tablet vertical, usar innerHeight para mejor compatibilidad
+      if ((isMobile || (isTablet && !isTabletLandscape)) && window.innerHeight) {
         setWindowHeight(window.innerHeight)
       } else if (window.visualViewport) {
         setWindowHeight(window.visualViewport.height)
@@ -32,6 +33,7 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
   // Función para actualizar tipo de dispositivo
   const updateDeviceType = () => {
     const width = window.innerWidth
+    const height = window.innerHeight
     const userAgent = navigator.userAgent.toLowerCase()
     
     // Detectar si es Android
@@ -41,12 +43,14 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
     // Detectar tipo de dispositivo
     const newIsMobile = width < 768
     const newIsTablet = width >= 768 && width < 1024
+    const newIsTabletLandscape = newIsTablet && width > height
     
     setIsMobile(newIsMobile)
     setIsTablet(newIsTablet)
+    setIsTabletLandscape(newIsTabletLandscape)
     
     // Si cambió el tipo de dispositivo, actualizar altura
-    if (newIsMobile !== isMobile) {
+    if (newIsMobile !== isMobile || newIsTabletLandscape !== isTabletLandscape) {
       setTimeout(updateHeight, 100)
     }
   }
@@ -76,7 +80,7 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
         window.visualViewport.removeEventListener('resize', updateHeight)
       }
     }
-  }, [isMobile])
+  }, [isMobile, isTabletLandscape])
 
   const scrollToSection = (index: number) => {
     if (index < 0 || index >= children.length || isScrolling) return
@@ -91,15 +95,16 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
       if (index === 0) {
         translateY = 0
       } else {
-        // En móviles, usar altura exacta del viewport
-        const sectionHeight = isMobile ? window.innerHeight : windowHeight
+        // En móviles y tablet vertical, usar altura exacta del viewport
+        // En tablet horizontal, usar altura calculada
+        const sectionHeight = (isMobile || (isTablet && !isTabletLandscape)) ? window.innerHeight : windowHeight
         translateY = index * sectionHeight
       }
       containerRef.current.style.transform = `translateY(-${translateY}px)`
     }
     
     // Ajustar tiempo de bloqueo según el dispositivo
-    const scrollDelay = isMobile ? 600 : 1000
+    const scrollDelay = (isMobile || (isTablet && !isTabletLandscape)) ? 600 : 1000
     setTimeout(() => {
       setIsScrolling(false)
     }, scrollDelay)
@@ -112,7 +117,7 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
       if (isScrolling) return
       
       // Ajustar sensibilidad según el dispositivo
-      const sensitivity = isMobile ? 30 : 50
+      const sensitivity = (isMobile || (isTablet && !isTabletLandscape)) ? 30 : 50
       
       if (e.deltaY > sensitivity) {
         // Scroll hacia abajo
@@ -159,7 +164,7 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
       const diff = touchStartY.current - touchEndY
       
       // Ajustar sensibilidad del touch según el dispositivo
-      const touchSensitivity = isMobile ? 30 : 50
+      const touchSensitivity = (isMobile || (isTablet && !isTabletLandscape)) ? 30 : 50
       
       if (Math.abs(diff) > touchSensitivity) {
         if (diff > 0) {
@@ -174,8 +179,9 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
 
     // Solo agregar listeners si estamos en el cliente
     if (typeof window !== 'undefined') {
-      // En móviles, mantener scroll nativo para mejor compatibilidad
-      if (isMobile) {
+      // En móviles y tablet vertical, mantener scroll nativo para mejor compatibilidad
+      // En tablet horizontal, usar scroll personalizado como en desktop
+      if (isMobile || (isTablet && !isTabletLandscape)) {
         document.body.style.overflow = 'auto'
       } else {
         document.body.style.overflow = 'hidden'
@@ -195,7 +201,7 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
         window.removeEventListener('touchend', handleTouchEnd)
       }
     }
-  }, [currentSection, isScrolling, children.length, windowHeight, isMobile, scrollToSection])
+  }, [currentSection, isScrolling, children.length, windowHeight, isMobile, isTablet, isTabletLandscape, scrollToSection])
 
   // No renderizar hasta que tengamos la altura de la ventana
   if (windowHeight === 0) {
@@ -214,9 +220,9 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
             key={index}
             className="w-full flex-shrink-0 relative"
             style={{ 
-              height: isMobile ? '100vh' : '100vh',
-              minHeight: isMobile ? '100vh' : '100vh',
-              maxHeight: isMobile ? '100vh' : '100vh'
+              height: '100vh',
+              minHeight: '100vh',
+              maxHeight: '100vh'
             }}
           >
             {child}
