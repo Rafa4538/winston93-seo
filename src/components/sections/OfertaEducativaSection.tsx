@@ -4,21 +4,30 @@ import AnimatedElement from '@/components/AnimatedElement'
 
 export default function OfertaEducativaSection() {
   const [isVisible, setIsVisible] = useState(false)
-  const [isTablet, setIsTablet] = useState(false)
+  const [isTabletOrMobile, setIsTabletOrMobile] = useState(false)
   const sectionRef = useRef<HTMLDivElement>(null)
 
-  // Detectar si es tablet
+  // Detectar si es tablet horizontal o móvil
   useEffect(() => {
     const updateDeviceType = () => {
       const width = window.innerWidth
-      setIsTablet(width >= 768 && width < 1024)
+      const height = window.innerHeight
+      const isLandscape = width > height
+      
+      // Tablet horizontal o móvil vertical
+      const isTabletLandscape = width >= 768 && width < 1024 && isLandscape
+      const isMobile = width < 768
+      
+      setIsTabletOrMobile(isTabletLandscape || isMobile)
     }
     
     updateDeviceType()
     window.addEventListener('resize', updateDeviceType)
+    window.addEventListener('orientationchange', updateDeviceType)
     
     return () => {
       window.removeEventListener('resize', updateDeviceType)
+      window.removeEventListener('orientationchange', updateDeviceType)
     }
   }, [])
 
@@ -70,11 +79,11 @@ export default function OfertaEducativaSection() {
     <div ref={sectionRef} className="w-full relative h-full flex flex-col">
       {/* Contenido de la sección */}
       <div className={`bg-white flex-1 flex flex-col justify-center ${
-        isTablet ? 'py-1' : 'py-3 sm:py-4 md:py-6'
+        isTabletOrMobile ? 'py-1' : 'py-3 sm:py-4 md:py-6'
       }`}>
         <div className="container mx-auto px-4 md:px-8">
           <div className={`text-center ${
-            isTablet ? 'mb-2' : 'mb-6 sm:mb-8 md:mb-14'
+            isTabletOrMobile ? 'mb-2' : 'mb-6 sm:mb-8 md:mb-14'
           }`}>
             {/* Título principal */}
             <div className={`transition-all duration-1000 ease-out ${
@@ -83,14 +92,14 @@ export default function OfertaEducativaSection() {
                 : 'opacity-0 -translate-y-8 scale-95'
             }`} style={{ transitionDelay: '100ms' }}>
               <h1 className={`font-bold text-blue-900 ${
-                isTablet 
+                isTabletOrMobile 
                   ? 'text-xl mb-0' 
                   : 'text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl mb-1 sm:mb-2 md:mb-4'
               }`}>
                 OFERTA
               </h1>
               <h2 className={`font-bold text-blue-600 ${
-                isTablet 
+                isTabletOrMobile 
                   ? 'text-xl' 
                   : 'text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl'
               }`}>
@@ -101,7 +110,7 @@ export default function OfertaEducativaSection() {
 
           {/* Tarjetas de niveles educativos - Grid responsive */}
           <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 max-w-6xl mx-auto ${
-            isTablet ? 'gap-2' : 'gap-3 sm:gap-4 md:gap-5 lg:gap-8'
+            isTabletOrMobile ? 'gap-2' : 'gap-3 sm:gap-4 md:gap-5 lg:gap-8'
           }`}>
             {educationalLevels.map((level, index) => {
               // Función para manejar la navegación
@@ -128,7 +137,7 @@ export default function OfertaEducativaSection() {
                 >
                   {/* Imagen del nivel educativo que ocupa la mayor parte de la tarjeta */}
                   <div className={`relative overflow-hidden ${
-                    isTablet 
+                    isTabletOrMobile 
                       ? 'h-16' 
                       : 'h-32 sm:h-36 md:h-44 lg:h-56 xl:h-64 2xl:h-72'
                   }`}>
@@ -145,13 +154,13 @@ export default function OfertaEducativaSection() {
 
                   {/* Sección inferior con color de fondo y texto */}
                   <div className={`${level.bgColor} ${
-                    isTablet 
+                    isTabletOrMobile 
                       ? 'px-2 py-1' 
                       : 'px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-4 lg:px-8 lg:py-5'
                   }`}>
                     <div className="text-center">
                       <h3 className={`font-bold ${level.textColor} tracking-wider transition-all duration-150 group-hover:scale-110 group-hover:tracking-widest ${
-                        isTablet 
+                        isTabletOrMobile 
                           ? 'text-xs' 
                           : 'text-sm sm:text-base md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl'
                       }`}>
