@@ -1197,4 +1197,35 @@ body {
 .home-page body::-webkit-scrollbar,
 .programas-page body::-webkit-scrollbar {
   display: none;
+}
+
+/* Asegurar que las otras páginas tengan scrollbar visible en html y body */
+.contacto-page html,
+.primaria-page html,
+.secundaria-page html,
+.servicios-en-linea-page html {
+  scrollbar-width: auto;
+  -ms-overflow-style: auto;
+}
+
+.contacto-page html::-webkit-scrollbar,
+.primaria-page html::-webkit-scrollbar,
+.secundaria-page html::-webkit-scrollbar,
+.servicios-en-linea-page html::-webkit-scrollbar {
+  display: block;
+}
+
+.contacto-page body,
+.primaria-page body,
+.secundaria-page body,
+.servicios-en-linea-page body {
+  scrollbar-width: auto;
+  -ms-overflow-style: auto;
+}
+
+.contacto-page body::-webkit-scrollbar,
+.primaria-page body::-webkit-scrollbar,
+.secundaria-page body::-webkit-scrollbar,
+.servicios-en-linea-page body::-webkit-scrollbar {
+  display: block;
 } 

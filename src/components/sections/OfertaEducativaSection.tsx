@@ -50,9 +50,9 @@ export default function OfertaEducativaSection() {
   ]
 
   return (
-    <div ref={sectionRef} className="w-full relative h-full">
+    <div ref={sectionRef} className="w-full relative h-screen flex flex-col">
       {/* Contenido de la sección */}
-      <div className="bg-white py-4 md:py-6 pb-20 md:pb-28">
+      <div className="bg-white py-4 md:py-6 flex-1 flex flex-col justify-center">
         <div className="container mx-auto px-4 md:px-8">
           <div className="text-center mb-8 md:mb-14">
             {/* Título principal */}
@@ -130,7 +130,7 @@ export default function OfertaEducativaSection() {
       </div>
 
       {/* Footer anclado al fondo de esta sección */}
-      <div className="absolute bottom-0 left-0 right-0">
+      <div className="flex-shrink-0">
         <Footer />
       </div>
     </div>

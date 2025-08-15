@@ -204,9 +204,9 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
             key={index}
             className="w-full flex-shrink-0 relative"
             style={{ 
-              height: index === children.length - 1 ? 'auto' : '100vh',
+              height: '100vh',
               minHeight: '100vh',
-              maxHeight: index === children.length - 1 ? 'none' : '100vh'
+              maxHeight: '100vh'
             }}
           >
             {child}
