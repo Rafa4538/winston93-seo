@@ -70,11 +70,11 @@ export default function OfertaEducativaSection() {
     <div ref={sectionRef} className="w-full relative h-full flex flex-col">
       {/* Contenido de la sección */}
       <div className={`bg-white flex-1 flex flex-col justify-center ${
-        isTablet ? 'py-2' : 'py-3 sm:py-4 md:py-6'
+        isTablet ? 'py-1' : 'py-3 sm:py-4 md:py-6'
       }`}>
         <div className="container mx-auto px-4 md:px-8">
           <div className={`text-center ${
-            isTablet ? 'mb-4' : 'mb-6 sm:mb-8 md:mb-14'
+            isTablet ? 'mb-2' : 'mb-6 sm:mb-8 md:mb-14'
           }`}>
             {/* Título principal */}
             <div className={`transition-all duration-1000 ease-out ${
@@ -84,14 +84,14 @@ export default function OfertaEducativaSection() {
             }`} style={{ transitionDelay: '100ms' }}>
               <h1 className={`font-bold text-blue-900 ${
                 isTablet 
-                  ? 'text-2xl mb-1' 
+                  ? 'text-xl mb-0' 
                   : 'text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl mb-1 sm:mb-2 md:mb-4'
               }`}>
                 OFERTA
               </h1>
               <h2 className={`font-bold text-blue-600 ${
                 isTablet 
-                  ? 'text-2xl' 
+                  ? 'text-xl' 
                   : 'text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl'
               }`}>
                 EDUCATIVA
@@ -101,7 +101,7 @@ export default function OfertaEducativaSection() {
 
           {/* Tarjetas de niveles educativos - Grid responsive */}
           <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 max-w-6xl mx-auto ${
-            isTablet ? 'gap-3' : 'gap-3 sm:gap-4 md:gap-5 lg:gap-8'
+            isTablet ? 'gap-2' : 'gap-3 sm:gap-4 md:gap-5 lg:gap-8'
           }`}>
             {educationalLevels.map((level, index) => {
               // Función para manejar la navegación
@@ -129,7 +129,7 @@ export default function OfertaEducativaSection() {
                   {/* Imagen del nivel educativo que ocupa la mayor parte de la tarjeta */}
                   <div className={`relative overflow-hidden ${
                     isTablet 
-                      ? 'h-24' 
+                      ? 'h-16' 
                       : 'h-32 sm:h-36 md:h-44 lg:h-56 xl:h-64 2xl:h-72'
                   }`}>
                     <img
@@ -152,7 +152,7 @@ export default function OfertaEducativaSection() {
                     <div className="text-center">
                       <h3 className={`font-bold ${level.textColor} tracking-wider transition-all duration-150 group-hover:scale-110 group-hover:tracking-widest ${
                         isTablet 
-                          ? 'text-sm' 
+                          ? 'text-xs' 
                           : 'text-sm sm:text-base md:text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl'
                       }`}>
                         {level.name}
