@@ -14,7 +14,7 @@ export default function Navigation({ currentSection = 0 }: NavigationProps) {
   const isTransparent = currentSection === 0
 
   return (
-    <nav className={`${isTransparent ? 'absolute' : 'sticky'} top-0 left-0 right-0 z-50 transition-all duration-500 ${
+    <nav className={`absolute top-0 left-0 right-0 z-50 transition-all duration-500 ${
       isTransparent 
         ? 'bg-transparent !bg-transparent' 
         : 'bg-[#0038e4] shadow-lg backdrop-blur-sm'

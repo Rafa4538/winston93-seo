@@ -1109,6 +1109,22 @@ body {
   /* La barra de desplazamiento se mostrará con los estilos por defecto */
 }
 
+/* Asegurar que las otras páginas tengan scrollbar visible */
+.contacto-page,
+.primaria-page,
+.secundaria-page,
+.servicios-en-linea-page {
+  scrollbar-width: auto;
+  -ms-overflow-style: auto;
+}
+
+.contacto-page::-webkit-scrollbar,
+.primaria-page::-webkit-scrollbar,
+.secundaria-page::-webkit-scrollbar,
+.servicios-en-linea-page::-webkit-scrollbar {
+  display: block;
+}
+
 /* Responsividad mejorada para tablet y mobile */
 @media (max-width: 1023px) {
   /* Ajustes para tablet */
