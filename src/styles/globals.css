@@ -1229,3 +1229,96 @@ body {
 .servicios-en-linea-page body::-webkit-scrollbar {
   display: block;
 } 
+
+/* Estilos globales */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Ocultar barra de desplazamiento en la página principal y programas */
+.home-page,
+.programas-page {
+  overflow: hidden;
+}
+
+.home-page::-webkit-scrollbar,
+.programas-page::-webkit-scrollbar {
+  display: none;
+}
+
+.home-page {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.programas-page {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Mostrar barra de desplazamiento en otras páginas */
+.contacto-page,
+.primaria-page,
+.secundaria-page,
+.servicios-en-linea-page {
+  /* La barra de desplazamiento se mostrará con los estilos por defecto */
+}
+
+/* Asegurar que las otras páginas tengan scrollbar visible */
+.contacto-page,
+.primaria-page,
+.secundaria-page,
+.servicios-en-linea-page {
+  scrollbar-width: auto;
+  -ms-overflow-style: auto;
+}
+
+.contacto-page::-webkit-scrollbar,
+.primaria-page::-webkit-scrollbar,
+.secundaria-page::-webkit-scrollbar,
+.servicios-en-linea-page::-webkit-scrollbar {
+  display: block;
+}
+
+/* Asegurar que las secciones de la página principal ocupen exactamente 100vh */
+.home-page .h-screen {
+  height: 100vh !important;
+  min-height: 100vh !important;
+  max-height: 100vh !important;
+}
+
+/* Asegurar que el contenido de las secciones se ajuste correctamente */
+.home-page section,
+.home-page .h-screen {
+  box-sizing: border-box;
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* Ajustar el header para que no interfiera con las secciones */
+.home-page nav.absolute {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 50 !important;
+}
+
+.home-page nav.sticky {
+  position: sticky !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 50 !important;
+} 

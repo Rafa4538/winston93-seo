@@ -15,30 +15,32 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
   const containerRef = useRef<HTMLDivElement>(null)
   const touchStartY = useRef(0)
 
-  // Inicializar altura de ventana en el cliente
-  useEffect(() => {
-    const updateHeight = () => {
-      // En móvil, usar visualViewport si está disponible para mejor precisión
+  // Función para actualizar altura de ventana
+  const updateHeight = () => {
+    if (typeof window !== 'undefined') {
       if (window.visualViewport) {
         setWindowHeight(window.visualViewport.height)
       } else {
         setWindowHeight(window.innerHeight)
       }
     }
+  }
+
+  // Función para actualizar tipo de dispositivo
+  const updateDeviceType = () => {
+    const width = window.innerWidth
+    const userAgent = navigator.userAgent.toLowerCase()
     
-    const updateDeviceType = () => {
-      const width = window.innerWidth
-      const userAgent = navigator.userAgent.toLowerCase()
-      
-      // Detectar si es Android
-      const isAndroidDevice = /android/.test(userAgent)
-      setIsAndroid(isAndroidDevice)
-      
-      // Detectar tipo de dispositivo
-      setIsMobile(width < 768)
-      setIsTablet(width >= 768 && width < 1024)
-    }
+    // Detectar si es Android
+    const isAndroidDevice = /android/.test(userAgent)
+    setIsAndroid(isAndroidDevice)
     
+    // Detectar tipo de dispositivo
+    setIsMobile(width < 768)
+    setIsTablet(width >= 768 && width < 1024)
+  }
+
+  useEffect(() => {
     updateHeight()
     updateDeviceType()
     
@@ -54,29 +56,23 @@ export default function FullPageScroll({ children, onSectionChange }: FullPageSc
     })
     
     // Para móvil, también escuchar cambios en visualViewport
-    if (window.visualViewport) {
+    if (typeof window !== 'undefined' && window.visualViewport) {
       window.visualViewport.addEventListener('resize', updateHeight)
     }
-    
+
     return () => {
-      window.removeEventListener('resize', updateHeight)
-      window.removeEventListener('orientationchange', updateHeight)
-      if (window.visualViewport) {
+      if (typeof window !== 'undefined' && window.visualViewport) {
         window.visualViewport.removeEventListener('resize', updateHeight)
       }
     }
   }, [])
 
   const scrollToSection = (index: number) => {
-    if (isScrolling || index < 0 || index >= children.length || windowHeight === 0) return
+    if (index < 0 || index >= children.length || isScrolling) return
     
     setIsScrolling(true)
     setCurrentSection(index)
-    
-    // Notificar al componente padre sobre el cambio de sección
-    if (onSectionChange) {
-      onSectionChange(index)
-    }
+    onSectionChange?.(index)
     
     if (containerRef.current) {
       let translateY = 0

@@ -18,7 +18,7 @@ export default function Navigation({ currentSection = 0 }: NavigationProps) {
   const shouldBeAbsolute = !isContactPage && isFirstSection
 
   return (
-    <nav className={`${shouldBeAbsolute ? 'absolute' : 'sticky'} top-0 left-0 right-0 z-50 transition-all duration-500 ${
+    <nav className={`${shouldBeAbsolute ? 'absolute' : 'sticky'} top-0 left-0 right-0 z-50 transition-all duration-700 ease-in-out ${
       shouldBeAbsolute 
         ? 'bg-transparent !bg-transparent' 
         : 'bg-[#0038e4] shadow-lg backdrop-blur-sm'
@@ -124,7 +124,7 @@ export default function Navigation({ currentSection = 0 }: NavigationProps) {
               <Link href="/programas" className="text-white hover:text-black font-medium transition-all duration-300 text-xs uppercase tracking-wide px-2.5 py-1.5 rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#dafb00'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(218, 251, 0, 0.5), 0 4px 6px -2px rgba(218, 251, 0, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
                 PROGRAMAS
               </Link>
-              <Link href="/contacto" className="text-white hover:text-black font-medium transition-all duration-300 text-xs uppercase tracking-wide px-2.5 py-1.5 rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#dafb00'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(218, 251, 0, 0.5), 0 4px 6px -2px rgba(218, 251, 0, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
+              <Link href="/contacto" className="text-white hover:text-black font-medium transition-all duration-300 text-xs uppercase tracking-wide px-4 py-2 rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#dafb00'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(218, 251, 0, 0.5), 0 4px 6px -2px rgba(218, 251, 0, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
                 CONTACTO
               </Link>
             </div>
