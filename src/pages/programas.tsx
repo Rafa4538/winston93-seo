@@ -3,48 +3,64 @@ import { useState, useEffect, useRef } from 'react'
 import Navigation from '@/components/Navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
-import FullPageScroll from '@/components/FullPageScroll'
 
-// Componente para imágenes fragmentadas
-const ImageFragment = ({ 
+// Componente para imagen con efecto de entrada único
+const AnimatedImage = ({ 
   src, 
   alt, 
-  initialPosition, 
+  effectType = 'slide',
   delay = 0 
 }: {
   src: string
   alt: string
-  initialPosition: { x: number; y: number }
+  effectType?: 'slide' | 'zoom' | 'zoom-organic' | 'fade' | 'rotate'
   delay?: number
 }) => {
+  const getInitialState = () => {
+    switch (effectType) {
+      case 'slide':
+        return { opacity: 0, x: -100, y: 0, scale: 1, rotate: 0 }
+      case 'zoom':
+        return { opacity: 0, x: 0, y: 0, scale: 0.3, rotate: 0 }
+      case 'zoom-organic':
+        return { opacity: 0, x: 0, y: 0, scale: 0.8, rotate: -5 }
+      case 'fade':
+        return { opacity: 0, x: 0, y: 0, scale: 1, rotate: 0 }
+      case 'rotate':
+        return { opacity: 0, x: 0, y: 0, scale: 0.8, rotate: 180 }
+      default:
+        return { opacity: 0, x: 0, y: 0, scale: 1, rotate: 0 }
+    }
+  }
+
+  const getFinalState = () => {
+    return { opacity: 1, x: 0, y: 0, scale: 1, rotate: 0 }
+  }
+
+  const getTransition = () => {
+    switch (effectType) {
+      case 'zoom-organic':
+        return { 
+          duration: 2.2, 
+          delay: delay,
+          ease: [0.25, 0.46, 0.45, 0.94] // Curva de ease-out más orgánica
+        }
+      default:
+        return { 
+          duration: 1.5, 
+          delay: delay,
+          ease: "easeOut"
+        }
+    }
+  }
+
   return (
     <motion.div
-      initial={{ 
-        opacity: 0, 
-        x: initialPosition.x, 
-        y: initialPosition.y,
-        scale: 0.9,
-        rotate: 0
-      }}
-      whileInView={{ 
-        opacity: 1, 
-        x: 0, 
-        y: 0,
-        scale: 1,
-        rotate: 0
-      }}
-      transition={{ 
-        duration: 0.8, 
-        delay: delay,
-        ease: "easeOut"
-      }}
+      initial={getInitialState()}
+      whileInView={getFinalState()}
+      transition={getTransition()}
       viewport={{ once: true, margin: "-50px" }}
-      className="w-full h-full relative"
-      style={{ 
-        border: 'none', 
-        outline: 'none',
-        boxShadow: 'none'
-      }}
+      className="absolute inset-0"
     >
       <Image
         src={src}
@@ -52,12 +68,6 @@ const ImageFragment = ({
         fill
         className="object-cover"
         priority={true}
-        style={{ 
-          border: 'none', 
-          outline: 'none',
-          boxShadow: 'none',
-          objectPosition: 'center'
-        }}
       />
     </motion.div>
   )
@@ -74,72 +84,29 @@ interface Section {
   textColor: string
   accentColor: string
   image?: string
-  imageFragments?: string[]
-  fragmentPositions?: { x: number; y: number }[]
+  imageEffect?: 'slide' | 'zoom' | 'zoom-organic' | 'fade' | 'rotate'
 }
 
 export default function ProgramasPage() {
+  const [currentSection, setCurrentSection] = useState(0)
   const [showTitle, setShowTitle] = useState(true)
-
-  // Ocultar el título después de 3 segundos
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowTitle(false)
-    }, 3000)
-    
-    return () => clearTimeout(timer)
-  }, [])
-
-  // Función para obtener el color de difuminado según el fondo de la sección
-  const getFadeColor = (bgColor: string) => {
-    if (bgColor.includes('blue-500') || bgColor.includes('blue-600')) {
-      return {
-        light: 'rgba(59, 130, 246, 0.05)',
-        medium: 'rgba(59, 130, 246, 0.15)',
-        strong: 'rgba(59, 130, 246, 0.4)',
-        veryStrong: 'rgba(59, 130, 246, 0.7)',
-        solid: 'rgba(59, 130, 246, 0.95)'
-      }
-    } else if (bgColor.includes('blue-800')) {
-      return {
-        light: 'rgba(30, 58, 138, 0.05)',
-        medium: 'rgba(30, 58, 138, 0.15)',
-        strong: 'rgba(30, 58, 138, 0.4)',
-        veryStrong: 'rgba(30, 58, 138, 0.7)',
-        solid: 'rgba(30, 58, 138, 0.95)'
-      }
-    } else if (bgColor.includes('yellow-400') || bgColor.includes('yellow-500')) {
-      return {
-        light: 'rgba(234, 179, 8, 0.05)',
-        medium: 'rgba(234, 179, 8, 0.15)',
-        strong: 'rgba(234, 179, 8, 0.4)',
-        veryStrong: 'rgba(234, 179, 8, 0.7)',
-        solid: 'rgba(234, 179, 8, 0.95)'
-      }
-    }
-    // Color por defecto (negro) para otros casos
-    return {
-      light: 'rgba(0, 0, 0, 0.05)',
-      medium: 'rgba(0, 0, 0, 0.15)',
-      strong: 'rgba(0, 0, 0, 0.4)',
-      veryStrong: 'rgba(0, 0, 0, 0.7)',
-      solid: 'rgba(0, 0, 0, 0.95)'
-    }
-  }
+  const [isScrolling, setIsScrolling] = useState(false)
+  const sectionsRef = useRef<HTMLDivElement>(null)
+  const sections = useRef<(HTMLDivElement | null)[]>([])
 
   // Configuración de las tres secciones
-  const sections: Section[] = [
+  const sectionsData: Section[] = [
     {
       id: 'mindfulness',
-      title: 'MIND',
-      subtitle: 'FUL NESS',
+      title: 'MINDFULNESS',
+      subtitle: '',
       description: 'Atención plena para el bienestar emocional y la concentración.',
       longDescription: 'Con ejercicios de respiración, enfoque y relajación, nuestros alumnos aprenden a gestionar sus emociones y mejorar su rendimiento académico.',
       bgColor: 'from-blue-500 to-blue-600',
       textColor: 'text-white',
       accentColor: 'bg-yellow-400',
-      // Imágenes fragmentadas para el efecto de unión
-      image: '/images/PROGRAMAS/socioemocional.jpg'
+      image: '/images/PROGRAMAS/socioemocional.jpg',
+      imageEffect: 'slide'
     },
     {
       id: 'formacion-social',
@@ -150,8 +117,8 @@ export default function ProgramasPage() {
       bgColor: 'from-blue-600 to-blue-800',
       textColor: 'text-white',
       accentColor: 'bg-yellow-400',
-      // Imágenes fragmentadas para formación social (efecto desfazado)
-      image: '/images/PROGRAMAS/donativo.jpg'
+      image: '/images/PROGRAMAS/donativo.jpg',
+      imageEffect: 'zoom-organic'
     },
     {
       id: 'educacion-financiera',
@@ -162,10 +129,117 @@ export default function ProgramasPage() {
       bgColor: 'from-yellow-400 to-yellow-500',
       textColor: 'text-black',
       accentColor: 'bg-blue-600',
-      // Imágenes fragmentadas para emprendimiento
-      image: '/images/PROGRAMAS/emprende.jpg'
+      image: '/images/PROGRAMAS/emprende.jpg',
+      imageEffect: 'fade'
     }
   ]
+
+  // Ocultar el título después de 3 segundos
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowTitle(false)
+    }, 3000)
+    
+    return () => clearTimeout(timer)
+  }, [])
+
+  // Función para obtener el color de difuminado más suave según el fondo de la sección
+  const getFadeColor = (bgColor: string) => {
+    if (bgColor.includes('blue-500') || bgColor.includes('blue-600')) {
+      return {
+        light: 'rgba(59, 130, 246, 0.01)',
+        medium: 'rgba(59, 130, 246, 0.03)',
+        strong: 'rgba(59, 130, 246, 0.08)',
+        veryStrong: 'rgba(59, 130, 246, 0.2)',
+        solid: 'rgba(59, 130, 246, 0.6)'
+      }
+    } else if (bgColor.includes('blue-800')) {
+      return {
+        light: 'rgba(30, 58, 138, 0.01)',
+        medium: 'rgba(30, 58, 138, 0.03)',
+        strong: 'rgba(30, 58, 138, 0.08)',
+        veryStrong: 'rgba(30, 58, 138, 0.2)',
+        solid: 'rgba(30, 58, 138, 0.6)'
+      }
+    } else if (bgColor.includes('yellow-400') || bgColor.includes('yellow-500')) {
+      return {
+        light: 'rgba(234, 179, 8, 0.01)',
+        medium: 'rgba(234, 179, 8, 0.03)',
+        strong: 'rgba(234, 179, 8, 0.08)',
+        veryStrong: 'rgba(234, 179, 8, 0.2)',
+        solid: 'rgba(234, 179, 8, 0.6)'
+      }
+    }
+    // Color por defecto (negro) para otros casos
+    return {
+      light: 'rgba(0, 0, 0, 0.01)',
+      medium: 'rgba(0, 0, 0, 0.03)',
+      strong: 'rgba(0, 0, 0, 0.08)',
+      veryStrong: 'rgba(0, 0, 0, 0.2)',
+      solid: 'rgba(0, 0, 0, 0.6)'
+    }
+  }
+
+  // Función para navegar a una sección específica
+  const goToSection = (index: number) => {
+    if (isScrolling || index < 0 || index >= sectionsData.length) return
+    
+    setIsScrolling(true)
+    setCurrentSection(index)
+    
+    // Usar scrollTo en el contenedor principal en lugar de window
+    if (sectionsRef.current) {
+      const targetY = index * window.innerHeight
+      sectionsRef.current.scrollTo({
+        top: targetY,
+        behavior: 'smooth'
+      })
+    }
+    
+    // Permitir scroll después de la animación
+    setTimeout(() => setIsScrolling(false), 1000)
+  }
+
+  // Manejar scroll del mouse y teclado
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (isScrolling) return
+      
+      if (e.deltaY > 0) {
+        // Scroll hacia abajo
+        goToSection(Math.min(currentSection + 1, sectionsData.length - 1))
+      } else {
+        // Scroll hacia arriba
+        goToSection(Math.max(currentSection - 1, 0))
+      }
+    }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (isScrolling) return
+      
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+        e.preventDefault()
+        goToSection(Math.min(currentSection + 1, sectionsData.length - 1))
+      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+        e.preventDefault()
+        goToSection(Math.max(currentSection - 1, 0))
+      }
+    }
+
+    // Bloquear scroll nativo completamente
+    document.body.style.overflow = 'hidden'
+    document.documentElement.style.overflow = 'hidden'
+    
+    document.addEventListener('wheel', handleWheel, { passive: false })
+    document.addEventListener('keydown', handleKeyDown)
+    
+    return () => {
+      document.body.style.overflow = ''
+      document.documentElement.style.overflow = ''
+      document.removeEventListener('wheel', handleWheel)
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [currentSection, isScrolling, sectionsData.length])
 
   return (
     <div className="programas-page">
@@ -180,27 +254,16 @@ export default function ProgramasPage() {
       {/* Navigation siempre transparente */}
       <Navigation currentSection={0} />
 
-      {/* Título de página que aparece brevemente */}
-      <AnimatePresence>
-        {showTitle && (
-          <motion.div
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -50 }}
-            transition={{ duration: 0.8 }}
-            className="fixed top-16 md:top-24 left-1/2 transform -translate-x-1/2 z-30 bg-blue-900 text-white px-4 md:px-6 py-2 md:py-3 rounded-full shadow-lg"
-          >
-            <h1 className="text-sm md:text-lg font-bold">PROGRAMAS ESPECIALIZADOS</h1>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* FullPageScroll para manejar el scroll por secciones */}
-      <FullPageScroll>
-        {sections.map((section, index) => (
+      
+      {/* Contenedor principal con secciones */}
+      <div ref={sectionsRef} className="programas-container">
+        {sectionsData.map((section, index) => (
           <motion.section
             key={section.id}
-            className="w-full relative overflow-hidden"
+            ref={(el: HTMLDivElement | null) => {
+              if (el) sections.current[index] = el
+            }}
+            className="programas-section h-screen w-full relative overflow-hidden"
             initial={{ opacity: 0, y: 100 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
@@ -208,9 +271,9 @@ export default function ProgramasPage() {
             style={{ border: 'none', outline: 'none', boxShadow: 'none' }}
           >
             {/* Contenedor unificado para imagen y texto */}
-            <div className="h-full w-full relative flex flex-col md:flex-row" style={{ border: 'none', outline: 'none', boxShadow: 'none' }}>
-              {/* Imagen de fondo con overlay */}
-              <div className="w-full md:w-2/3 h-1/2 md:h-full relative" style={{ border: 'none', outline: 'none', boxShadow: 'none' }}>
+            <div className="h-full w-full relative flex flex-row" style={{ border: 'none', outline: 'none', boxShadow: 'none' }}>
+              {/* Imagen de fondo que ocupa toda la pantalla */}
+              <div className="w-full h-full relative" style={{ border: 'none', outline: 'none', boxShadow: 'none' }}>
                 <motion.div
                   initial={{ opacity: 0, scale: 1.1 }}
                   whileInView={{ opacity: 1, scale: 1 }}
@@ -219,62 +282,31 @@ export default function ProgramasPage() {
                   className="absolute inset-0"
                   style={{ border: 'none', outline: 'none' }}
                 >
-                  {/* Renderizar imagen normal o fragmentos según la configuración */}
-                  {section.imageFragments && section.imageFragments.length > 0 ? (
-                    // Renderizar fragmentos si existen
-                    <div className="image-fragments-container">
-                      {section.imageFragments.map((fragmentSrc, fragmentIndex) => (
-                        <div
-                          key={fragmentIndex}
-                          className="absolute"
-                          style={{
-                            left: section.id === 'educacion-financiera' ? '0%' : `${(fragmentIndex * 33.33)}%`,
-                            top: section.id === 'educacion-financiera' ? `${fragmentIndex * 33.33}%` : '0%',
-                            width: section.id === 'educacion-financiera' ? '100%' : '33.33%',
-                            height: section.id === 'educacion-financiera' ? '33.33%' : '100%',
-                            zIndex: fragmentIndex + 1,
-                            transform: 'translateX(0)',
-                            overflow: 'hidden',
-                            boxSizing: 'border-box'
-                          }}
-                        >
-                          <ImageFragment
-                            src={fragmentSrc}
-                            alt={`${section.title} - Fragmento ${fragmentIndex + 1}`}
-                            initialPosition={section.fragmentPositions[fragmentIndex]}
-                            delay={fragmentIndex * 1.5}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  ) : section.image ? (
-                    // Renderizar imagen normal si existe
-                    <Image
-                      src={section.image}
-                      alt={section.title}
-                      fill
-                      className="object-cover"
-                      priority={index === 0}
-                    />
-                  ) : (
-                    // Fallback si no hay imagen ni fragmentos
-                    <div className="w-full h-full bg-gray-300 flex items-center justify-center">
-                      <span className="text-gray-500">Imagen no disponible</span>
-                    </div>
-                  )}
-                  {/* Overlay con gradiente para el fundido con el texto */}
+                  {/* Contenedor para la imagen */}
+                  <div className="relative w-full h-full">
+                    {/* Renderizar imagen con efecto único */}
+                    {section.image && (
+                      <AnimatedImage 
+                        src={section.image} 
+                        alt={section.title} 
+                        effectType={section.imageEffect}
+                        delay={0.3}
+                      />
+                    )}
+                  </div>
+                  
+                  {/* Overlay con gradiente suave para desvanecer la parte derecha de la imagen */}
                   <div 
                     className="absolute inset-0"
                     style={{
                       background: `linear-gradient(
                         to right,
                         transparent 0%,
-                        transparent 15%,
-                        ${getFadeColor(section.bgColor).light} 30%,
-                        ${getFadeColor(section.bgColor).medium} 50%,
-                        ${getFadeColor(section.bgColor).strong} 70%,
-                        ${getFadeColor(section.bgColor).veryStrong} 90%,
-                        ${getFadeColor(section.bgColor).solid} 100%
+                        transparent 30%,
+                        rgba(0, 0, 0, 0.1) 50%,
+                        rgba(0, 0, 0, 0.3) 70%,
+                        rgba(0, 0, 0, 0.5) 85%,
+                        rgba(0, 0, 0, 0.7) 100%
                       )`,
                       border: 'none',
                       outline: 'none',
@@ -284,22 +316,44 @@ export default function ProgramasPage() {
                 </motion.div>
               </div>
 
-              {/* Panel de texto derecho */}
+              {/* Panel de texto derecho con fondo sólido que se extiende sobre la imagen */}
               <div 
-                className={`w-full md:w-1/3 h-1/2 md:h-full bg-gradient-to-b ${section.bgColor} relative flex items-center justify-center p-6 md:p-12`}
+                className={`w-4/5 h-full absolute right-0 top-0 flex items-center justify-end pr-8 md:pr-16 lg:pr-24`}
                 style={{
                   border: 'none',
                   outline: 'none',
-                  boxShadow: 'none'
+                  boxShadow: 'none',
+                  background: `linear-gradient(
+                    to left,
+                    ${section.bgColor.includes('from-') ? 
+                      section.bgColor.includes('blue-500') ? 'rgba(59, 130, 246, 1)' :
+                      section.bgColor.includes('blue-800') ? 'rgba(30, 58, 138, 1)' :
+                      section.bgColor.includes('yellow-400') ? 'rgba(234, 179, 8, 1)' :
+                      'rgba(0, 0, 0, 1)' : 'rgba(0, 0, 0, 1)'
+                    } 0%,
+                    ${section.bgColor.includes('from-') ? 
+                      section.bgColor.includes('blue-500') ? 'rgba(59, 130, 246, 0.95)' :
+                      section.bgColor.includes('blue-800') ? 'rgba(30, 58, 138, 0.95)' :
+                      section.bgColor.includes('yellow-400') ? 'rgba(234, 179, 8, 0.95)' :
+                      'rgba(0, 0, 0, 0.95)' : 'rgba(0, 0, 0, 0.95)'
+                    } 15%,
+                    ${section.bgColor.includes('from-') ? 
+                      section.bgColor.includes('blue-500') ? 'rgba(59, 130, 246, 0.8)' :
+                      section.bgColor.includes('blue-800') ? 'rgba(30, 58, 138, 0.8)' :
+                      section.bgColor.includes('yellow-400') ? 'rgba(234, 179, 8, 0.8)' :
+                      'rgba(0, 0, 0, 0.8)' : 'rgba(0, 0, 0, 0.8)'
+                    } 35%,
+                    ${section.bgColor.includes('from-') ? 
+                      section.bgColor.includes('blue-500') ? 'rgba(59, 130, 246, 0.4)' :
+                      section.bgColor.includes('blue-800') ? 'rgba(30, 58, 138, 0.4)' :
+                      section.bgColor.includes('yellow-400') ? 'rgba(234, 179, 8, 0.4)' :
+                      'rgba(0, 0, 0, 0.4)' : 'rgba(0, 0, 0, 0.4)'
+                    } 60%,
+                    transparent 100%
+                  )`
                 } as React.CSSProperties}
               >
-                <motion.div
-                  initial={{ opacity: 0, x: 100 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  className="text-center max-w-sm"
-                >
+                <div className="text-center max-w-sm">
                   {/* Título principal */}
                   <motion.h2 
                     initial={{ opacity: 0, y: 30 }}
@@ -369,6 +423,32 @@ export default function ProgramasPage() {
                     </svg>
                   </motion.div>
 
+                  {/* Flechas de navegación */}
+                  <div className="absolute right-8 top-1/2 transform -translate-y-1/2 space-y-4">
+                    <button
+                      onClick={() => goToSection(Math.max(0, index - 1))}
+                      className={`w-10 h-10 rounded-full ${section.textColor} hover:bg-white hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center transform hover:scale-110 ${
+                        index === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'
+                      }`}
+                      disabled={index === 0}
+                    >
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                      </svg>
+                    </button>
+                    <button
+                      onClick={() => goToSection(Math.min(sectionsData.length - 1, index + 1))}
+                      className={`w-10 h-10 rounded-full ${section.textColor} hover:bg-white hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center transform hover:scale-110 ${
+                        index === sectionsData.length - 1 ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg'
+                      }`}
+                      disabled={index === sectionsData.length - 1}
+                    >
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                  </div>
+
                   {/* Aviso de privacidad */}
                   <motion.div 
                     initial={{ opacity: 0, y: 20 }}
@@ -381,12 +461,14 @@ export default function ProgramasPage() {
                       AVISO DE PRIVACIDAD
                     </p>
                   </motion.div>
-                </motion.div>
+                </div>
               </div>
             </div>
           </motion.section>
         ))}
-      </FullPageScroll>
+      </div>
+
+
     </div>
   )
 } 

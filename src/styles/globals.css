@@ -39,6 +39,71 @@ body {
   scrollbar-width: none;
 }
 
+/* Ocultar scrollbars en html y body cuando esté en página de programas */
+.programas-page html,
+.programas-page body {
+  overflow: hidden !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.programas-page html::-webkit-scrollbar,
+.programas-page body::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* Reglas globales para eliminar scrollbars en página de programas */
+.programas-page * {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.programas-page *::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* Scroll-snapping para la página de programas */
+.programas-page .programas-container {
+  scroll-snap-type: y mandatory;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+.programas-page .programas-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  height: 100vh;
+  width: 100%;
+}
+
+/* Ocultar scrollbar pero mantener funcionalidad */
+.programas-page .programas-container::-webkit-scrollbar {
+  display: none !important;
+}
+
+.programas-page .programas-container {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
+/* Ocultar scrollbar en todo el body y html de la página de programas */
+.programas-page html::-webkit-scrollbar,
+.programas-page body::-webkit-scrollbar {
+  display: none !important;
+}
+
+.programas-page html,
+.programas-page body {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+  overflow: hidden !important;
+}
+
+/* Permitir scroll en el contenedor principal para navegación */
+.programas-page .programas-container {
+  overflow-y: auto !important;
+}
+
 /* Mostrar barra de desplazamiento en otras páginas */
 .contacto-page,
 .primaria-page,

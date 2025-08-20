@@ -113,30 +113,32 @@ export default function SecundariaPage() {
     educacionFinanciera: {
       title: "EDUCACIÓN FINANCIERA",
       images: [
-        "/images/entrepreneurs/emprendedores1.jpg",
-        "/images/entrepreneurs/emprendedores2.png",
-        "/images/entrepreneurs/emprendedores3.jpg",
-        "/images/entrepreneurs/emprendedores4.jpg"
+        "/images/secundaria/emprende/emprendedores1.jpg",
+        "/images/secundaria/emprende/emprendedores2.jpg",
+        "/images/secundaria/emprende/emprendedores3.jpg",
+        "/images/secundaria/emprende/emprendedores4.jpg",
+        "/images/secundaria/emprende/emprendedores5.jpg",
+        "/images/secundaria/emprende/emprendedores6.jpg",
+        "/images/secundaria/emprende/emprendedores7.jpg"
       ]
     },
     robotica: {
       title: "ROBÓTICA",
       images: [
-        "/images/entrepreneurs/emprendedores5.jpg",
-        "/images/entrepreneurs/emprendedores6.jpg",
-        "/images/entrepreneurs/emprendedores7.jpg",
-        "/images/entrepreneurs/emprendedores8.jpg",
-        "/images/entrepreneurs/emprendedores9.jpg"
+        "/images/secundaria/robotica/robotica1.jpg",
+        "/images/secundaria/robotica/robotica2.jpg"
       ]
     },
     artes: {
       title: "ARTES",
       images: [
-        "/images/artes/artes1.jpg",
-        "/images/artes/artes2.jpg",
-        "/images/artes/artes3.JPG",
-        "/images/artes/artes4.jpg",
-        "/images/artes/artes5.jpg"
+        "/images/secundaria/arte/arte1.jpg",
+        "/images/secundaria/arte/arte2.jpg",
+        "/images/secundaria/arte/arte3.JPG",
+        "/images/secundaria/arte/arte4.jpg",
+        "/images/secundaria/arte/arte5.jpg",
+        "/images/secundaria/arte/arte6.jpg",
+        "/images/secundaria/arte/arte7.jpg"
       ]
     },
     tecnologia: {
@@ -161,10 +163,8 @@ export default function SecundariaPage() {
     formacionSocial: {
       title: "FORMACIÓN SOCIAL Y HUMANA",
       images: [
-        "/images/entrepreneurs/emprendedores1.jpg",
-        "/images/entrepreneurs/emprendedores2.png",
-        "/images/entrepreneurs/emprendedores3.jpg",
-        "/images/entrepreneurs/emprendedores4.jpg"
+        "/images/secundaria/formacion/formacion1.jpg",
+        "/images/secundaria/formacion/formacion2.jpg"
       ]
     }
   }
@@ -273,17 +273,29 @@ export default function SecundariaPage() {
         <div className="container mx-auto px-6 relative z-10">
           <div className="flex gap-80 items-start justify-center">
             {/* Título a la izquierda */}
-            <div className="flex-shrink-0">
-              <h2 className="text-3xl md:text-4xl font-bold text-blue-900">PENSAMIENTO</h2>
-              <h3 className="text-3xl md:text-4xl font-bold text-blue-600">CRÍTICO</h3>
-              <div className="ml-4">
-                <p className="text-lg text-blue-700 font-medium">IDIOMAS Y</p>
-                <p className="text-lg text-blue-700 font-medium">FORMACIÓN INTEGRAL</p>
+            <div className="flex-shrink-0 text-left">
+              <h2 className="text-4xl md:text-6xl font-bold text-blue-900">PENSAMIENTO</h2>
+              <h3 className="text-4xl md:text-6xl font-bold text-blue-600">CRÍTICO</h3>
+              <div className="ml-0">
+                <p className="text-xl md:text-2xl text-blue-700 font-medium">IDIOMAS Y</p>
+                <p className="text-xl md:text-2xl text-blue-700 font-medium">FORMACIÓN INTEGRAL</p>
               </div>
             </div>
 
             {/* Texto descriptivo a la derecha */}
-            <div className="w-96">
+            <div className="w-96 relative">
+              {/* Plaquita naranja decorativa */}
+              <div className="absolute -right-32 -top-8 w-20 h-64 pointer-events-none">
+                <div className="relative w-full h-full">
+                  {/* Tira naranja vertical principal */}
+                  <div 
+                    className="absolute inset-0"
+                    style={{ backgroundColor: '#fb7c04' }}
+                  ></div>
+                  {/* Mueca inferior derecha (blanca) - más grande */}
+                  <div className="absolute bottom-0 right-0 w-20 h-20 bg-white rounded-tl-full"></div>
+                </div>
+              </div>
               <div className="space-y-2 text-gray-600 leading-relaxed text-justify">
                 <p>
                   En nuestra secundaria, fomentamos que nuestros alumnos piensen, cuestionen y resuelvan problemas, 
@@ -339,7 +351,7 @@ export default function SecundariaPage() {
             {/* Educación Financiera */}
             <div className="relative group overflow-hidden rounded-2xl cursor-pointer" onClick={() => openGallery('educacionFinanciera')}>
               <img
-                src="/images/extracurriculares/entrepreneurs.jpg"
+                src="/images/secundaria/emprende.png"
                 alt="Educación Financiera"
                 className="w-auto h-auto max-h-80 object-contain transition-transform duration-500 group-hover:scale-105"
               />

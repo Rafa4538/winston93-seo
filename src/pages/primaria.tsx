@@ -296,42 +296,66 @@ export default function PrimariaPage() {
 
 
 
-      {/* Sección de Educación Bilingüe */}
-      <section className="py-20 bg-white relative overflow-hidden">
-       
-                 <div className="container mx-auto px-6 relative z-10">
-           <div className="flex gap-80 items-start justify-center">
-             {/* Título a la izquierda */}
-             <div className="flex-shrink-0">
-               <h2 className="text-3xl md:text-4xl font-bold text-blue-900">EDUCACIÓN</h2>
-               <h3 className="text-3xl md:text-4xl font-bold text-blue-600">BILINGÜE</h3>
-               <div className="ml-4">
-                 <p className="text-lg text-blue-700 font-medium">QUE FORMA</p>
-                 <p className="text-lg text-blue-700 font-medium">CON PROPÓSITO</p>
-               </div>
-             </div>
+      {/* Sección Unificada con Fondo Continuo */}
+      <section className="relative overflow-hidden">
+        {/* Imagen de fondo continua */}
+        <div 
+          className="absolute inset-0 z-0 opacity-20"
+          style={{
+            backgroundImage: 'url(/images/primaria/fondo_linea.png)',
+            backgroundSize: 'contain',
+            backgroundPosition: 'left center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+        
+        {/* Contenido de Educación Bilingüe */}
+        <div className="py-20 relative z-10">
+          <div className="container mx-auto px-6">
+            <div className="flex gap-80 items-start justify-center">
+              {/* Título a la izquierda */}
+              <div className="flex-shrink-0 text-left">
+                <h2 className="text-4xl md:text-6xl font-bold text-blue-900">EDUCACIÓN</h2>
+                <h3 className="text-4xl md:text-6xl font-bold text-blue-600">BILINGÜE</h3>
+                <div className="ml-0">
+                  <p className="text-xl md:text-2xl text-blue-700 font-medium">QUE FORMA</p>
+                  <p className="text-xl md:text-2xl text-blue-700 font-medium">CON PROPÓSITO</p>
+                </div>
+              </div>
 
-             {/* Texto descriptivo a la derecha */}
-             <div className="w-96">
-               <div className="space-y-2 text-gray-600 leading-relaxed text-justify">
-                 <p>
-                   En nuestra primaria, nuestros alumnos aprenden un modelo bilingüe con inmersión total en inglés, logrando comprender y expresarse con fluidez.
-                   La otra mitad se imparte en español cumpliendo con el programa oficial de la SEP.
-                 </p>                
-                 <div className="ml-8">
-                   <p>
-                     Desde esta etapa, promovemos el pensamiento emprendedor, la autonomía, fortaleciendo su seguridad, creatividad y habilidades para enfrentar con éxito los retos del mundo actual.
-                   </p>
-                 </div>
-               </div>
-             </div>
-           </div>
-         </div>
-      </section>
+              {/* Texto descriptivo a la derecha */}
+              <div className="w-96 relative">
+                {/* Plaquita verde - tira vertical simple */}
+                <div className="absolute -right-32 -top-8 w-20 h-64 pointer-events-none">
+                  <div className="relative w-full h-full">
+                    {/* Tira verde vertical principal */}
+                                          <div 
+                        className="absolute inset-0"
+                        style={{ backgroundColor: '#ccfb00' }}
+                      ></div>
+                    {/* Mueca inferior derecha (blanca) - más grande */}
+                    <div className="absolute bottom-0 right-0 w-20 h-20 bg-white rounded-tl-full"></div>
+                  </div>
+                </div>
+                <div className="space-y-2 text-gray-600 leading-relaxed text-justify">
+                  <p>
+                    En nuestra primaria, nuestros alumnos aprenden un modelo bilingüe con inmersión total en inglés, logrando comprender y expresarse con fluidez.
+                    La otra mitad se imparte en español cumpliendo con el programa oficial de la SEP.
+                  </p>                
+                  <div className="ml-8">
+                    <p>
+                      Desde esta etapa, promovemos el pensamiento emprendedor, la autonomía, fortaleciendo su seguridad, creatividad y habilidades para enfrentar con éxito los retos del mundo actual.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      {/* Sección de Materias Extracurriculares */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-6">
+        {/* Contenido de Materias Extracurriculares */}
+        <div className="py-20 relative z-10">
+          <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4">
               Materias extracurriculares que
@@ -420,39 +444,40 @@ export default function PrimariaPage() {
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* Sección de Certificaciones */}
-      <section className="py-16">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Certificación Internacional */}
-            <div className="bg-blue-600 text-white p-8 rounded-2xl">
-              <h3 className="text-2xl font-bold mb-4">CERTIFICACIÓN INTERNACIONAL</h3>
-              <p className="mb-6 leading-relaxed">
-                Contamos con el respaldo del prestigioso programa de Cambridge diseñado para elevar la excelencia académica en el idioma inglés y proporcionar a nuestros estudiantes las mejores herramientas para su desarrollo.
-              </p>
-              <div className="flex items-center">
-                <img
-                  src="/images/logos/cambridge.png"
-                  alt="University of Cambridge"
-                  className="h-16 w-auto"
-                />
+        {/* Contenido de Certificaciones */}
+        <div className="py-16 relative z-10">
+          <div className="container mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Certificación Internacional */}
+              <div className="bg-blue-600 text-white p-8 rounded-2xl">
+                <h3 className="text-2xl font-bold mb-4">CERTIFICACIÓN INTERNACIONAL</h3>
+                <p className="mb-6 leading-relaxed">
+                  Contamos con el respaldo del prestigioso programa de Cambridge diseñado para elevar la excelencia académica en el idioma inglés y proporcionar a nuestros estudiantes las mejores herramientas para su desarrollo.
+                </p>
+                <div className="flex items-center">
+                  <img
+                    src="/images/logos/cambridge.png"
+                    alt="University of Cambridge"
+                    className="h-16 w-auto"
+                  />
+                </div>
               </div>
-            </div>
 
-            {/* Servicio de Estancia */}
-            <div className="bg-[#dafb00] text-black p-8 rounded-2xl">
-              <h3 className="text-2xl font-bold mb-4">SERVICIO DE ESTANCIA</h3>
-              <p className="mb-4 leading-relaxed">
-                <strong>FLEXIBILIDAD PARA EL ACOMPAÑAMIENTO PARA ELLOS</strong>
-              </p>
-              <p className="leading-relaxed">
-                Sabemos que cada familia tiene diferentes horarios por eso ofrecemos servicio de estancia para brindar acompañamiento y apoyo a nuestros alumnos en tareas de desarrollo de su autonomía.
-              </p>
-              <div className="mt-4">
-                <p className="font-bold">HORARIO:</p>
-                <p>7:00 AM - 6:00 PM</p>
+              {/* Servicio de Estancia */}
+              <div className="bg-[#dafb00] text-black p-8 rounded-2xl">
+                <h3 className="text-2xl font-bold mb-4">SERVICIO DE ESTANCIA</h3>
+                <p className="mb-4 leading-relaxed">
+                  <strong>FLEXIBILIDAD PARA EL ACOMPAÑAMIENTO PARA ELLOS</strong>
+                </p>
+                <p className="leading-relaxed">
+                  Sabemos que cada familia tiene diferentes horarios por eso ofrecemos servicio de estancia para brindar acompañamiento y apoyo a nuestros alumnos en tareas de desarrollo de su autonomía.
+                </p>
+                <div className="mt-4">
+                  <p className="font-bold">HORARIO:</p>
+                  <p>7:00 AM - 6:00 PM</p>
+                </div>
               </div>
             </div>
           </div>

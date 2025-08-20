@@ -30,7 +30,7 @@ export default function EducationalOfferSection() {
           <div className="flex flex-col md:flex-row items-center justify-between h-full py-4 md:py-0">
             
             {/* Lado izquierdo - Imagen de estudiantes */}
-            <div className="w-full md:w-1/2 relative flex items-center justify-center md:justify-start md:pl-8 mb-4 sm:mb-6 md:mb-0">
+            <div className="w-full md:w-1/2 relative flex items-center justify-center mb-4 sm:mb-6 md:mb-0">
               <div className={`relative transition-all duration-1000 ease-out ${
                 isVisible 
                   ? 'opacity-100 translate-x-0' 
@@ -41,17 +41,17 @@ export default function EducationalOfferSection() {
                 <div className="absolute -bottom-1 left-6 sm:-bottom-2 sm:left-10 md:-bottom-5 md:left-20 w-6 h-6 sm:w-9 sm:h-9 md:w-24 md:h-24 bg-yellow-400 rounded-lg transform -rotate-6"></div>
                 <div className="absolute top-1 -right-1 sm:top-2 sm:-right-2 md:top-5 md:-right-5 w-5 h-5 sm:w-8 sm:h-8 md:w-20 md:h-20 bg-green-500 rounded-lg transform rotate-45"></div>
                 
-                {/* Imagen de estudiantes - Responsive */}
+                {/* Imagen de estudiantes - Responsive - Más grande */}
                 <img
                   src="/images/students/niños_left.jpg"
                   alt="Estudiantes del Instituto Winston Churchill"
-                  className="relative z-10 h-[180px] sm:h-[220px] md:h-[500px] lg:h-[600px] w-auto max-w-none object-contain"
+                  className="relative z-10 h-[220px] sm:h-[280px] md:h-[600px] lg:h-[700px] xl:h-[800px] w-auto max-w-none object-contain"
                 />
               </div>
             </div>
 
             {/* Lado derecho - Contenido de texto */}
-            <div className="w-full md:w-1/2 text-center md:text-left md:pl-16 px-3 md:px-0">
+            <div className="w-full md:w-1/2 text-center px-3 md:px-0 flex flex-col justify-center">
               {/* Títulos - Entran desde arriba */}
               <div className={`mb-3 sm:mb-4 md:mb-8 transition-all duration-1000 ease-out ${
                 isVisible 
@@ -67,7 +67,7 @@ export default function EducationalOfferSection() {
               </div>
 
               {/* Descripción - Entra desde abajo */}
-              <p className={`text-xs sm:text-sm md:text-base lg:text-lg text-gray-700 leading-relaxed max-w-full md:max-w-lg mx-auto md:mx-0 transition-all duration-1000 ease-out line-clamp-4 md:line-clamp-none ${
+              <p className={`text-xs sm:text-sm md:text-base lg:text-lg text-gray-700 leading-relaxed max-w-full md:max-w-lg mx-auto transition-all duration-1000 ease-out line-clamp-4 md:line-clamp-none ${
                 isVisible 
                   ? 'opacity-100 translate-y-0' 
                   : 'opacity-0 translate-y-8'

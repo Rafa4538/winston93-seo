@@ -62,7 +62,6 @@ export default function OfertaEducativaSection() {
     {
       name: 'KÍNDER',
       image: '/images/education/kinder.png',
-      bgColor: 'bg-green-600',
       textColor: 'text-white',
       delay: '200ms',
       link: '/kinder'
@@ -70,7 +69,6 @@ export default function OfertaEducativaSection() {
     {
       name: 'PRIMARIA',
       image: '/images/education/primaria.png',
-      bgColor: 'bg-yellow-500',
       textColor: 'text-white',
       delay: '400ms',  
       link: '/primaria'
@@ -78,7 +76,6 @@ export default function OfertaEducativaSection() {
     {
       name: 'SECUNDARIA',
       image: '/images/education/secundaria.png',
-      bgColor: 'bg-blue-600',
       textColor: 'text-white',
       delay: '600ms',
       link: '/secundaria'
@@ -89,7 +86,7 @@ export default function OfertaEducativaSection() {
     <div ref={sectionRef} className="w-full relative h-full flex flex-col">
       {/* Debug info - solo en desarrollo */}
       {process.env.NODE_ENV === 'development' && (
-        <div className="fixed top-0 left-0 bg-black text-white p-2 text-xs z-50">
+        <div className="fixed top-0 left-0 text-white p-2 text-xs z-50">
           {debugInfo}
         </div>
       )}
@@ -157,7 +154,7 @@ export default function OfertaEducativaSection() {
                 <div
                   key={level.name}
                   onClick={handleNavigation}
-                  className={`bg-white overflow-hidden shadow-lg transition-all duration-1000 ease-out transform cursor-pointer group hover:scale-105 hover:shadow-2xl hover:-translate-y-2 ${
+                  className={`bg-white overflow-hidden transition-all duration-1000 ease-out transform cursor-pointer group hover:scale-105 hover:-translate-y-2 ${
                     isTabletHorizontal ? 'rounded-md' : isMobile ? 'rounded-lg' : 'rounded-2xl sm:rounded-3xl'
                   } ${
                     isVisible 
@@ -166,37 +163,21 @@ export default function OfertaEducativaSection() {
                   }`}
                   style={{ transitionDelay: level.delay }}
                 >
-                  {/* Imagen del nivel educativo que ocupa la mayor parte de la tarjeta */}
-                  <div className={`relative overflow-hidden ${
-                    // Móvil: h-16 (más grande), Tablet horizontal: h-8 (pequeño), Desktop: h-32+
-                    isTabletHorizontal 
-                      ? 'h-8' 
-                      : isMobile 
-                        ? 'h-16' 
-                        : 'h-32 sm:h-36 md:h-44 lg:h-56 xl:h-64 2xl:h-72'
-                  }`}>
+                  {/* Imagen del nivel educativo que se ajusta a su tamaño natural */}
+                  <div className="relative overflow-hidden">
                     <img
                       src={level.image}
                       alt={`Estudiantes de ${level.name} - Instituto Winston Churchill`}
-                      className="w-full h-full object-contain md:object-cover object-center transition-all duration-200 ease-out group-hover:scale-105 group-hover:brightness-105"
-                      style={{ objectPosition: 'center 0%' }}
+                      className="w-full h-auto max-w-[200px] md:max-w-[240px] lg:max-w-[280px] mx-auto object-contain transition-all duration-200 ease-out group-hover:scale-105 group-hover:brightness-105"
                     />
                     
-                    {/* Overlay de hover - Color sólido transparente que abarca toda la imagen */}
-                    <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-all duration-300"></div>
+
                   </div>
 
-                  {/* Sección inferior con color de fondo y texto */}
-                  <div className={`${level.bgColor} ${
-                    // Móvil: padding normal, Tablet horizontal: padding mínimo, Desktop: padding normal
-                    isTabletHorizontal 
-                      ? 'px-0.5 py-0' 
-                      : isMobile 
-                        ? 'px-2 py-1' 
-                        : 'px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-4 lg:px-8 lg:py-5'
-                  }`}>
+                  {/* Texto en la parte inferior de la imagen */}
+                  <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center py-2">
                     <div className="text-center">
-                      <h3 className={`font-bold ${level.textColor} tracking-wider transition-all duration-150 group-hover:scale-110 group-hover:tracking-widest ${
+                      <h3 className={`font-bold ${level.textColor} tracking-wider transition-all duration-150 group-hover:scale-110 group-hover:tracking-widest drop-shadow-lg ${
                         // Móvil: text-sm (más grande), Tablet horizontal: text-xs (pequeño), Desktop: text-sm+
                         isTabletHorizontal 
                           ? 'text-xs' 
@@ -214,11 +195,7 @@ export default function OfertaEducativaSection() {
           </div>
         </div>
 
-        {/* Elementos decorativos adicionales */}
-        <div className="hidden lg:block absolute top-20 left-20 w-4 h-4 bg-cyan-400 rounded-full animate-bounce opacity-60"></div>
-        <div className="hidden lg:block absolute bottom-56 right-32 w-3 h-3 bg-yellow-400 rounded-full animate-pulse opacity-70"></div>
-        <div className="hidden lg:block absolute top-1/3 right-1/4 w-2 h-2 bg-blue-400 rounded-full animate-ping opacity-50"></div>
-        <div className="hidden lg:block absolute bottom-[30%] left-1/4 w-2 h-2 bg-green-400 rounded-full animate-bounce opacity-40"></div>
+      
       </div>
 
       {/* Footer anclado al fondo de esta sección */}
