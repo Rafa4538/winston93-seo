@@ -382,10 +382,10 @@ export default function WinstonLife() {
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
                     <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="bg-white bg-opacity-90 p-3 rounded-full">
-                        <svg className="w-8 h-8 text-blue-900" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                        </svg>
+                      <div className="bg-white bg-opacity-60 px-4 py-2 rounded-full">
+                        <span className="text-blue-900 font-medium text-sm uppercase tracking-wide">
+                          VER COMPLETA
+                        </span>
                       </div>
                     </div>
                   </div>
