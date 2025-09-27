@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function HeroSection() {
   const [isAndroid, setIsAndroid] = useState(false)
@@ -6,6 +6,8 @@ export default function HeroSection() {
   const [isTablet, setIsTablet] = useState(false)
   const [videoLoaded, setVideoLoaded] = useState(false)
   const [loadingProgress, setLoadingProgress] = useState(0)
+  const [showPlayOverlay, setShowPlayOverlay] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
     const updateDeviceType = () => {
@@ -31,10 +33,63 @@ export default function HeroSection() {
     }
   }, [])
 
+  // Intentar autoplay; si falla (iOS/Safari), mostrar overlay de Play
+  useEffect(() => {
+    const tryAutoplay = async () => {
+      if (!videoRef.current) return
+      try {
+        // Asegurar flags antes de intentar reproducir
+        videoRef.current.muted = true
+        videoRef.current.playsInline = true
+        await videoRef.current.play()
+        setVideoLoaded(true)
+        setShowPlayOverlay(false)
+      } catch (err) {
+        // Requiere interacción del usuario
+        setShowPlayOverlay(true)
+        setVideoLoaded(false)
+      }
+    }
+    // Solo intentar una vez en cliente
+    if (typeof window !== 'undefined') {
+      tryAutoplay()
+    }
+  }, [])
+
+  const handlePlayClick = async () => {
+    if (!videoRef.current) return
+    try {
+      // Permitir sonido tras interacción si lo deseas: mantener muted para evitar bloqueos
+      videoRef.current.muted = false
+      await videoRef.current.play()
+      setVideoLoaded(true)
+      setShowPlayOverlay(false)
+    } catch (err) {
+      // Si aún falla, mantener controles visibles
+      setShowPlayOverlay(true)
+    }
+  }
+
   return (
     <div className="h-full w-full relative overflow-hidden">
-      {/* Indicador de carga con espacio reservado */}
-      {!videoLoaded && (
+      {/* Overlay móvil: botón de Play si autoplay es bloqueado */}
+      {showPlayOverlay && (
+        <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/40">
+          <button
+            onClick={handlePlayClick}
+            aria-label="Reproducir video"
+            className="bg-white/90 hover:bg-white text-blue-700 font-semibold px-5 py-3 rounded-full shadow-lg backdrop-blur-sm flex items-center gap-2"
+          >
+            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+            Reproducir
+          </button>
+        </div>
+      )}
+
+      {/* Indicador de carga en desktop/tablet cuando no hay overlay */}
+      {!videoLoaded && !showPlayOverlay && (
         <div className="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center z-20">
           <div className="text-center px-4">
             <div className="w-12 h-12 md:w-16 md:h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
@@ -61,12 +116,14 @@ export default function HeroSection() {
       
       {/* Video de fondo con reproducción progresiva */}
       <video
+        ref={videoRef}
         autoPlay
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="auto"
         poster="/images/slider/SLIDE_INICIO_1.jpg"
+        controls={isMobile}
         className={`absolute inset-0 w-full h-full object-cover z-20 transition-opacity duration-1000 ease-in-out`}
         style={{
           width: '100%',
@@ -96,10 +153,12 @@ export default function HeroSection() {
         onCanPlay={() => {
           console.log('Video puede reproducirse')
           setVideoLoaded(true)
+          setShowPlayOverlay(false)
         }}
         onCanPlayThrough={() => {
           console.log('Video puede reproducirse completamente')
           setVideoLoaded(true)
+          setShowPlayOverlay(false)
         }}
         onProgress={(e) => {
           const video = e.currentTarget
