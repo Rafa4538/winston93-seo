@@ -345,15 +345,14 @@ export default function WinstonLife() {
 
         {/* Sección ENTREPRENEURS */}
         <section id="entrepreneurs" className="py-20 bg-white overflow-hidden">
-          <div className="container mx-auto px-6">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-blue-900 mb-4">
-                ENTREPRENEURS
-              </h2>
-            </div>
-            
-            {/* Cintilla con movimiento infinito hacia la izquierda */}
-            <div className="relative w-full overflow-hidden bg-gradient-to-r from-blue-600 via-[#ccfb00] to-blue-600 py-8 rounded-2xl shadow-lg">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-blue-900 mb-4">
+              ENTREPRENEURS
+            </h2>
+          </div>
+          
+          {/* Cintilla con movimiento infinito hacia la izquierda - pantalla completa */}
+          <div className="relative w-full overflow-hidden bg-gradient-to-r from-blue-600/40 via-[#ccfb00]/40 to-blue-600/40 py-8">
               {/* Contenedor de la cintilla infinita */}
               <div className="flex animate-scroll-left">
                 {/* Primera serie de imágenes */}
@@ -385,10 +384,9 @@ export default function WinstonLife() {
                 ))}
               </div>
               
-              {/* Gradientes laterales para efecto de desvanecimiento */}
-              <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-white to-transparent pointer-events-none z-10"></div>
-              <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-white to-transparent pointer-events-none z-10"></div>
-            </div>
+            {/* Gradientes laterales para efecto de desvanecimiento */}
+            <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-white to-transparent pointer-events-none z-10"></div>
+            <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-white to-transparent pointer-events-none z-10"></div>
           </div>
         </section>
 
