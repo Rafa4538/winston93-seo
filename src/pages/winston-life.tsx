@@ -351,28 +351,46 @@ export default function WinstonLife() {
             </h2>
           </div>
           
-          {/* Cintilla formal con movimiento infinito - diseño institucional */}
-          <div className="relative w-full overflow-hidden bg-gradient-to-r from-slate-100 via-blue-50 to-slate-100 py-20 border-t border-b border-blue-200">
-            {/* Línea decorativa superior */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-blue-800 to-blue-600"></div>
+          {/* Cintilla atractiva con balance formal-dinámico */}
+          <div className="relative w-full overflow-hidden bg-gradient-to-r from-blue-600/20 via-[#ccfb00]/30 to-blue-600/20 py-20">
+            {/* Patrón decorativo de fondo */}
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-600/20 to-transparent transform skew-y-1"></div>
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent via-[#ccfb00]/20 to-transparent transform -skew-y-1"></div>
+            </div>
+            
+            {/* Líneas decorativas dinámicas */}
+            <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-blue-600 via-[#ccfb00] to-blue-600 opacity-80"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-blue-600 via-[#ccfb00] to-blue-600 opacity-80"></div>
             
             {/* Contenedor de la cintilla infinita */}
-            <div className="flex animate-scroll-left">
+            <div className="flex animate-scroll-left relative z-10">
               {/* Primera serie de imágenes */}
               {[1, 2, 3, 4, 5, 6, 7].map((num) => (
-                <div key={`first-${num}`} className="flex-shrink-0 mx-6">
+                <div key={`first-${num}`} className="flex-shrink-0 mx-4">
                   <div className="relative group">
-                    <div className="bg-white p-3 rounded-lg shadow-md border border-gray-200 transition-all duration-300 group-hover:shadow-xl group-hover:border-blue-300">
+                    {/* Marco con gradiente sutil */}
+                    <div className="bg-gradient-to-br from-white via-blue-50 to-white p-4 rounded-2xl shadow-lg border-2 border-white transition-all duration-500 group-hover:shadow-2xl group-hover:border-[#ccfb00] group-hover:-translate-y-2">
                       <img
                         src={`/images/Winston Life/emprendedores/emprendedores${num}.${num === 2 ? 'png' : 'jpg'}`}
                         alt={`Programa Entrepreneurs - Actividad ${num}`}
-                        className="w-80 h-60 object-cover rounded-md transition-transform duration-300 group-hover:scale-102"
+                        className="w-80 h-60 object-cover rounded-xl transition-all duration-500 group-hover:scale-105 group-hover:brightness-110"
                       />
-                      <div className="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-sm rounded-md p-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                        <p className="text-blue-900 text-sm font-semibold text-center">
+                      
+                      {/* Overlay colorido en hover */}
+                      <div className="absolute inset-4 bg-gradient-to-t from-blue-600/70 via-transparent to-[#ccfb00]/30 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                      
+                      {/* Etiqueta elegante */}
+                      <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-md rounded-lg p-3 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
+                        <p className="text-blue-900 text-sm font-bold text-center uppercase tracking-wide">
                           Programa Entrepreneurs
                         </p>
+                        <div className="w-12 h-0.5 bg-[#ccfb00] mx-auto mt-1 rounded-full"></div>
                       </div>
+                      
+                      {/* Efectos decorativos en las esquinas */}
+                      <div className="absolute top-2 left-2 w-3 h-3 bg-[#ccfb00] rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100"></div>
+                      <div className="absolute top-2 right-2 w-3 h-3 bg-blue-600 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200"></div>
                     </div>
                   </div>
                 </div>
@@ -380,31 +398,44 @@ export default function WinstonLife() {
               
               {/* Segunda serie de imágenes (duplicada para efecto infinito) */}
               {[1, 2, 3, 4, 5, 6, 7].map((num) => (
-                <div key={`second-${num}`} className="flex-shrink-0 mx-6">
+                <div key={`second-${num}`} className="flex-shrink-0 mx-4">
                   <div className="relative group">
-                    <div className="bg-white p-3 rounded-lg shadow-md border border-gray-200 transition-all duration-300 group-hover:shadow-xl group-hover:border-blue-300">
+                    {/* Marco con gradiente sutil */}
+                    <div className="bg-gradient-to-br from-white via-blue-50 to-white p-4 rounded-2xl shadow-lg border-2 border-white transition-all duration-500 group-hover:shadow-2xl group-hover:border-[#ccfb00] group-hover:-translate-y-2">
                       <img
                         src={`/images/Winston Life/emprendedores/emprendedores${num}.${num === 2 ? 'png' : 'jpg'}`}
                         alt={`Programa Entrepreneurs - Actividad ${num}`}
-                        className="w-80 h-60 object-cover rounded-md transition-transform duration-300 group-hover:scale-102"
+                        className="w-80 h-60 object-cover rounded-xl transition-all duration-500 group-hover:scale-105 group-hover:brightness-110"
                       />
-                      <div className="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-sm rounded-md p-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                        <p className="text-blue-900 text-sm font-semibold text-center">
+                      
+                      {/* Overlay colorido en hover */}
+                      <div className="absolute inset-4 bg-gradient-to-t from-blue-600/70 via-transparent to-[#ccfb00]/30 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                      
+                      {/* Etiqueta elegante */}
+                      <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-md rounded-lg p-3 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
+                        <p className="text-blue-900 text-sm font-bold text-center uppercase tracking-wide">
                           Programa Entrepreneurs
                         </p>
+                        <div className="w-12 h-0.5 bg-[#ccfb00] mx-auto mt-1 rounded-full"></div>
                       </div>
+                      
+                      {/* Efectos decorativos en las esquinas */}
+                      <div className="absolute top-2 left-2 w-3 h-3 bg-[#ccfb00] rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100"></div>
+                      <div className="absolute top-2 right-2 w-3 h-3 bg-blue-600 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200"></div>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
             
-            {/* Línea decorativa inferior */}
-            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-blue-800 to-blue-600"></div>
+            {/* Elementos decorativos flotantes */}
+            <div className="absolute top-8 left-1/4 w-2 h-2 bg-[#ccfb00] rounded-full animate-bounce opacity-60"></div>
+            <div className="absolute bottom-8 right-1/3 w-3 h-3 bg-blue-600 rounded-full animate-pulse opacity-50"></div>
+            <div className="absolute top-12 right-1/4 w-1.5 h-1.5 bg-[#ccfb00] rounded-full animate-ping opacity-40"></div>
             
             {/* Gradientes laterales para efecto de desvanecimiento */}
-            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent pointer-events-none z-10"></div>
-            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent pointer-events-none z-10"></div>
+            <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent pointer-events-none z-20"></div>
+            <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent pointer-events-none z-20"></div>
           </div>
         </section>
 
