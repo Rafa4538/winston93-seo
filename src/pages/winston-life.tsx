@@ -351,42 +351,60 @@ export default function WinstonLife() {
             </h2>
           </div>
           
-          {/* Cintilla con movimiento infinito hacia la izquierda - pantalla completa */}
-          <div className="relative w-full overflow-hidden bg-gradient-to-r from-blue-600/40 via-[#ccfb00]/40 to-blue-600/40 py-16">
-              {/* Contenedor de la cintilla infinita */}
-              <div className="flex animate-scroll-left">
-                {/* Primera serie de imágenes */}
-                {[1, 2, 3, 4, 5, 6, 7].map((num) => (
-                  <div key={`first-${num}`} className="flex-shrink-0 mx-4">
-                    <div className="relative group">
+          {/* Cintilla formal con movimiento infinito - diseño institucional */}
+          <div className="relative w-full overflow-hidden bg-gradient-to-r from-slate-100 via-blue-50 to-slate-100 py-20 border-t border-b border-blue-200">
+            {/* Línea decorativa superior */}
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-blue-800 to-blue-600"></div>
+            
+            {/* Contenedor de la cintilla infinita */}
+            <div className="flex animate-scroll-left">
+              {/* Primera serie de imágenes */}
+              {[1, 2, 3, 4, 5, 6, 7].map((num) => (
+                <div key={`first-${num}`} className="flex-shrink-0 mx-6">
+                  <div className="relative group">
+                    <div className="bg-white p-3 rounded-lg shadow-md border border-gray-200 transition-all duration-300 group-hover:shadow-xl group-hover:border-blue-300">
                       <img
                         src={`/images/Winston Life/emprendedores/emprendedores${num}.${num === 2 ? 'png' : 'jpg'}`}
-                        alt={`Entrepreneurs ${num}`}
-                        className="w-80 h-60 object-cover rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-105 border-4 border-white"
+                        alt={`Programa Entrepreneurs - Actividad ${num}`}
+                        className="w-80 h-60 object-cover rounded-md transition-transform duration-300 group-hover:scale-102"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-sm rounded-md p-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                        <p className="text-blue-900 text-sm font-semibold text-center">
+                          Programa Entrepreneurs
+                        </p>
+                      </div>
                     </div>
                   </div>
-                ))}
-                
-                {/* Segunda serie de imágenes (duplicada para efecto infinito) */}
-                {[1, 2, 3, 4, 5, 6, 7].map((num) => (
-                  <div key={`second-${num}`} className="flex-shrink-0 mx-4">
-                    <div className="relative group">
-                      <img
-                        src={`/images/Winston Life/emprendedores/emprendedores${num}.${num === 2 ? 'png' : 'jpg'}`}
-                        alt={`Entrepreneurs ${num}`}
-                        className="w-80 h-60 object-cover rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-105 border-4 border-white"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                </div>
+              ))}
               
+              {/* Segunda serie de imágenes (duplicada para efecto infinito) */}
+              {[1, 2, 3, 4, 5, 6, 7].map((num) => (
+                <div key={`second-${num}`} className="flex-shrink-0 mx-6">
+                  <div className="relative group">
+                    <div className="bg-white p-3 rounded-lg shadow-md border border-gray-200 transition-all duration-300 group-hover:shadow-xl group-hover:border-blue-300">
+                      <img
+                        src={`/images/Winston Life/emprendedores/emprendedores${num}.${num === 2 ? 'png' : 'jpg'}`}
+                        alt={`Programa Entrepreneurs - Actividad ${num}`}
+                        className="w-80 h-60 object-cover rounded-md transition-transform duration-300 group-hover:scale-102"
+                      />
+                      <div className="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-sm rounded-md p-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                        <p className="text-blue-900 text-sm font-semibold text-center">
+                          Programa Entrepreneurs
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            {/* Línea decorativa inferior */}
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-blue-800 to-blue-600"></div>
+            
             {/* Gradientes laterales para efecto de desvanecimiento */}
-            <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-white to-transparent pointer-events-none z-10"></div>
-            <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-white to-transparent pointer-events-none z-10"></div>
+            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent pointer-events-none z-10"></div>
+            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent pointer-events-none z-10"></div>
           </div>
         </section>
 
