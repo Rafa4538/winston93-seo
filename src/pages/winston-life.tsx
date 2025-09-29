@@ -352,7 +352,7 @@ export default function WinstonLife() {
           </div>
           
           {/* Cintilla con movimiento infinito hacia la izquierda - pantalla completa */}
-          <div className="relative w-full overflow-hidden bg-gradient-to-r from-blue-600/40 via-[#ccfb00]/40 to-blue-600/40 py-12">
+          <div className="relative w-full overflow-hidden bg-gradient-to-r from-blue-600/40 via-[#ccfb00]/40 to-blue-600/40 py-16">
               {/* Contenedor de la cintilla infinita */}
               <div className="flex animate-scroll-left">
                 {/* Primera serie de imágenes */}
@@ -362,7 +362,7 @@ export default function WinstonLife() {
                       <img
                         src={`/images/Winston Life/emprendedores/emprendedores${num}.${num === 2 ? 'png' : 'jpg'}`}
                         alt={`Entrepreneurs ${num}`}
-                        className="w-64 h-48 object-cover rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-105 border-4 border-white"
+                        className="w-80 h-60 object-cover rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-105 border-4 border-white"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
@@ -376,7 +376,7 @@ export default function WinstonLife() {
                       <img
                         src={`/images/Winston Life/emprendedores/emprendedores${num}.${num === 2 ? 'png' : 'jpg'}`}
                         alt={`Entrepreneurs ${num}`}
-                        className="w-64 h-48 object-cover rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-105 border-4 border-white"
+                        className="w-80 h-60 object-cover rounded-xl shadow-lg transition-transform duration-300 group-hover:scale-105 border-4 border-white"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
