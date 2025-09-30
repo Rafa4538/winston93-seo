@@ -23,6 +23,81 @@
   animation: scroll-left 20s linear infinite;
 }
 
+/* Animación para cintilla verdaderamente infinita */
+@keyframes scroll-infinite {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-100% / 3));
+  }
+}
+
+.animate-scroll-infinite {
+  animation: scroll-infinite 20s linear infinite;
+}
+
+/* Marquee tipo pista duplicada (loop realmente infinito) */
+@keyframes cintilla-marquee-x {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.cintilla-track {
+  display: flex;
+  align-items: center;
+  will-change: transform;
+  animation: cintilla-marquee-x 24s linear infinite;
+}
+
+/* Más color en la cintilla: overlay animado en tono azul/verde */
+.cintilla-overlay {
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* Animación de gradiente con fundido suave tipo espectro */
+@keyframes gradient-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 25% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  75% {
+    background-position: 75% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-flow {
+  background-size: 400% 400%;
+  animation: gradient-flow 12s ease-in-out infinite;
+}
+
+/* Animación mejorada para scroll infinito sin cortes */
+@keyframes scroll-left-seamless {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-seamless {
+  animation: scroll-left-seamless 25s linear infinite;
+}
+
 /* Estilos globales */
 html {
   scroll-behavior: smooth;
