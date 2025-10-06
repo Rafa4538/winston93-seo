@@ -11,8 +11,8 @@ import OfertaEducativaSection from '@/components/sections/OfertaEducativaSection
 
 export default function Home() {
   const [currentSection, setCurrentSection] = useState(0)
-  // Por defecto asumimos móvil para SSR y evitamos bloqueos de scroll antes de hidratar
-  const [isMobile, setIsMobile] = useState(true)
+  // Por defecto asumimos scroll nativo para SSR
+  const [useNativeScroll, setUseNativeScroll] = useState(true)
   const [isHydrated, setIsHydrated] = useState(false)
 
   const handleSectionChange = (sectionIndex: number) => {
@@ -22,7 +22,13 @@ export default function Home() {
   useEffect(() => {
     const updateDeviceType = () => {
       if (typeof window !== 'undefined') {
-        setIsMobile(window.innerWidth < 768)
+        const width = window.innerWidth
+        const height = window.innerHeight
+        const isLandscape = width > height
+        
+        // Usar scroll nativo en: móviles (<768px) o tablets horizontales (768-1024px landscape)
+        const shouldUseNativeScroll = width < 768 || (width >= 768 && width <= 1024 && isLandscape)
+        setUseNativeScroll(shouldUseNativeScroll)
       }
     }
     updateDeviceType()
@@ -48,19 +54,19 @@ export default function Home() {
       {/* Navigation que recibe la sección actual */}
       <Navigation currentSection={currentSection} />
 
-      {/* Móvil: scroll nativo con secciones de pantalla completa. Desktop/Tablet: FullPageScroll */}
-      {isHydrated && isMobile ? (
+      {/* Móvil y Tablets: scroll nativo. Solo Desktop: FullPageScroll */}
+      {isHydrated && useNativeScroll ? (
         <div className="w-full">
           <section className="h-screen w-full">
             <HeroSection />
           </section>
-          <section className="h-[50vh] w-full">
+          <section className="min-h-screen w-full">
             <SliderSection />
           </section>
           <section className="h-screen w-full">
             <EducationalOfferSection />
           </section>
-          <section className="h-[33vh] w-full">
+          <section className="h-screen w-full">
             <ConveniosSection />
           </section>
           <section className="min-h-screen w-full">
