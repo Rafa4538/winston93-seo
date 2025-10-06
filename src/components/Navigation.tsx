@@ -23,9 +23,8 @@ export default function Navigation({ currentSection = 0 }: NavigationProps) {
       // Móvil: < 768px (siempre vertical)
       setIsMobile(width < 768)
       
-      // Tablet: 768px - 1024px en posición horizontal (landscape)
-      // En tablet vertical, usar diseño móvil
-      const isTabletLandscape = width >= 768 && width < 1024 && isLandscape
+      // Tablet: 768px - 1024px en posición horizontal (landscape) - incluye Nest Hub
+      const isTabletLandscape = width >= 768 && width <= 1024 && isLandscape
       setIsTablet(isTabletLandscape)
     }
     
@@ -41,28 +40,27 @@ export default function Navigation({ currentSection = 0 }: NavigationProps) {
   
   // El header será sobrepuesto (absolute) SOLO en la primera sección (index 0) de cada página
   // EXCEPTO en la página de contacto, donde siempre será sticky
-  // En móviles y tablet vertical, siempre será fixed para evitar problemas de posicionamiento
+  // En móviles y tablets horizontales, siempre será fixed para scroll nativo
   const isContactPage = router.pathname === '/contacto'
   const isFirstSection = currentSection === 0
+  const isHomePage = router.pathname === '/'
   
   let navPosition = 'sticky'
-  if (isMobile || (isTablet && window.innerHeight > window.innerWidth)) {
-    // Móvil o tablet en vertical: fixed
+  let navBackground = 'bg-[#0038e4] shadow-lg backdrop-blur-sm'
+  
+  if (isMobile || isTablet) {
+    // Móvil o tablet horizontal: fixed
     navPosition = 'fixed'
+    // Transparente en primera sección, azul después
+    navBackground = isFirstSection ? 'bg-transparent' : 'bg-[#0038e4] shadow-lg backdrop-blur-sm'
   } else if (!isContactPage && isFirstSection) {
-    // Desktop o tablet horizontal, primera sección: absolute
+    // Desktop, primera sección: absolute
     navPosition = 'absolute'
-  } else {
-    // Resto de casos: sticky
-    navPosition = 'sticky'
+    navBackground = 'bg-transparent !bg-transparent'
   }
 
   return (
-    <nav className={`${navPosition} top-0 left-0 right-0 z-50 transition-all duration-700 ease-in-out ${
-      navPosition === 'absolute' 
-        ? 'bg-transparent !bg-transparent' 
-        : 'bg-[#0038e4] shadow-lg backdrop-blur-sm'
-    }`}>
+    <nav className={`${navPosition} top-0 left-0 right-0 z-50 transition-all duration-700 ease-in-out ${navBackground}`}>
       <div className="container mx-auto px-2">
         <div className="flex items-center justify-between h-16">
           {/* Logo Winston */}
