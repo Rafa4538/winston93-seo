@@ -23,9 +23,9 @@ export default function Navigation({ currentSection = 0 }: NavigationProps) {
       // Móvil: < 768px (siempre vertical)
       setIsMobile(width < 768)
       
-      // Tablet: 768px - 1024px en posición horizontal (landscape) - incluye Nest Hub
-      const isTabletLandscape = width >= 768 && width <= 1024 && isLandscape
-      setIsTablet(isTabletLandscape)
+      // Tablet: 768-1024px O dispositivos landscape con altura <= 900px (incluye Nest Hub y Nest Hub Max)
+      const isTabletDevice = (width >= 768 && width <= 1024) || (isLandscape && height <= 900)
+      setIsTablet(isTabletDevice)
     }
     
     checkDevice()

@@ -18,8 +18,8 @@ export default function OfertaEducativaSection() {
       // Móvil: width < 768 (vertical)
       const newIsMobile = width < 768
       
-      // Tablet horizontal: 768 <= width < 1024 Y landscape
-      const newIsTabletHorizontal = width >= 768 && width < 1024 && isLandscape
+      // Tablet horizontal: (768-1024px) O (landscape con altura <= 900px) - incluye Nest Hub y Nest Hub Max
+      const newIsTabletHorizontal = (width >= 768 && width <= 1024) || (isLandscape && height <= 900)
       
       setIsMobile(newIsMobile)
       setIsTabletHorizontal(newIsTabletHorizontal)

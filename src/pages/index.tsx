@@ -31,8 +31,11 @@ export default function Home() {
         // Determinar si es móvil
         setIsMobile(width < 768)
         
-        // Usar scroll nativo en: móviles (<768px) o tablets horizontales (768-1024px landscape)
-        const shouldUseNativeScroll = width < 768 || (width >= 768 && width <= 1024 && isLandscape)
+        // Detectar tablets: 768-1024px O dispositivos landscape con altura <= 900px (Nest Hub Max)
+        const isTabletDevice = (width >= 768 && width <= 1024) || (isLandscape && height <= 900)
+        
+        // Usar scroll nativo en: móviles O tablets
+        const shouldUseNativeScroll = width < 768 || isTabletDevice
         setUseNativeScroll(shouldUseNativeScroll)
       }
     }

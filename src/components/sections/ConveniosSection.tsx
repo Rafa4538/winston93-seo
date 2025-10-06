@@ -9,14 +9,21 @@ export default function ConveniosSection() {
   useEffect(() => {
     const updateDeviceType = () => {
       const width = window.innerWidth
-      setIsTablet(width >= 768 && width < 1024)
+      const height = window.innerHeight
+      const isLandscape = width > height
+      
+      // Tablet: (768-1024px) O (landscape con altura <= 900px) - incluye Nest Hub y Nest Hub Max
+      const isTabletDevice = (width >= 768 && width <= 1024) || (isLandscape && height <= 900)
+      setIsTablet(isTabletDevice)
     }
     
     updateDeviceType()
     window.addEventListener('resize', updateDeviceType)
+    window.addEventListener('orientationchange', updateDeviceType)
     
     return () => {
       window.removeEventListener('resize', updateDeviceType)
+      window.removeEventListener('orientationchange', updateDeviceType)
     }
   }, [])
 
