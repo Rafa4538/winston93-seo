@@ -77,62 +77,11 @@ export default function AmoCRM({
         const widget = document.querySelector('[id*="amo"], [class*="amo"]')
         if (widget) {
           console.log('✅ Widget de AmoCRM encontrado:', widget)
-          
-          // Forzar estilos para que sea visible y completo
-          const applyForceStyles = (element: Element) => {
-            if (element instanceof HTMLElement) {
-              element.style.setProperty('z-index', '999999', 'important')
-              element.style.setProperty('position', 'fixed', 'important')
-              element.style.setProperty('visibility', 'visible', 'important')
-              element.style.setProperty('opacity', '1', 'important')
-              element.style.setProperty('display', 'block', 'important')
-              element.style.setProperty('pointer-events', 'auto', 'important')
-              element.style.setProperty('right', '20px', 'important')
-              element.style.setProperty('overflow', 'visible', 'important')
-              element.style.setProperty('clip-path', 'none', 'important')
-              element.style.setProperty('transform', 'none', 'important')
-              element.style.setProperty('margin-right', '0', 'important')
-            }
-          }
-          
-          // Aplicar estilos al elemento encontrado
-          applyForceStyles(widget)
-          
-          // Buscar y aplicar a todos los elementos relacionados con AmoCRM
-          const amoElements = document.querySelectorAll('[class*="amo"], [id*="amo"], .amo-button-holder, .amo-widget-container')
-          amoElements.forEach(el => {
-            applyForceStyles(el)
-            console.log('🎨 Estilos forzados aplicados a:', el.className || el.id)
-          })
-          
-          console.log('✅ Estilos de visibilidad forzados aplicados')
         } else {
           console.warn('⚠️ Widget de AmoCRM no encontrado en el DOM')
           console.warn('💡 Verifica que el widget esté habilitado en tu panel de AmoCRM')
-          console.warn('💡 URL del panel: https://www.amocrm.com/')
         }
       }, 2000)
-      
-      // Segunda verificación más agresiva a los 4 segundos
-      setTimeout(() => {
-        const amoElements = document.querySelectorAll('[class*="amo"], [id*="amo"]')
-        if (amoElements.length > 0) {
-          console.log(`🔍 Encontrados ${amoElements.length} elementos de AmoCRM, forzando visibilidad completa...`)
-          amoElements.forEach(el => {
-            if (el instanceof HTMLElement) {
-              el.style.setProperty('z-index', '999999', 'important')
-              el.style.setProperty('position', 'fixed', 'important')
-              el.style.setProperty('visibility', 'visible', 'important')
-              el.style.setProperty('opacity', '1', 'important')
-              el.style.setProperty('display', 'block', 'important')
-              el.style.setProperty('right', '20px', 'important')
-              el.style.setProperty('overflow', 'visible', 'important')
-              el.style.setProperty('clip-path', 'none', 'important')
-            }
-          })
-          console.log('✅ Segunda aplicación de estilos completada - widget debería estar completamente visible')
-        }
-      }, 4000)
     }
 
     // Evento de error
@@ -147,34 +96,8 @@ export default function AmoCRM({
       console.log('📝 Script agregado al <head>')
     }
 
-    // Observer para mantener los estilos aplicados constantemente
-    const observer = new MutationObserver(() => {
-      const amoElements = document.querySelectorAll('[class*="amo"], [id*="amo"]')
-      amoElements.forEach(el => {
-        if (el instanceof HTMLElement) {
-          const currentZIndex = window.getComputedStyle(el).zIndex
-          if (currentZIndex !== '999999') {
-            el.style.setProperty('z-index', '999999', 'important')
-            el.style.setProperty('visibility', 'visible', 'important')
-            el.style.setProperty('opacity', '1', 'important')
-            el.style.setProperty('right', '20px', 'important')
-            el.style.setProperty('overflow', 'visible', 'important')
-          }
-        }
-      })
-    })
-
-    // Observar cambios en el DOM
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      attributes: true,
-      attributeFilter: ['style', 'class']
-    })
-
-    // Cleanup: remover el script y observer cuando el componente se desmonte
+    // Cleanup: remover el script cuando el componente se desmonte
     return () => {
-      observer.disconnect()
       const existingScript = document.getElementById('amo_social_button_script')
       if (existingScript && existingScript.parentNode) {
         existingScript.parentNode.removeChild(existingScript)

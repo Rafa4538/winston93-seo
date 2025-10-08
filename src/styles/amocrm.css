@@ -1,90 +1,10 @@
 /* Estilos para el widget de AmoCRM */
 
-/* Botón flotante principal - z-index EXTREMADAMENTE ALTO */
 .amo-button-holder.amo-horisontal {
   position: fixed !important;
-  z-index: 999999 !important;
-  right: 20px !important;
+  z-index: 3001 !important;
+  right: 10px !important;
   bottom: 210px !important;
   padding: 10px !important;
   box-sizing: border-box !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  display: block !important;
-  transform: none !important;
-  margin-right: 0 !important;
-  max-width: none !important;
-  overflow: visible !important;
-}
-
-/* Asegurar que el contenedor del widget sea visible */
-.amo-button-holder {
-  position: fixed !important;
-  pointer-events: auto !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  display: block !important;
-  z-index: 999999 !important;
-}
-
-/* Widget expandido - debe estar incluso más arriba */
-.amo-widget-container {
-  z-index: 1000000 !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-
-/* Overlay cuando se abre el widget */
-.amo-overlay {
-  z-index: 999998 !important;
-}
-
-/* Todos los elementos de AmoCRM */
-[class*="amo-"],
-[id*="amo-"],
-div[class*="amo"],
-iframe[class*="amo"] {
-  z-index: 999999 !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  pointer-events: auto !important;
-}
-
-/* Asegurar que el body no corte el widget */
-body {
-  overflow-x: visible !important;
-}
-
-/* Asegurar que ningún contenedor corte el widget */
-body > div,
-#__next,
-.home-page,
-main {
-  overflow-x: visible !important;
-  overflow: visible !important;
-}
-
-/* Ajustes para móvil */
-@media (max-width: 768px) {
-  .amo-button-holder.amo-horisontal {
-    right: 15px !important;
-    bottom: 20px !important;
-    padding: 8px !important;
-  }
-}
-
-/* Ajuste de posición original si usas bottom: 210px */
-@media (min-width: 769px) {
-  .amo-button-holder.amo-horisontal {
-    right: 20px !important;
-    bottom: 210px !important;
-  }
-}
-
-/* Forzar que el botón y sus hijos sean completamente visibles */
-.amo-button-holder *,
-.amo-button-holder > * {
-  overflow: visible !important;
-  clip-path: none !important;
-  transform: none !important;
 }
