@@ -4,13 +4,17 @@
 .amo-button-holder.amo-horisontal {
   position: fixed !important;
   z-index: 999999 !important;
-  right: 10px !important;
+  right: 20px !important;
   bottom: 210px !important;
   padding: 10px !important;
   box-sizing: border-box !important;
   visibility: visible !important;
   opacity: 1 !important;
   display: block !important;
+  transform: none !important;
+  margin-right: 0 !important;
+  max-width: none !important;
+  overflow: visible !important;
 }
 
 /* Asegurar que el contenedor del widget sea visible */
@@ -46,10 +50,24 @@ iframe[class*="amo"] {
   pointer-events: auto !important;
 }
 
+/* Asegurar que el body no corte el widget */
+body {
+  overflow-x: visible !important;
+}
+
+/* Asegurar que ningún contenedor corte el widget */
+body > div,
+#__next,
+.home-page,
+main {
+  overflow-x: visible !important;
+  overflow: visible !important;
+}
+
 /* Ajustes para móvil */
 @media (max-width: 768px) {
   .amo-button-holder.amo-horisontal {
-    right: 10px !important;
+    right: 15px !important;
     bottom: 20px !important;
     padding: 8px !important;
   }
@@ -58,6 +76,15 @@ iframe[class*="amo"] {
 /* Ajuste de posición original si usas bottom: 210px */
 @media (min-width: 769px) {
   .amo-button-holder.amo-horisontal {
+    right: 20px !important;
     bottom: 210px !important;
   }
+}
+
+/* Forzar que el botón y sus hijos sean completamente visibles */
+.amo-button-holder *,
+.amo-button-holder > * {
+  overflow: visible !important;
+  clip-path: none !important;
+  transform: none !important;
 }

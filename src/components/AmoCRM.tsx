@@ -78,7 +78,7 @@ export default function AmoCRM({
         if (widget) {
           console.log('✅ Widget de AmoCRM encontrado:', widget)
           
-          // Forzar estilos para que sea visible
+          // Forzar estilos para que sea visible y completo
           const applyForceStyles = (element: Element) => {
             if (element instanceof HTMLElement) {
               element.style.setProperty('z-index', '999999', 'important')
@@ -87,6 +87,11 @@ export default function AmoCRM({
               element.style.setProperty('opacity', '1', 'important')
               element.style.setProperty('display', 'block', 'important')
               element.style.setProperty('pointer-events', 'auto', 'important')
+              element.style.setProperty('right', '20px', 'important')
+              element.style.setProperty('overflow', 'visible', 'important')
+              element.style.setProperty('clip-path', 'none', 'important')
+              element.style.setProperty('transform', 'none', 'important')
+              element.style.setProperty('margin-right', '0', 'important')
             }
           }
           
@@ -112,7 +117,7 @@ export default function AmoCRM({
       setTimeout(() => {
         const amoElements = document.querySelectorAll('[class*="amo"], [id*="amo"]')
         if (amoElements.length > 0) {
-          console.log(`🔍 Encontrados ${amoElements.length} elementos de AmoCRM, forzando visibilidad...`)
+          console.log(`🔍 Encontrados ${amoElements.length} elementos de AmoCRM, forzando visibilidad completa...`)
           amoElements.forEach(el => {
             if (el instanceof HTMLElement) {
               el.style.setProperty('z-index', '999999', 'important')
@@ -120,9 +125,12 @@ export default function AmoCRM({
               el.style.setProperty('visibility', 'visible', 'important')
               el.style.setProperty('opacity', '1', 'important')
               el.style.setProperty('display', 'block', 'important')
+              el.style.setProperty('right', '20px', 'important')
+              el.style.setProperty('overflow', 'visible', 'important')
+              el.style.setProperty('clip-path', 'none', 'important')
             }
           })
-          console.log('✅ Segunda aplicación de estilos completada')
+          console.log('✅ Segunda aplicación de estilos completada - widget debería estar completamente visible')
         }
       }, 4000)
     }
@@ -149,6 +157,8 @@ export default function AmoCRM({
             el.style.setProperty('z-index', '999999', 'important')
             el.style.setProperty('visibility', 'visible', 'important')
             el.style.setProperty('opacity', '1', 'important')
+            el.style.setProperty('right', '20px', 'important')
+            el.style.setProperty('overflow', 'visible', 'important')
           }
         }
       })
