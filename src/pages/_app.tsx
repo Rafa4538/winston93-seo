@@ -1,4 +1,5 @@
 import '@/styles/globals.css'
+import '@/styles/amocrm.css'
 import type { AppProps } from 'next/app'
 import { useState, useEffect } from 'react'
 import { AnimatePresence } from 'framer-motion'
@@ -6,6 +7,7 @@ import LoadingScreen from '@/components/LoadingScreen'
 import PageLoadingScreen from '@/components/PageLoadingScreen'
 import Layout from '@/components/Layout'
 import { useRouter } from 'next/router'
+import AmoCRM from '@/components/AmoCRM'
 
 export default function App({ Component, pageProps }: AppProps) {
   const [isLoading, setIsLoading] = useState(true)
@@ -46,18 +48,23 @@ export default function App({ Component, pageProps }: AppProps) {
   }, [router])
 
   return (
-    <AnimatePresence mode="wait">
-      {isLoading ? (
-        <LoadingScreen key="initial-loading" />
-      ) : isPageLoading ? (
-        <PageLoadingScreen key="page-loading" />
-      ) : router.pathname === '/' || router.pathname === '/programas' ? (
-        <Component {...pageProps} />
-      ) : (
-        <Layout key="layout" showFooter={true}>
+    <>
+      {/* Componente AmoCRM para métricas y contacto con usuarios */}
+      <AmoCRM />
+      
+      <AnimatePresence mode="wait">
+        {isLoading ? (
+          <LoadingScreen key="initial-loading" />
+        ) : isPageLoading ? (
+          <PageLoadingScreen key="page-loading" />
+        ) : router.pathname === '/' || router.pathname === '/programas' ? (
           <Component {...pageProps} />
-        </Layout>
-      )}
-    </AnimatePresence>
+        ) : (
+          <Layout key="layout" showFooter={true}>
+            <Component {...pageProps} />
+          </Layout>
+        )}
+      </AnimatePresence>
+    </>
   )
 } // Updated: vie 08 ago 2025 11:02:42 CST
