@@ -1,31 +1,38 @@
 /* Estilos para el widget de AmoCRM */
 
-/* Botón flotante principal - z-index MUY ALTO para estar por encima de todo */
+/* Botón flotante principal - z-index EXTREMADAMENTE ALTO */
 .amo-button-holder.amo-horisontal {
   position: fixed !important;
-  z-index: 99999 !important; /* Aumentado para estar por encima de todos los elementos */
+  z-index: 999999 !important;
   right: 10px !important;
   bottom: 210px !important;
   padding: 10px !important;
   box-sizing: border-box !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
 }
 
 /* Asegurar que el contenedor del widget sea visible */
 .amo-button-holder {
+  position: fixed !important;
   pointer-events: auto !important;
   visibility: visible !important;
   opacity: 1 !important;
-  z-index: 99999 !important;
+  display: block !important;
+  z-index: 999999 !important;
 }
 
 /* Widget expandido - debe estar incluso más arriba */
 .amo-widget-container {
-  z-index: 100000 !important;
+  z-index: 1000000 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 /* Overlay cuando se abre el widget */
 .amo-overlay {
-  z-index: 99998 !important;
+  z-index: 999998 !important;
 }
 
 /* Todos los elementos de AmoCRM */
@@ -33,7 +40,10 @@
 [id*="amo-"],
 div[class*="amo"],
 iframe[class*="amo"] {
-  z-index: 99999 !important;
+  z-index: 999999 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
 }
 
 /* Ajustes para móvil */
