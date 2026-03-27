@@ -90,17 +90,20 @@ export default function Home() {
 
       {/* Móvil y Tablets: scroll nativo. Solo Desktop: FullPageScroll */}
       {isHydrated && useNativeScroll ? (
-        <div className="w-full">
-          <section className="h-screen w-full">
+        // 2026-03-27: Espaciado y alturas fluidas para mejorar legibilidad en móvil/tablet sin alterar orden de secciones.
+        <div className="w-full pt-16 md:pt-[72px]">
+          <section className="min-h-[85vh] md:h-screen w-full">
             <HeroSection />
           </section>
-          <section className={`w-full ${isMobile ? 'h-[50vh]' : 'h-screen'}`}>
-            <SliderSection />
+          <section className={`w-full ${isMobile ? 'min-h-[70vh]' : 'h-screen'}`}>
+            <div className="h-full">
+              <SliderSection />
+            </div>
           </section>
-          <section className="h-screen w-full">
+          <section className="min-h-[85vh] md:h-screen w-full">
             <EducationalOfferSection />
           </section>
-          <section className="h-screen w-full">
+          <section className={`w-full ${isMobile ? 'min-h-[360px]' : 'h-screen'}`}>
             <ConveniosSection />
           </section>
           <section className="min-h-screen w-full">

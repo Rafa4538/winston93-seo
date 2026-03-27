@@ -11,6 +11,8 @@ export default function Navigation({ currentSection = 0 }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const [isTablet, setIsTablet] = useState(false)
+  const [isPortrait, setIsPortrait] = useState(true)
+  const [isAtTop, setIsAtTop] = useState(true)
   const router = useRouter()
   
   // Detectar si es móvil o tablet
@@ -19,6 +21,7 @@ export default function Navigation({ currentSection = 0 }: NavigationProps) {
       const width = window.innerWidth
       const height = window.innerHeight
       const isLandscape = width > height
+      setIsPortrait(height >= width)
       
       // Móvil: < 768px (siempre vertical)
       setIsMobile(width < 768)
@@ -37,13 +40,25 @@ export default function Navigation({ currentSection = 0 }: NavigationProps) {
       window.removeEventListener('orientationchange', checkDevice)
     }
   }, [])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsAtTop(window.scrollY <= 8)
+    }
+
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
   
   // El header será sobrepuesto (absolute) SOLO en la primera sección (index 0) de cada página
   // EXCEPTO en la página de contacto, donde siempre será sticky
   // En móviles y tablets horizontales, siempre será fixed para scroll nativo
   const isContactPage = router.pathname === '/contacto'
   const isFirstSection = currentSection === 0
+  const isServiciosPage = router.pathname === '/servicios-en-linea'
   const isHomePage = router.pathname === '/'
+  const isMobileMenu = isMobile || (isTablet && isPortrait)
   
   let navPosition = 'sticky'
   let navBackground = 'bg-[#013BDF] shadow-lg backdrop-blur-sm'
@@ -51,18 +66,39 @@ export default function Navigation({ currentSection = 0 }: NavigationProps) {
   if (isMobile || isTablet) {
     // Móvil o tablet horizontal: fixed
     navPosition = 'fixed'
-    // Transparente en primera sección, azul después
-    navBackground = isFirstSection ? 'bg-transparent' : 'bg-[#013BDF] shadow-lg backdrop-blur-sm'
+    navBackground = 'bg-[#013BDF] shadow-lg backdrop-blur-sm'
   } else if (!isContactPage && isFirstSection) {
     // Desktop, primera sección: absolute
     navPosition = 'absolute'
-    navBackground = 'bg-transparent !bg-transparent'
+    navBackground = 'bg-transparent'
+  }
+
+  // 2026-03-27: Regla unificada de transparencia con transición suave.
+  // - Siempre azul en servicios-en-linea (fondo blanco).
+  // - Home desktop (FullPageScroll): transparente SOLO en sección 0.
+  // - Resto de páginas/dispositivos: transparente solo en top real (scrollY).
+  const isHomeDesktopFullPage = isHomePage && !isMobile && !isTablet
+  const shouldBeTransparent = isServiciosPage
+    ? false
+    : isHomeDesktopFullPage
+      ? isFirstSection
+      : isAtTop
+
+  if (shouldBeTransparent) {
+    navBackground = 'bg-transparent shadow-none backdrop-blur-0'
+    if (!isMobile && !isTablet) {
+      navPosition = 'absolute'
+    } else {
+      navPosition = 'fixed'
+    }
+  } else {
+    navBackground = 'bg-[#013BDF]/95 shadow-lg backdrop-blur-sm'
   }
 
   return (
-    <nav className={`${navPosition} top-0 left-0 right-0 z-50 transition-all duration-700 ease-in-out ${navBackground}`}>
-      <div className="container mx-auto px-2">
-        <div className="flex items-center justify-between h-16">
+    <nav className={`${navPosition} top-0 left-0 right-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-500 ease-in-out ${navBackground}`}>
+      <div className="container mx-auto px-3 sm:px-4 md:px-6">
+        <div className="flex items-center justify-between h-16 md:h-[72px]">
           {/* Logo Winston */}
           <div className="flex items-center -ml-2">
             <Link 
@@ -172,10 +208,10 @@ export default function Navigation({ currentSection = 0 }: NavigationProps) {
 
           {/* Mobile menu button - Solo en móvil y tablet vertical */}
           <div className="md:hidden lg:hidden">
-            {(isMobile || (isTablet && window.innerHeight > window.innerWidth)) && (
+            {isMobileMenu && (
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="text-white hover:text-black focus:outline-none focus:text-black transition-all duration-300 p-2 rounded-md hover:shadow-lg"
+                className="text-white hover:text-black focus:outline-none focus:text-black transition-all duration-300 w-11 h-11 flex items-center justify-center rounded-md hover:shadow-lg"
                 onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#E3FB07'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(227, 251, 7, 0.5), 0 4px 6px -2px rgba(227, 251, 7, 0.3)'}} 
                 onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}
               >
@@ -192,31 +228,32 @@ export default function Navigation({ currentSection = 0 }: NavigationProps) {
         </div>
 
         {/* Mobile Menu - Solo en móvil y tablet vertical */}
-        {isOpen && (isMobile || (isTablet && window.innerHeight > window.innerWidth)) && (
+        {isOpen && isMobileMenu && (
           <div className="md:hidden lg:hidden">
+            {/* 2026-03-27: Mejora responsive/táctil para menú móvil sin cambiar estructura de navegación */}
             <div className="px-2 pt-2 pb-3 space-y-1 bg-black/80 backdrop-blur-sm rounded-lg mt-2">
-              <Link href="#conocenos" className="block px-3 py-2 text-white hover:text-black font-medium transition-all duration-300 text-sm uppercase tracking-wide rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#E3FB07'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(227, 251, 7, 0.5), 0 4px 6px -2px rgba(227, 251, 7, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
+              <Link href="#conocenos" className="block px-3 py-3 text-white hover:text-black font-medium transition-all duration-300 text-base uppercase tracking-wide rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#E3FB07'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(227, 251, 7, 0.5), 0 4px 6px -2px rgba(227, 251, 7, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
                 CONÓCENOS
               </Link>
-              <Link href="#oferta-educativa" className="block px-3 py-2 text-white hover:text-black font-medium transition-all duration-300 text-sm uppercase tracking-wide rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#E3FB07'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(227, 251, 7, 0.5), 0 4px 6px -2px rgba(227, 251, 7, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
+              <Link href="#oferta-educativa" className="block px-3 py-3 text-white hover:text-black font-medium transition-all duration-300 text-base uppercase tracking-wide rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#E3FB07'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(227, 251, 7, 0.5), 0 4px 6px -2px rgba(227, 251, 7, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
                 OFERTA EDUCATIVA
               </Link>
-              <Link href="/primaria" className="block px-3 py-2 text-white hover:text-black font-medium transition-all duration-300 text-sm uppercase tracking-wide rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#E3FB07'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(227, 251, 7, 0.5), 0 4px 6px -2px rgba(227, 251, 7, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
+              <Link href="/primaria" className="block px-3 py-3 text-white hover:text-black font-medium transition-all duration-300 text-base uppercase tracking-wide rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#E3FB07'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(227, 251, 7, 0.5), 0 4px 6px -2px rgba(227, 251, 7, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
                 PRIMARIA
               </Link>
-              <Link href="/secundaria" className="block px-3 py-2 text-white hover:text-black font-medium transition-all duration-300 text-sm uppercase tracking-wide rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#E3FB07'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(227, 251, 7, 0.5), 0 4px 6px -2px rgba(227, 251, 7, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
+              <Link href="/secundaria" className="block px-3 py-3 text-white hover:text-black font-medium transition-all duration-300 text-base uppercase tracking-wide rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#E3FB07'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(227, 251, 7, 0.5), 0 4px 6px -2px rgba(227, 251, 7, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
                 SECUNDARIA
               </Link>
-              <Link href="/servicios-en-linea" className="block px-3 py-2 text-white hover:text-black font-medium transition-all duration-300 text-sm uppercase tracking-wide rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#E3FB07'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(227, 251, 7, 0.5), 0 4px 6px -2px rgba(227, 251, 7, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
+              <Link href="/servicios-en-linea" className="block px-3 py-3 text-white hover:text-black font-medium transition-all duration-300 text-base uppercase tracking-wide rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#E3FB07'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(227, 251, 7, 0.5), 0 4px 6px -2px rgba(227, 251, 7, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
                 SERVICIOS EN LÍNEA
               </Link>
-              <Link href="/programas" className="block px-3 py-2 text-white hover:text-black font-medium transition-all duration-300 text-sm uppercase tracking-wide rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#E3FB07'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(227, 251, 7, 0.5), 0 4px 6px -2px rgba(227, 251, 7, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
+              <Link href="/programas" className="block px-3 py-3 text-white hover:text-black font-medium transition-all duration-300 text-base uppercase tracking-wide rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#E3FB07'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(227, 251, 7, 0.5), 0 4px 6px -2px rgba(227, 251, 7, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
                 PROGRAMAS
               </Link>
-              <Link href="/winston-life" className="block px-3 py-2 text-white hover:text-black font-medium transition-all duration-300 text-sm uppercase tracking-wide rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#E3FB07'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(227, 251, 7, 0.5), 0 4px 6px -2px rgba(227, 251, 7, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
+              <Link href="/winston-life" className="block px-3 py-3 text-white hover:text-black font-medium transition-all duration-300 text-base uppercase tracking-wide rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#E3FB07'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(227, 251, 7, 0.5), 0 4px 6px -2px rgba(227, 251, 7, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
                 WINSTON LIFE
               </Link>
-              <Link href="/contacto" className="block px-3 py-2 text-white hover:text-black font-medium transition-all duration-300 text-sm uppercase tracking-wide rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#E3FB07'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(227, 251, 7, 0.5), 0 4px 6px -2px rgba(227, 251, 7, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
+              <Link href="/contacto" className="block px-3 py-3 text-white hover:text-black font-medium transition-all duration-300 text-base uppercase tracking-wide rounded-md hover:shadow-lg" onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#E3FB07'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(227, 251, 7, 0.5), 0 4px 6px -2px rgba(227, 251, 7, 0.3)'}} onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}>
                 CONTACTO
               </Link>
             </div>

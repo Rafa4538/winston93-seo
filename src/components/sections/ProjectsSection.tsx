@@ -57,7 +57,6 @@ export default function SliderSection() {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => {
         const nextSlide = (prev + 1) % slides.length
-        console.log('Auto advancing to slide:', nextSlide)
         return nextSlide
       })
     }, 5000)
@@ -67,29 +66,19 @@ export default function SliderSection() {
 
   const nextSlide = () => {
     setCurrentSlide((prev) => {
-      const next = (prev + 1) % slides.length
-      console.log('Manual next to slide:', next)
-      return next
+      return (prev + 1) % slides.length
     })
   }
 
   const prevSlide = () => {
     setCurrentSlide((prev) => {
-      const previous = (prev - 1 + slides.length) % slides.length
-      console.log('Manual prev to slide:', previous)
-      return previous
+      return (prev - 1 + slides.length) % slides.length
     })
   }
 
   const goToSlide = (index: number) => {
-    console.log('Going to slide:', index)
     setCurrentSlide(index)
   }
-
-  // Debug: Log current slide
-  useEffect(() => {
-    console.log('Current slide changed to:', currentSlide)
-  }, [currentSlide])
 
   return (
     <div className="w-full h-full relative overflow-hidden">
@@ -106,8 +95,6 @@ export default function SliderSection() {
               src={slide.image}
               alt={`Slide ${index + 1}`}
               className="w-full h-full object-cover"
-              onLoad={() => console.log(`Image ${index + 1} loaded:`, slide.image)}
-              onError={(e) => console.error(`Error loading image ${index + 1}:`, slide.image, e)}
             />
           </div>
         ))}
@@ -116,8 +103,9 @@ export default function SliderSection() {
       </div>
 
       {/* Contenido superpuesto */}
-      <div className="relative z-30 h-full flex items-center">
+      <div className="relative z-30 h-full flex items-center justify-end">
         <div className="container mx-auto px-2 md:px-8 py-0 md:py-0">
+          {/* 2026-03-27: Ajuste de tipografía/espaciado para lectura en móvil y tablet. */}
           <div className={`flex items-start justify-between h-full ${
             // Eliminar padding-top en móvil, mantener en tablet/desktop
             isTabletLandscape 
@@ -132,13 +120,13 @@ export default function SliderSection() {
                 : 'w-full md:w-1/2 md:max-w-lg text-white md:pr-8'        // Slides 1 y 2: izquierda en desktop
             }`}>
               <AnimatedElement>
-                <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-2 md:mb-4 tracking-wide">
+                <h2 className="text-[clamp(1.5rem,4.2vw,3rem)] font-bold mb-2 md:mb-4 tracking-wide">
                   {slides[currentSlide].title}
                 </h2>
-                <h3 className="text-xl sm:text-2xl md:text-2xl lg:text-3xl xl:text-4xl font-bold mb-3 md:mb-4 lg:mb-6 text-blue-300">
+                <h3 className="text-[clamp(1.125rem,3.5vw,2.25rem)] font-bold mb-3 md:mb-4 lg:mb-6 text-blue-300">
                   {slides[currentSlide].subtitle}
                 </h3>
-                <p className="text-sm sm:text-base md:text-base lg:text-lg text-gray-200 leading-relaxed mb-4 md:mb-6 lg:mb-8 max-w-sm md:max-w-none">
+                <p className="text-base md:text-base lg:text-lg text-gray-100 leading-relaxed mb-4 md:mb-6 lg:mb-8 max-w-md md:max-w-none">
                   {slides[currentSlide].description}
                 </p>
                 <button 
@@ -193,12 +181,12 @@ export default function SliderSection() {
 
       {/* Controles móviles */}
       <div className="md:hidden absolute bottom-4 left-1/2 transform -translate-x-1/2 z-40">
-        <div className="flex space-x-2">
+          <div className="flex space-x-2">
           {slides.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                 index === currentSlide 
                   ? 'bg-white scale-125' 
                   : 'bg-white/50'
@@ -212,7 +200,7 @@ export default function SliderSection() {
       <div className="md:hidden absolute inset-x-0 top-1/2 transform -translate-y-1/2 z-40 flex justify-between px-4">
         <button
           onClick={prevSlide}
-          className="w-8 h-8 bg-white/20 hover:bg-white/30 text-white rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm"
+          className="w-11 h-11 bg-white/20 hover:bg-white/30 text-white rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -220,7 +208,7 @@ export default function SliderSection() {
         </button>
         <button
           onClick={nextSlide}
-          className="w-8 h-8 bg-white/20 hover:bg-white/30 text-white rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm"
+          className="w-11 h-11 bg-white/20 hover:bg-white/30 text-white rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

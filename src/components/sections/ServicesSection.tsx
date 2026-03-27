@@ -25,7 +25,7 @@ export default function EducationalOfferSection() {
   return (
     <div ref={sectionRef} className="h-full w-full relative overflow-hidden bg-white">
       {/* Contenido principal */}
-      <div className="h-full flex items-center">
+      <div className="h-full flex items-center py-6 md:py-0">
         <div className="container mx-auto px-4 md:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between h-full">
             
@@ -41,11 +41,11 @@ export default function EducationalOfferSection() {
                 <div className="absolute -bottom-1 left-6 sm:-bottom-2 sm:left-10 md:-bottom-5 md:left-20 w-6 h-6 sm:w-9 sm:h-9 md:w-24 md:h-24 bg-yellow-400 rounded-lg transform -rotate-6"></div>
                 <div className="absolute top-1 -right-1 sm:top-2 sm:-right-2 md:top-5 md:-right-5 w-5 h-5 sm:w-8 sm:h-8 md:w-20 md:h-20 bg-green-500 rounded-lg transform rotate-45"></div>
                 
-                {/* Imagen de estudiantes - Responsive - Más grande */}
+                {/* 2026-03-27: Escala responsive de imagen para evitar recortes en móvil/tablet manteniendo el diseño base. */}
                 <img
                   src="/images/students/niños_left.jpg"
                   alt="Estudiantes del Instituto Winston Churchill"
-                  className="relative z-10 h-[220px] sm:h-[280px] md:h-[600px] lg:h-[700px] xl:h-[800px] w-auto max-w-none object-contain"
+                  className="relative z-10 h-[260px] sm:h-[320px] md:h-[500px] lg:h-[620px] xl:h-[700px] w-auto max-w-none object-contain"
                 />
               </div>
             </div>
@@ -58,16 +58,16 @@ export default function EducationalOfferSection() {
                   ? 'opacity-100 translate-y-0 scale-100' 
                   : 'opacity-0 -translate-y-8 scale-95'
               }`} style={{ transitionDelay: '400ms' }}>
-                <h1 className="text-xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-blue-900 leading-tight mb-1 md:mb-4">
+                <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-blue-900 leading-tight mb-2 md:mb-4">
                   INSTITUTO WINSTON CHURCHILL
                 </h1>
-                <h2 className="text-base md:text-xl lg:text-2xl xl:text-3xl font-bold text-blue-700 mb-2 md:mb-6">
+                <h2 className="text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold text-blue-700 mb-2 md:mb-6">
                   Formando líderes con visión global desde hace más de 30 años.
                 </h2>
               </div>
 
               {/* Descripción - Entra desde abajo */}
-              <p className={`text-xs sm:text-sm md:text-base lg:text-lg text-gray-700 leading-relaxed max-w-full md:max-w-lg mx-auto transition-all duration-1000 ease-out line-clamp-4 md:line-clamp-none ${
+              <p className={`text-base md:text-base lg:text-lg text-gray-700 leading-relaxed max-w-full md:max-w-lg mx-auto transition-all duration-1000 ease-out ${
                 isVisible 
                   ? 'opacity-100 translate-y-0' 
                   : 'opacity-0 translate-y-8'

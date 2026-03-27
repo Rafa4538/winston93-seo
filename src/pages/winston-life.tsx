@@ -86,6 +86,10 @@ export default function WinstonLife() {
   const [currentGallery, setCurrentGallery] = useState<string | null>(null)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [activeRibbon, setActiveRibbon] = useState<string | null>(null)
+  const [video1Muted, setVideo1Muted] = useState(true)
+  const [video2Muted, setVideo2Muted] = useState(true)
+  const [video1ManuallyPaused, setVideo1ManuallyPaused] = useState(false)
+  const [video2ManuallyPaused, setVideo2ManuallyPaused] = useState(false)
   
   const video1Ref = useRef<HTMLVideoElement>(null)
   const video2Ref = useRef<HTMLVideoElement>(null)
@@ -99,6 +103,122 @@ export default function WinstonLife() {
       video2Ref.current.load()
     }
   }, [])
+
+  // Sincronizar el estado muted con los elementos de video
+  useEffect(() => {
+    if (video1Ref.current) {
+      video1Ref.current.muted = video1Muted
+    }
+  }, [video1Muted])
+
+  useEffect(() => {
+    if (video2Ref.current) {
+      video2Ref.current.muted = video2Muted
+    }
+  }, [video2Muted])
+
+
+  // Intersection Observer para video 1 - pausar cuando no está visible
+  useEffect(() => {
+    const video1 = video1Ref.current
+    if (!video1) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Video está visible, reproducir solo si no fue pausado manualmente
+            if (!video1ManuallyPaused) {
+              video1.play().catch((error) => {
+                console.log('Error al reproducir video 1:', error)
+              })
+            }
+          } else {
+            // Video no está visible, pausar (solo si no fue pausado manualmente)
+            if (!video1ManuallyPaused) {
+              video1.pause()
+            }
+          }
+        })
+      },
+      {
+        threshold: 0.5 // Se considera visible cuando al menos el 50% está en pantalla
+      }
+    )
+
+    observer.observe(video1)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [video1ManuallyPaused])
+
+  // Intersection Observer para video 2 - pausar cuando no está visible
+  useEffect(() => {
+    const video2 = video2Ref.current
+    if (!video2) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Video está visible, reproducir solo si no fue pausado manualmente
+            if (!video2ManuallyPaused) {
+              video2.play().catch((error) => {
+                console.log('Error al reproducir video 2:', error)
+              })
+            }
+          } else {
+            // Video no está visible, pausar (solo si no fue pausado manualmente)
+            if (!video2ManuallyPaused) {
+              video2.pause()
+            }
+          }
+        })
+      },
+      {
+        threshold: 0.5 // Se considera visible cuando al menos el 50% está en pantalla
+      }
+    )
+
+    observer.observe(video2)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [video2ManuallyPaused])
+
+  const toggleVideo1Audio = () => {
+    setVideo1Muted(!video1Muted)
+  }
+
+  const toggleVideo2Audio = () => {
+    setVideo2Muted(!video2Muted)
+  }
+
+  const toggleVideo1PlayPause = () => {
+    if (video1Ref.current) {
+      if (video1Ref.current.paused) {
+        video1Ref.current.play()
+        setVideo1ManuallyPaused(false)
+      } else {
+        video1Ref.current.pause()
+        setVideo1ManuallyPaused(true)
+      }
+    }
+  }
+
+  const toggleVideo2PlayPause = () => {
+    if (video2Ref.current) {
+      if (video2Ref.current.paused) {
+        video2Ref.current.play()
+        setVideo2ManuallyPaused(false)
+      } else {
+        video2Ref.current.pause()
+        setVideo2ManuallyPaused(true)
+      }
+    }
+  }
 
   // Galerías de imágenes
   const galleries = {
@@ -179,7 +299,7 @@ export default function WinstonLife() {
       {/* Header */}
       <Navigation currentSection={0} />
 
-      <div className="min-h-screen">
+      <div className="min-h-screen pt-16 md:pt-[72px]">
         {/* Banner Principal */}
         <section className="relative h-screen overflow-hidden">
           <div className="absolute inset-0">
@@ -192,15 +312,15 @@ export default function WinstonLife() {
           </div>
           
           <div className="relative z-10 h-full flex flex-col items-center justify-center">
-            <div className="text-center text-white mb-16">
+            <div className="text-center text-white mb-12 md:mb-16">
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1 }}
-                className="text-6xl md:text-8xl font-bold leading-tight"
+                className="text-4xl sm:text-6xl md:text-8xl font-bold leading-tight"
               >
                 <div className="text-white">WINSTON</div>
-                <div className="text-[#E3FB07] text-4xl md:text-6xl">LIFE</div>
+                <div className="text-[#E3FB07] text-3xl sm:text-4xl md:text-6xl">LIFE</div>
               </motion.div>
             </div>
 
@@ -209,7 +329,7 @@ export default function WinstonLife() {
               initial={{ opacity: 0, y: 100 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.6 }}
-              className="absolute bottom-0 left-0 right-0 h-32 flex"
+              className="absolute bottom-0 left-0 right-0 h-28 sm:h-32 flex"
             >
               {/* Winston Olympics - Azul sólido */}
               <div
@@ -222,17 +342,18 @@ export default function WinstonLife() {
                   ['--hole-r' as any]: activeRibbon === 'winston-olympics' ? '80px' : '0px'
                 }}
               >
+                {/* 2026-03-27: Optimización responsive de cintilla para mantener legibilidad/tacto en móvil. */}
                 {/* Icono con z-index muy alto para asegurar visibilidad */}
                 <div className={`relative ${activeRibbon === 'winston-olympics' ? 'z-[9999]' : 'z-20'}`}>
                   <img
                     src="/images/Winston Life/iconos/CARA_LEON.png"
                     alt="Winston Olympics"
-                    className={`w-16 h-16 mb-2 transition-all duration-700 ease-in-out ${
+                    className={`w-11 h-11 sm:w-16 sm:h-16 mb-1 sm:mb-2 transition-all duration-700 ease-in-out ${
                       activeRibbon === 'winston-olympics' ? 'scale-150 -translate-y-4' : ''
                     }`}
                   />
                 </div>
-                <span className="text-xl text-center relative z-40 text-white">WINSTON OLYMPICS</span>
+                <span className="text-[11px] sm:text-lg md:text-xl text-center relative z-40 text-white px-1">WINSTON OLYMPICS</span>
               </div>
 
               {/* Entrepreneurs - Verde lima sólido */}
@@ -251,12 +372,12 @@ export default function WinstonLife() {
                   <img
                     src="/images/Winston Life/iconos/FOCO.png"
                     alt="Entrepreneurs"
-                    className={`w-16 h-16 mb-2 transition-all duration-700 ease-in-out ${
+                    className={`w-11 h-11 sm:w-16 sm:h-16 mb-1 sm:mb-2 transition-all duration-700 ease-in-out ${
                       activeRibbon === 'entrepreneurs' ? 'scale-150 -translate-y-4' : ''
                     }`}
                   />
                 </div>
-                <span className="text-xl text-center relative z-40 text-blue-600">ENTREPRENEURS</span>
+                <span className="text-[11px] sm:text-lg md:text-xl text-center relative z-40 text-blue-600 px-1">ENTREPRENEURS</span>
               </div>
 
               {/* #Soy Winston - Azul sólido */}
@@ -275,12 +396,12 @@ export default function WinstonLife() {
                   <img
                     src="/images/Winston Life/iconos/icono_winston.png"
                     alt="#Soy Winston"
-                    className={`w-16 h-16 mb-2 transition-all duration-700 ease-in-out ${
+                    className={`w-11 h-11 sm:w-16 sm:h-16 mb-1 sm:mb-2 transition-all duration-700 ease-in-out ${
                       activeRibbon === 'soy-winston' ? 'scale-150 -translate-y-4' : ''
                     }`}
                   />
                 </div>
-                <span className="text-xl text-center relative z-40 text-white">#SOYWINSTON</span>
+                <span className="text-[11px] sm:text-lg md:text-xl text-center relative z-40 text-white px-1">#SOYWINSTON</span>
               </div>
               {/* Iconos superpuestos para evitar ser enmascarados y asegurar visibilidad */}
               <div
@@ -329,20 +450,41 @@ export default function WinstonLife() {
             ref={video1Ref}
             autoPlay
             loop
-            muted
+            muted={video1Muted}
             playsInline
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover cursor-pointer"
             preload="auto"
+            onClick={toggleVideo1PlayPause}
           >
             <source src="/images/Winston Life/video1.mp4" type="video/mp4" />
             Tu navegador no soporta el elemento de video.
           </video>
+          {/* Botón de control de audio */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              toggleVideo1Audio()
+            }}
+            className="absolute bottom-4 right-4 md:bottom-8 md:right-8 z-20 bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-3 md:p-4 rounded-full transition-all duration-300 hover:scale-110"
+            aria-label={video1Muted ? "Activar audio" : "Desactivar audio"}
+          >
+            {video1Muted ? (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+              </svg>
+            ) : (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+              </svg>
+            )}
+          </button>
         </section>
 
         {/* Sección ENTREPRENEURS */}
-        <section id="entrepreneurs" className="py-20 bg-white overflow-hidden">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-600 mb-4">
+        <section id="entrepreneurs" className="py-14 md:py-20 bg-white overflow-hidden">
+          <div className="text-center mb-10 md:mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-600 mb-4">
               ENTREPRENEURS
             </h2>
           </div>
@@ -356,7 +498,7 @@ export default function WinstonLife() {
                     <div key={`a-${num}`} className="flex-shrink-0">
                       <div className="relative group">
                         <div className="bg-gradient-to-br from-white via-blue-50 to-blue-100 p-4 rounded-2xl shadow-lg border-2 border-blue-200 transition-all duration-500 group-hover:shadow-2xl group-hover:border-blue-400 group-hover:bg-gradient-to-br group-hover:from-blue-50 group-hover:via-white group-hover:to-blue-50 group-hover:-translate-y-2">
-                          <img src={`/images/Winston Life/emprendedores/emprendedores${num}.${num === 2 ? 'png' : 'jpg'}`} alt={`Programa Entrepreneurs - Actividad ${num}`} className="w-[420px] h-[300px] object-cover rounded-xl transition-all duration-500 group-hover:scale-105 group-hover:brightness-110" />
+                          <img src={`/images/Winston Life/emprendedores/emprendedores${num}.${num === 2 ? 'png' : 'jpg'}`} alt={`Programa Entrepreneurs - Actividad ${num}`} className="w-[280px] sm:w-[340px] md:w-[420px] h-[210px] sm:h-[250px] md:h-[300px] object-cover rounded-xl transition-all duration-500 group-hover:scale-105 group-hover:brightness-110" />
                           <div className="absolute inset-4 bg-gradient-to-t from-blue-700/60 via-blue-500/20 to-[#E3FB07]/25 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
                           <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-md rounded-lg p-3 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
                             <p className="text-blue-900 text-sm font-bold text-center uppercase tracking-wide">Programa Entrepreneurs</p>
@@ -375,7 +517,7 @@ export default function WinstonLife() {
                     <div key={`b-${num}`} className="flex-shrink-0">
                       <div className="relative group">
                         <div className="bg-gradient-to-br from-white via-blue-50 to-blue-100 p-4 rounded-2xl shadow-lg border-2 border-blue-200 transition-all duration-500 group-hover:shadow-2xl group-hover:border-blue-400 group-hover:bg-gradient-to-br group-hover:from-blue-50 group-hover:via-white group-hover:to-blue-50 group-hover:-translate-y-2">
-                          <img src={`/images/Winston Life/emprendedores/emprendedores${num}.${num === 2 ? 'png' : 'jpg'}`} alt={`Programa Entrepreneurs - Actividad ${num}`} className="w-[420px] h-[300px] object-cover rounded-xl transition-all duration-500 group-hover:scale-105 group-hover:brightness-110" />
+                          <img src={`/images/Winston Life/emprendedores/emprendedores${num}.${num === 2 ? 'png' : 'jpg'}`} alt={`Programa Entrepreneurs - Actividad ${num}`} className="w-[280px] sm:w-[340px] md:w-[420px] h-[210px] sm:h-[250px] md:h-[300px] object-cover rounded-xl transition-all duration-500 group-hover:scale-105 group-hover:brightness-110" />
                           <div className="absolute inset-4 bg-gradient-to-t from-blue-700/60 via-blue-500/20 to-[#E3FB07]/25 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
                           <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-md rounded-lg p-3 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
                             <p className="text-blue-900 text-sm font-bold text-center uppercase tracking-wide">Programa Entrepreneurs</p>
@@ -441,16 +583,16 @@ export default function WinstonLife() {
         </section>
 
         {/* Sección #SOY WINSTON */}
-        <section id="soy-winston" className="py-20 bg-gray-50">
+        <section id="soy-winston" className="py-14 md:py-20 bg-gray-50">
           <div className="container mx-auto px-6">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-600 mb-4">
+            <div className="text-center mb-10 md:mb-16">
+              <h2 className="text-3xl md:text-5xl font-bold text-gray-600 mb-4">
                 #SOY WINSTON
               </h2>
             </div>
             
             {/* Grid de imágenes */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8 max-w-6xl mx-auto">
               {galleries.soyWinston.gridImages.map((image, index) => (
                 <div
                   key={index}
@@ -460,12 +602,12 @@ export default function WinstonLife() {
                   <img
                     src={image}
                     alt={`#Soy Winston ${index + 1}`}
-                    className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="w-full h-64 sm:h-72 md:h-80 object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
                     <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <div className="bg-white bg-opacity-60 px-4 py-2 rounded-full">
-                        <span className="text-blue-900 font-medium text-sm uppercase tracking-wide">
+                        <span className="text-blue-900 font-medium text-xs sm:text-sm uppercase tracking-wide">
                           VER COMPLETA
                         </span>
                       </div>
@@ -483,14 +625,35 @@ export default function WinstonLife() {
             ref={video2Ref}
             autoPlay
             loop
-            muted
+            muted={video2Muted}
             playsInline
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover cursor-pointer"
             preload="auto"
+            onClick={toggleVideo2PlayPause}
           >
             <source src="/images/Winston Life/video2.mp4" type="video/mp4" />
             Tu navegador no soporta el elemento de video.
           </video>
+          {/* Botón de control de audio */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              toggleVideo2Audio()
+            }}
+            className="absolute bottom-4 right-4 md:bottom-8 md:right-8 z-20 bg-black bg-opacity-50 hover:bg-opacity-75 text-white p-3 md:p-4 rounded-full transition-all duration-300 hover:scale-110"
+            aria-label={video2Muted ? "Activar audio" : "Desactivar audio"}
+          >
+            {video2Muted ? (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+              </svg>
+            ) : (
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+              </svg>
+            )}
+          </button>
         </section>
 
         {/* Modal de Galería */}
