@@ -60,10 +60,10 @@ export default function ConveniosSection() {
                   : 'opacity-0 translate-y-8 scale-95'
               }`} style={{ transitionDelay: '200ms' }}>
                 {/* Imagen de convenios - Responsive - Tamaño perfecto */}
+                {/* 2026-03-27: Escala reducida para evitar solape con texto lateral. */}
                 <img
                   src="/images/logos/convenios.png"
                   alt="Convenios y Alianzas Académicas - Instituto Winston Churchill"
-                  // 2026-03-27: Reducción de escala para mejorar composición y evitar solapes con texto.
                   className="w-auto h-auto object-contain scale-90 sm:scale-95 md:scale-100 lg:scale-110 xl:scale-125 2xl:scale-140"
                 />
                 
