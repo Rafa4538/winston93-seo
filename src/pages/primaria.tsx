@@ -348,7 +348,7 @@ export default function PrimariaPage() {
 
         {/* Nueva imagen de bandas horizontales con movimiento de izquierda a derecha */}
         <motion.div 
-          className="absolute inset-0 flex items-center justify-center"
+          className="absolute inset-0 z-[1] flex items-center justify-center"
           initial={{ x: -1000, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
@@ -360,19 +360,11 @@ export default function PrimariaPage() {
             height={1080}
             className="w-full h-full object-cover"
           />
-          {/* 2026-04-10: En móvil solo mostrar "PRIMARIA"; en tablet subir considerablemente el bloque sin afectar desktop. */}
-          <div className="absolute bottom-[38%] left-[66%] md:bottom-[80%] lg:bottom-[38%] md:left-[62%] lg:left-[64%] xl:left-[66%] transform -translate-x-1/2 translate-y-1/2 max-w-md md:max-w-xl lg:max-w-2xl px-4 md:px-6">
-            <h1 className="text-white text-2xl md:text-6xl font-bold tracking-wider mb-3 md:mb-6">PRIMARIA</h1>
-            <div className="hidden md:block text-white text-xs md:text-base leading-relaxed space-y-2 drop-shadow-lg">
-              <p className="font-semibold">Etapa avalada por el respaldo académico de Cambridge.</p>
-              <p>Con una formación académica de calidad y el inglés como parte esencial del aprendizaje, acompañamos a nuestros alumnos en una etapa clave para fortalecer su pensamiento crítico y sus valores.</p>
-            </div>
-          </div>
         </motion.div>
 
-        {/* Imagen del estudiante con movimiento de abajo hacia arriba */}
+        {/* Imagen del estudiante — debajo del texto para no tapar el copy (2026-04-11). */}
         <motion.div 
-          className="absolute bottom-0 left-0 w-full h-full"
+          className="absolute bottom-0 left-0 z-[5] w-full h-full pointer-events-none"
           initial={{ y: 1000, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 1.8, delay: 0.8, ease: "easeOut" }}
@@ -385,6 +377,18 @@ export default function PrimariaPage() {
             className="absolute bottom-0 left-2 md:left-16 h-full w-auto object-cover object-bottom"
           />
         </motion.div>
+
+        {/* 2026-04-11: Capa propia z-30 encima del niño; móvil solo título, md+ título + párrafos; tablet grande alineado al lado derecho del personaje. */}
+        {/* 2026-04-11: Más padding izquierdo en md+ para separar el copy del personaje. */}
+        <div className="absolute inset-0 z-[30] flex flex-col justify-center items-center px-4 pt-10 pb-6 text-center md:items-stretch md:justify-center md:text-left md:pl-[50%] lg:pl-[52%] xl:pl-[50%] md:pr-6 lg:pr-10 xl:pr-16 md:pt-16 md:pb-8 pointer-events-none">
+          <div className="pointer-events-auto max-w-[22rem] sm:max-w-md md:max-w-lg lg:max-w-xl w-full">
+            <h1 className="text-white text-2xl md:text-5xl lg:text-6xl font-bold tracking-wider mb-2 md:mb-4 drop-shadow-lg">PRIMARIA</h1>
+            <div className="hidden md:block text-white text-sm md:text-base leading-relaxed space-y-2 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+              <p className="font-semibold">Etapa avalada por el respaldo académico de Cambridge.</p>
+              <p>Con una formación académica de calidad y el inglés como parte esencial del aprendizaje, acompañamos a nuestros alumnos en una etapa clave para fortalecer su pensamiento crítico y sus valores.</p>
+            </div>
+          </div>
+        </div>
       </section>
 
 
