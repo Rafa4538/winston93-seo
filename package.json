@@ -4,7 +4,7 @@
   "description": "Proyecto web con Next.js, TypeScript y Tailwind CSS",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "set NEXT_DISABLE_LOCAL_TRACE=1&& next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

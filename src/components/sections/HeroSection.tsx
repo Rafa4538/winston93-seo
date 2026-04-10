@@ -33,36 +33,28 @@ export default function HeroSection() {
     }
   }, [])
 
-  // En móvil, forzar overlay de Play siempre para garantizar reproducción
+  // 2026-04-10: Se unifica el intento de autoplay para todos los dispositivos.
+  // Los navegadores modernos (iOS Safari, Android Chrome) permiten muted+playsInline.
+  // Si falla, se muestra overlay de Play sobre el poster en lugar de fondo blanco.
   useEffect(() => {
     const tryAutoplay = async () => {
       if (!videoRef.current) return
-      
-      // En móvil, siempre mostrar overlay de Play para evitar problemas de autoplay
-      if (isMobile) {
-        setShowPlayOverlay(true)
-        setVideoLoaded(false)
-        return
-      }
-      
       try {
-        // Asegurar flags antes de intentar reproducir (solo desktop/tablet)
         videoRef.current.muted = true
         videoRef.current.playsInline = true
         await videoRef.current.play()
         setVideoLoaded(true)
         setShowPlayOverlay(false)
-      } catch (err) {
-        // Requiere interacción del usuario
+      } catch {
+        // El autoplay fue bloqueado; se muestra overlay de Play sobre el poster
         setShowPlayOverlay(true)
         setVideoLoaded(false)
       }
     }
-    // Solo intentar una vez en cliente
     if (typeof window !== 'undefined') {
       tryAutoplay()
     }
-  }, [isMobile])
+  }, [])
 
   const handlePlayClick = async () => {
     if (!videoRef.current) return
@@ -97,7 +89,8 @@ export default function HeroSection() {
   }
 
   return (
-    <div className="h-full w-full relative overflow-hidden">
+    // 2026-04-10: min-h garantiza altura en móvil donde h-full puede colapsar sin padre con altura fija
+    <div className="h-full min-h-[85vh] md:min-h-screen w-full relative overflow-hidden">
       {/* Overlay móvil: botón de Play si autoplay es bloqueado */}
       {showPlayOverlay && (
         <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/40">
@@ -114,29 +107,32 @@ export default function HeroSection() {
         </div>
       )}
 
-      {/* Indicador de carga (no tapa overlay de play). Reducimos opacidad en móvil */}
+      {/* 2026-04-10: Spinner sobre el poster (fondo ya no es blanco); solo visible mientras carga y sin overlay de play */}
       {!videoLoaded && !showPlayOverlay && (
-        <div className="absolute inset-0 bg-white/80 md:bg-white/90 flex items-center justify-center z-20">
+        <div className="absolute inset-0 flex items-center justify-center z-20">
           <div className="text-center px-4">
-            <div className="w-12 h-12 md:w-16 md:h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="text-gray-800 text-base md:text-lg font-semibold">Cargando video...</p>
-            <div className="w-48 md:w-64 bg-gray-200 rounded-full h-2 mt-4">
+            <div className="w-12 h-12 md:w-16 md:h-16 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-white text-base md:text-lg font-semibold drop-shadow">Cargando video...</p>
+            <div className="w-48 md:w-64 bg-white/30 rounded-full h-2 mt-4">
               <div 
-                className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                className="bg-white h-2 rounded-full transition-all duration-300"
                 style={{ width: `${loadingProgress}%` }}
               ></div>
             </div>
-            <p className="text-gray-600 text-xs md:text-sm mt-2">{Math.round(loadingProgress)}% cargado</p>
+            <p className="text-white/80 text-xs md:text-sm mt-2">{Math.round(loadingProgress)}% cargado</p>
           </div>
         </div>
       )}
       
-      {/* Fundido blanco con transición suave */}
+      {/* 2026-04-10: Poster como fondo mientras carga el video; evita el fondo blanco en móvil/tablet */}
       <div 
-        className={`absolute inset-0 bg-white z-10 transition-opacity duration-1000 ease-in-out`}
+        className="absolute inset-0 z-10 transition-opacity duration-1000 ease-in-out bg-black"
         style={{ 
           minHeight: '100vh',
-          opacity: videoLoaded ? 0 : 1
+          opacity: videoLoaded ? 0 : 1,
+          backgroundImage: 'url(/images/slider/SLIDE_INICIO_1.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
         }}
       ></div>
       
@@ -149,7 +145,7 @@ export default function HeroSection() {
         playsInline
         preload="auto"
         poster="/images/slider/SLIDE_INICIO_1.jpg"
-        controls={isMobile}
+        controls={false}
         className={`absolute inset-0 w-full h-full object-cover z-20 transition-opacity duration-1000 ease-in-out`}
         style={{
           width: '100%',

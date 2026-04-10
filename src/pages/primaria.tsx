@@ -240,11 +240,12 @@ export default function PrimariaPage() {
       <section className="relative h-[33vh] md:h-screen w-full overflow-hidden">
         {/* Imagen de fondo fija con fundido suave - fachada completa visible */}
         <motion.div 
-          className="absolute inset-0 bg-contain bg-center bg-no-repeat bg-fixed"
+          className="absolute inset-0 bg-center bg-no-repeat"
           style={{
             backgroundImage: `url('/images/facilities/fondo_escuela.png')`,
-            backgroundAttachment: 'fixed',
-            backgroundSize: 'contain'
+            // 2026-04-10: En móvil evitamos bg-fixed (inestable) y estiramos al 100% para rellenar todo el hero.
+            backgroundAttachment: windowSize.width < 768 ? 'scroll' : 'fixed',
+            backgroundSize: windowSize.width < 768 ? '100% 100%' : 'contain'
           }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -268,10 +269,10 @@ export default function PrimariaPage() {
             height={1080}
             className="w-full h-full object-cover"
           />
-          {/* Texto PRIMARIA sobre la banda azul */}
-          <div className="absolute bottom-[38%] left-[58%] md:left-[62%] lg:left-[64%] xl:left-[66%] transform -translate-x-1/2 translate-y-1/2 max-w-md md:max-w-xl lg:max-w-2xl px-4 md:px-6">
+          {/* 2026-04-10: En móvil solo mostrar "PRIMARIA"; en tablet subir el bloque descriptivo sin afectar desktop. */}
+          <div className="absolute bottom-[38%] left-[66%] md:bottom-[66%] lg:bottom-[38%] md:left-[62%] lg:left-[64%] xl:left-[66%] transform -translate-x-1/2 translate-y-1/2 max-w-md md:max-w-xl lg:max-w-2xl px-4 md:px-6">
             <h1 className="text-white text-2xl md:text-6xl font-bold tracking-wider mb-3 md:mb-6">PRIMARIA</h1>
-            <div className="text-white text-xs md:text-base leading-relaxed space-y-2 drop-shadow-lg">
+            <div className="hidden md:block text-white text-xs md:text-base leading-relaxed space-y-2 drop-shadow-lg">
               <p className="font-semibold">Etapa avalada por el respaldo académico de Cambridge.</p>
               <p>Con una formación académica de calidad y el inglés como parte esencial del aprendizaje, acompañamos a nuestros alumnos en una etapa clave para fortalecer su pensamiento crítico y sus valores.</p>
             </div>

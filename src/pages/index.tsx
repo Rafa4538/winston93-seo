@@ -91,7 +91,8 @@ export default function Home() {
       {/* Móvil y Tablets: scroll nativo. Solo Desktop: FullPageScroll */}
       {isHydrated && useNativeScroll ? (
         // 2026-03-27: Espaciado y alturas fluidas para mejorar legibilidad en móvil/tablet sin alterar orden de secciones.
-        <div className="w-full pt-16 md:pt-[72px]">
+        // 2026-04-10: Eliminado pt-16 del contenedor; la sección hero arranca en y=0 para que el nav transparente la superponga.
+        <div className="w-full">
           <section className="min-h-[85vh] md:h-screen w-full">
             <HeroSection />
           </section>
