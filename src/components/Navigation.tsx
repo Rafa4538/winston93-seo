@@ -73,16 +73,10 @@ export default function Navigation({ currentSection = 0 }: NavigationProps) {
     navBackground = 'bg-transparent'
   }
 
-  // 2026-03-27: Regla unificada de transparencia con transición suave.
-  // - Siempre azul en servicios-en-linea (fondo blanco).
-  // - Home desktop (FullPageScroll): transparente SOLO en sección 0.
-  // - Resto de páginas/dispositivos: transparente solo en top real (scrollY).
-  const isHomeDesktopFullPage = isHomePage && !isMobile && !isTablet
-  const shouldBeTransparent = isServiciosPage
-    ? false
-    : isHomeDesktopFullPage
-      ? isFirstSection
-      : isAtTop
+  // 2026-04-10: Transparencia consistente para desktop/tablet/móvil.
+  // En top real el navbar inicia transparente y al hacer scroll pasa a azul;
+  // servicios-en-linea se mantiene sólido para conservar contraste sobre fondo claro.
+  const shouldBeTransparent = isServiciosPage ? false : isAtTop
 
   if (shouldBeTransparent) {
     navBackground = 'bg-transparent shadow-none backdrop-blur-0'

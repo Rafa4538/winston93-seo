@@ -299,7 +299,8 @@ export default function WinstonLife() {
       {/* Header */}
       <Navigation currentSection={0} />
 
-      <div className="min-h-screen pt-16 md:pt-[72px]">
+      {/* 2026-04-10: Sin pt superior; el hero arranca en y=0 y el nav fijo/transparente se superpone a la portada (igual que home en móvil/tablet). */}
+      <div className="min-h-screen">
         {/* Banner Principal */}
         <section className="relative h-screen overflow-hidden">
           <div className="absolute inset-0">

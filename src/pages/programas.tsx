@@ -372,7 +372,7 @@ export default function ProgramasPage() {
 
               {/* Panel de texto derecho con fondo sólido que se extiende sobre la imagen */}
               <div 
-                className={`w-4/5 h-full absolute right-0 top-0 flex items-center justify-end pr-8 md:pr-16 lg:pr-24 z-20`}
+                className={`w-full md:w-4/5 h-full absolute right-0 top-0 flex items-end md:items-center justify-center md:justify-end px-4 pb-24 md:pb-0 md:pr-16 lg:pr-24 z-20`}
                 style={{
                   border: 'none',
                   outline: 'none',
@@ -434,7 +434,8 @@ export default function ProgramasPage() {
                     )`
                 } as React.CSSProperties}
               >
-                <div className={`max-w-sm ${section.fadeImage?.includes('naranja') ? 'text-left -ml-8 md:-ml-12 lg:-ml-' : 'text-center'}`}>
+                {/* 2026-04-10: Se ajustan anchos/offsets para evitar solapes y mejorar legibilidad en móvil/tablet. */}
+                <div className={`w-full max-w-[95vw] sm:max-w-[34rem] md:max-w-sm ${section.fadeImage?.includes('naranja') ? 'text-left ml-0 md:-ml-12 lg:-ml-16' : 'text-center'}`}>
                   {/* Título principal - Solo para sección naranja */}
                   {section.fadeImage?.includes('naranja') ? (
                     <div className="mb-4">
@@ -443,10 +444,10 @@ export default function ProgramasPage() {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
                         viewport={{ once: true }}
-                        className="text-white font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight -ml-12 md:-ml-16 lg:-ml-20"
+                        className="text-white font-bold text-3xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight ml-0 md:-ml-16 lg:-ml-20"
                       >
-                        <div className="-ml-12 md:-ml-16 lg:-ml-35">Educación</div>
-                        <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl -ml-12 md:-ml-16 lg:-ml-10">Financiera</div>
+                        <div className="ml-0 md:-ml-16 lg:-ml-24">Educación</div>
+                        <div className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl ml-0 md:-ml-16 lg:-ml-10">Financiera</div>
                       </motion.div>
                       
                       {/* Subtítulo */}
@@ -455,7 +456,7 @@ export default function ProgramasPage() {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.4 }}
                         viewport={{ once: true }}
-                        className="text-white font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl mt-2 -ml-12 md:-ml-16 lg:-ml-20"
+                        className="text-white font-bold text-base sm:text-xl md:text-2xl lg:text-3xl mt-2 ml-0 md:-ml-16 lg:-ml-20"
                       >
                         Entrepreneurs
                       </motion.h3>
@@ -468,11 +469,11 @@ export default function ProgramasPage() {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
                         viewport={{ once: true }}
-                        className="text-white font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight"
+                        className="text-white font-bold text-3xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight"
                       >
-                        <div className="-ml-12 md:-ml-16 lg:-ml-40">MIND</div>
-                        <div className="-ml-12 md:-ml-16 lg:-ml-10">FUL</div>
-                        <div className="-mr-12 md:-mr-16 lg:-mr-20">NESS</div>
+                        <div className="ml-0 md:-ml-16 lg:-ml-40">MIND</div>
+                        <div className="ml-0 md:-ml-16 lg:-ml-10">FUL</div>
+                        <div className="mr-0 md:-mr-16 lg:-mr-20">NESS</div>
                       </motion.div>
                     </div>
                   ) : section.fadeImage?.includes('verde') ? (
@@ -484,7 +485,7 @@ export default function ProgramasPage() {
                         transition={{ duration: 0.8, delay: 0.2 }}
                         viewport={{ once: true }}
                         className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-2"
-                        style={{ color: '#97b664' }}
+                        style={{ color: '#0A1F44' }}
                       >
                         {section.title}
                       </motion.h2>
@@ -495,7 +496,7 @@ export default function ProgramasPage() {
                         transition={{ duration: 0.8, delay: 0.4 }}
                         viewport={{ once: true }}
                         className="font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl mb-4 md:mb-6"
-                        style={{ color: '#97b664' }}
+                        style={{ color: '#0A1F44' }}
                       >
                         {section.subtitle}
                       </motion.h3>
@@ -534,9 +535,9 @@ export default function ProgramasPage() {
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.8, delay: 0.6 }}
                       viewport={{ once: true }}
-                      className="bg-transparent border border-white p-3 md:p-4 mb-4 md:mb-6"
+                      className="bg-transparent border border-white p-3 md:p-4 mb-3 md:mb-6"
                     >
-                      <p className="text-sm md:text-lg text-white font-medium">
+                      <p className="text-sm md:text-lg text-white font-medium leading-relaxed">
                         {section.description}
                       </p>
                     </motion.div>
@@ -547,11 +548,12 @@ export default function ProgramasPage() {
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.8, delay: 0.6 }}
                       viewport={{ once: true }}
-                      className="bg-transparent p-3 md:p-4 mb-4 md:mb-6"
-                      style={{ borderColor: '#97b664', border: '1px solid' }}
+                      className="bg-transparent p-3 md:p-4 mb-3 md:mb-6"
+                      // 2026-04-10: En fondo verde/amarillo usamos azul marino para maximizar contraste.
+                      style={{ borderColor: '#0A1F44', border: '1px solid' }}
                     >
-                      <p className="text-sm md:text-lg font-medium"
-                         style={{ color: '#97b664' }}>
+                      <p className="text-sm md:text-lg font-medium leading-relaxed"
+                         style={{ color: '#0A1F44' }}>
                         {section.description}
                       </p>
                     </motion.div>
@@ -562,9 +564,9 @@ export default function ProgramasPage() {
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.8, delay: 0.6 }}
                       viewport={{ once: true }}
-                      className={`${section.accentColor} bg-opacity-20 border border-current border-opacity-30 p-3 md:p-4 mb-4 md:mb-6`}
+                      className={`${section.accentColor} bg-opacity-20 border border-current border-opacity-30 p-3 md:p-4 mb-3 md:mb-6`}
                     >
-                      <p className={`text-sm md:text-lg ${section.textColor} font-medium`}>
+                      <p className={`text-sm md:text-lg ${section.textColor} font-medium leading-relaxed`}>
                         {section.description}
                       </p>
                     </motion.div>
@@ -576,8 +578,8 @@ export default function ProgramasPage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.8 }}
                     viewport={{ once: true }}
-                    className={`text-sm md:text-base leading-relaxed text-left ${section.fadeImage?.includes('naranja') ? 'text-white -ml-12 md:-ml-16 lg:-ml-20' : section.fadeImage?.includes('azul') ? 'text-white' : section.fadeImage?.includes('verde') ? '' : section.textColor} opacity-90`}
-                    style={section.fadeImage?.includes('verde') ? { color: '#97b664' } : {}}
+                    className={`text-xs sm:text-sm md:text-base leading-relaxed text-left ${section.fadeImage?.includes('naranja') ? 'text-white ml-0 md:-ml-16 lg:-ml-20' : section.fadeImage?.includes('azul') ? 'text-white' : section.fadeImage?.includes('verde') ? '' : section.textColor} opacity-95`}
+                    style={section.fadeImage?.includes('verde') ? { color: '#0A1F44' } : {}}
                   >
                     {section.longDescription}
                   </motion.p>
@@ -588,7 +590,7 @@ export default function ProgramasPage() {
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 1 }}
                     viewport={{ once: true }}
-                    className="absolute bottom-8 left-8"
+                    className="hidden md:block absolute bottom-8 left-8"
                   >
                     <svg 
                       className={`w-8 h-8 ${section.fadeImage?.includes('naranja') ? 'text-white' : section.fadeImage?.includes('azul') ? 'text-white' : section.textColor} opacity-60`}
@@ -607,12 +609,12 @@ export default function ProgramasPage() {
                   </motion.div>
 
                   {/* Flechas de navegación */}
-                  <div className="absolute right-6 top-1/2 transform -translate-y-1/2 space-y-6 z-30">
+                  <div className="absolute right-4 md:right-6 bottom-6 md:top-1/2 md:bottom-auto transform md:-translate-y-1/2 flex md:block gap-3 md:gap-0 md:space-y-6 z-30">
                     <motion.button
                       onClick={() => goToSection(Math.max(0, index - 1))}
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
-                      className={`w-14 h-14 rounded-full backdrop-blur-sm transition-all duration-300 flex items-center justify-center shadow-xl ${
+                      className={`w-11 h-11 md:w-14 md:h-14 rounded-full backdrop-blur-sm transition-all duration-300 flex items-center justify-center shadow-xl ${
                         section.fadeImage?.includes('naranja') ? 'bg-white bg-opacity-20 text-white hover:bg-opacity-30' :
                         section.fadeImage?.includes('azul') ? 'bg-white bg-opacity-20 text-white hover:bg-opacity-30' :
                         section.fadeImage?.includes('verde') ? 'bg-white bg-opacity-20 hover:bg-opacity-30' :
@@ -623,7 +625,7 @@ export default function ProgramasPage() {
                       style={section.fadeImage?.includes('verde') ? { color: '#97b664' } : {}}
                       disabled={index === 0}
                     >
-                      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 15l7-7 7 7" />
                       </svg>
                     </motion.button>
@@ -631,7 +633,7 @@ export default function ProgramasPage() {
                       onClick={() => goToSection(Math.min(sectionsData.length - 1, index + 1))}
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
-                      className={`w-14 h-14 rounded-full backdrop-blur-sm transition-all duration-300 flex items-center justify-center shadow-xl ${
+                      className={`w-11 h-11 md:w-14 md:h-14 rounded-full backdrop-blur-sm transition-all duration-300 flex items-center justify-center shadow-xl ${
                         section.fadeImage?.includes('naranja') ? 'bg-white bg-opacity-20 text-white hover:bg-opacity-30' :
                         section.fadeImage?.includes('azul') ? 'bg-white bg-opacity-20 text-white hover:bg-opacity-30' :
                         section.fadeImage?.includes('verde') ? 'bg-white bg-opacity-20 hover:bg-opacity-30' :
@@ -642,7 +644,7 @@ export default function ProgramasPage() {
                       style={section.fadeImage?.includes('verde') ? { color: '#97b664' } : {}}
                       disabled={index === sectionsData.length - 1}
                     >
-                      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
                       </svg>
                     </motion.button>
@@ -654,7 +656,7 @@ export default function ProgramasPage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 1.2 }}
                     viewport={{ once: true }}
-                    className="absolute bottom-8 right-8"
+                    className="hidden md:block absolute bottom-8 right-8"
                   >
                     <p className={`text-sm ${section.textColor} opacity-70 font-medium`}>
                       AVISO DE PRIVACIDAD
