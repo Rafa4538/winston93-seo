@@ -412,11 +412,12 @@ export default function PrimariaPage() {
             <div className="flex flex-col md:flex-row gap-8 md:gap-80 items-start justify-center">
               {/* Título a la izquierda */}
               <div className="flex-shrink-0 text-center md:text-left mb-6 md:mb-0">
-                <h2 className="text-2xl md:text-6xl font-bold text-blue-900">EDUCACIÓN</h2>
-                <h3 className="text-2xl md:text-6xl font-bold text-blue-600">BILINGÜE</h3>
+                {/* 2026-04-14: "EDUCACIÓN" en #0038e4 y el resto del título en #156dff por solicitud del usuario. */}
+                <h2 className="text-2xl md:text-6xl font-bold text-[#0038e4]">EDUCACIÓN</h2>
+                <h3 className="text-2xl md:text-6xl font-bold text-[#156dff]">BILINGÜE</h3>
                 <div className="ml-0">
-                  <p className="text-lg md:text-2xl text-blue-700 font-medium">QUE FORMA</p>
-                  <p className="text-lg md:text-2xl text-blue-700 font-medium">CON PROPÓSITO</p>
+                  <p className="text-lg md:text-2xl text-[#156dff] font-medium">QUE FORMA</p>
+                  <p className="text-lg md:text-2xl text-[#156dff] font-medium">CON PROPÓSITO</p>
                 </div>
               </div>
 
@@ -471,7 +472,8 @@ export default function PrimariaPage() {
               MINDFULNESS
             </ExtracurricularCard>
 
-            <ExtracurricularCard src="/images/extracurriculares/robotica.png" alt="Robótica" overlayColor="bg-[#E3FB07] bg-opacity-60" textColor="text-black" onClick={() => openGallery('robotica')}>
+            {/* 2026-04-14: En tarjetas verde fosforescente, texto de materias en azul #0038e4. */}
+            <ExtracurricularCard src="/images/extracurriculares/robotica.png" alt="Robótica" overlayColor="bg-[#E3FB07] bg-opacity-60" textColor="text-[#0038e4]" onClick={() => openGallery('robotica')}>
               ROBÓTICA
             </ExtracurricularCard>
 
@@ -482,7 +484,7 @@ export default function PrimariaPage() {
 
           {/* Segunda fila */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 max-w-7xl mx-auto justify-items-center">
-            <ExtracurricularCard src="/images/extracurriculares/tecnologia.png" alt="Tecnología" overlayColor="bg-[#E3FB07] bg-opacity-60" textColor="text-black" onClick={() => openGallery('tecnologia')}>
+            <ExtracurricularCard src="/images/extracurriculares/tecnologia.png" alt="Tecnología" overlayColor="bg-[#E3FB07] bg-opacity-60" textColor="text-[#0038e4]" onClick={() => openGallery('tecnologia')}>
               TECNOLOGÍA
             </ExtracurricularCard>
 
@@ -490,7 +492,7 @@ export default function PrimariaPage() {
               ENTREPRENEURS
             </ExtracurricularCard>
 
-            <ExtracurricularCard src="/images/extracurriculares/fe.png" alt="Educación en la Fe" overlayColor="bg-[#E3FB07] bg-opacity-60" textColor="text-black" onClick={() => openGallery('fe')}>
+            <ExtracurricularCard src="/images/extracurriculares/fe.png" alt="Educación en la Fe" overlayColor="bg-[#E3FB07] bg-opacity-60" textColor="text-[#0038e4]" onClick={() => openGallery('fe')}>
               EDUCACIÓN EN LA FE <span className="text-xs ml-2">(OPCIONAL)</span>
             </ExtracurricularCard>
           </div>
