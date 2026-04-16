@@ -25,9 +25,13 @@ export default function EducationalOfferSection() {
   return (
     <div ref={sectionRef} className="h-full w-full relative overflow-hidden bg-white">
       {/* Contenido principal */}
-      <div className="h-full flex items-center py-6 md:py-0">
+      <div className="h-full flex items-center py-6 md:py-0 relative">
+        {/* 2026-04-16: Barra azul decorativa movida al contenedor superior; ocupa la mitad desde la derecha. */}
+        <div className={`absolute top-16 md:top-24 right-0 h-4 w-1/2 bg-[#0050ce] transition-all duration-1000 ease-out ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
+        }`} style={{ transitionDelay: '300ms' }} />
         <div className="container mx-auto px-4 md:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between h-full">
+          <div className="flex flex-col md:flex-row items-center justify-between h-full relative">
             
             {/* Lado izquierdo - Imagen de estudiantes */}
             <div className="w-full md:w-1/2 relative flex items-center justify-center mb-0 md:mb-0">

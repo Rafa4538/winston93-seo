@@ -524,18 +524,32 @@ export default function PrimariaPage() {
               {/* 2026-04-14: Ajuste de legibilidad en bloque verde fosforescente usando tono negro-gris para el texto. */}
               <div className="bg-[#E3FB07] text-gray-900 p-8 rounded-2xl">
                 <h3 className="text-2xl font-bold mb-4">SERVICIO DE ESTANCIA</h3>
+                {/* 2026-04-16: Se actualiza texto de Servicio de Estancia con copia oficial y horarios correctos. */}
                 <p className="mb-4 leading-relaxed text-justify">
-                  <strong>FLEXIBILIDAD PARA EL ACOMPAÑAMIENTO PARA ELLOS</strong>
+                  <strong>FLEXIBILIDAD PARA TI, ACOMPAÑAMIENTO PARA ELLOS.</strong>
                 </p>
                 <p className="leading-relaxed text-justify">
-                  Sabemos que cada familia tiene diferentes horarios por eso ofrecemos servicio de estancia para brindar acompañamiento y apoyo a nuestros alumnos en tareas de desarrollo de su autonomía.
+                  Sabemos que cada familia tiene diferentes horarios, por eso ofrecemos un servicio de estancia que cuida, acompaña y apoya a nuestros alumnos al terminar su jornada escolar.
                 </p>
+                {/* 2026-04-16: Se unifica el horario en formato de rango para evitar ambigüedad. */}
                 <div className="mt-4">
-                  <p className="font-bold">HORARIO:</p>
-                  <p>7:00 AM - 6:00 PM</p>
+                  <p>5:00 PM a 7:00 PM</p>
                 </div>
               </div>
             </div>
+
+            {/* 2026-04-16: Botón de admisión centrado debajo de las tarjetas de certificación y estancia. */}
+            <div className="mt-8 flex justify-center">
+              <a
+                href="https://agendaw.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-[#013BDF] text-white font-bold text-lg uppercase tracking-widest px-10 py-4 rounded-xl shadow-lg hover:bg-[#0050ce] hover:shadow-xl transition-all duration-300 hover:scale-105"
+              >
+                COMIENZA TU PROCESO DE ADMISIÓN
+              </a>
+            </div>
+
           </div>
         </div>
       </section>

@@ -578,7 +578,8 @@ export default function WinstonLife() {
             }
             .wl-cintilla-track {
               will-change: transform;
-              animation: wl-marquee-x 24s linear infinite;
+              /* 2026-04-16: Se ajusta la velocidad del slider a 52 segundos por solicitud del usuario. */
+              animation: wl-marquee-x 52s linear infinite;
             }
           `}</style>
         </section>

@@ -438,15 +438,13 @@ export default function SecundariaPage() {
                 </div>
               </div>
               {/* 2026-04-14: Se simplifica formato del texto lateral para corregir desalineación y mantenerlo justificado. */}
+              {/* 2026-04-16: Se actualiza el texto de secundaria con la redacción exacta proporcionada en la imagen del usuario. */}
               <div className="text-gray-600 px-4 md:px-0">
                 <p className="leading-relaxed text-justify mb-4">
-                  En nuestra secundaria, fomentamos que nuestros alumnos piensen, cuestionen y resuelvan problemas, 
-                  construyendo conocimiento a través del análisis, la reflexión y la experimentación en un ambiente 
-                  que estimula la curiosidad y la toma de decisiones independientes.
+                  En secundaria impulsamos a nuestros alumnos a pensar, cuestionar y resolver. Fomentamos el conocimiento a través del análisis, la reflexión y la experimentación, dentro de un ambiente que estimula la curiosidad y la toma de decisiones con criterio propio.
                 </p>
                 <p className="leading-relaxed text-justify">
-                  Además del programa oficial de la SEP, fortalecemos su educación con inglés avanzado y francés, 
-                  integrando el desarrollo cívico, social, deportivo y de valores.
+                  Además de cumplir con el plan de estudios oficial (SEP), fortalecemos su formación con una preparación sólida en inglés avanzado y conocimientos en francés, integrando también el desarrollo cívico, social, deportivo y en valores como parte esencial de su crecimiento.
                 </p>
               </div>
             </div>
@@ -579,18 +577,32 @@ export default function SecundariaPage() {
             {/* 2026-04-14: Texto del bloque "Servicio de Estancia" en blanco por solicitud del usuario. */}
             <div className="bg-[#ffb600] text-white p-8 rounded-2xl">
               <h3 className="text-2xl font-bold mb-4">SERVICIO DE ESTANCIA</h3>
+              {/* 2026-04-16: Se actualiza texto de Servicio de Estancia con copia oficial y horarios correctos. */}
               <p className="mb-4 leading-relaxed text-justify">
-                <strong>FLEXIBILIDAD PARA TI, ACOMPAÑAMIENTO PARA ELLOS</strong>
+                <strong>FLEXIBILIDAD PARA TI, ACOMPAÑAMIENTO PARA ELLOS.</strong>
               </p>
               <p className="leading-relaxed text-justify">
-                Sabemos que cada familia tiene diferentes horarios por eso ofrecemos servicio de estancia para cuidar, acompañar y apoyar a nuestros alumnos después de su jornada escolar.
+                Sabemos que cada familia tiene diferentes horarios, por eso ofrecemos un servicio de estancia que cuida, acompaña y apoya a nuestros alumnos al terminar su jornada escolar.
               </p>
+              {/* 2026-04-16: Se unifica el horario en formato de rango para evitar ambigüedad. */}
               <div className="mt-4">
-                <p className="font-bold">HORARIOS:</p>
-                <p>5:00 PM - 7:00 PM</p>
+                <p>5:00 PM a 7:00 PM</p>
               </div>
             </div>
           </div>
+
+          {/* 2026-04-16: Botón de admisión centrado debajo de las tarjetas de certificación y estancia. */}
+          <div className="mt-8 flex justify-center">
+            <a
+              href="https://agendaw.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-[#013BDF] text-white font-bold text-lg uppercase tracking-widest px-10 py-4 rounded-xl shadow-lg hover:bg-[#0050ce] hover:shadow-xl transition-all duration-300 hover:scale-105"
+            >
+              COMIENZA TU PROCESO DE ADMISIÓN
+            </a>
+          </div>
+
         </div>
       </section>
 

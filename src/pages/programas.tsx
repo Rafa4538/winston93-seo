@@ -103,6 +103,7 @@ export default function ProgramasPage() {
       title: 'Educación Financiera',
       subtitle: 'Entrepreneurs',
       description: 'Fomentamos la cultura del emprendimiento desde edades tempranas.',
+      // 2026-04-16: El texto "Fomentamos..." se mostrará en un bloque separado en negritas.
       longDescription: 'Nuestros alumnos no sólo imaginan ideas innovadoras: Aprenden a construir un negocio desde cero. Desarrollan planes de negocio reales, crean estrategias de marketing, realizan proyecciones financieras básicas y presentan sus proyectos de forma profesional, todo esto con la finalidad de fortalecer su liderazgo, pensamiento estratégico y toma de decisiones.',
       bgColor: 'from-yellow-400 to-yellow-500',
       textColor: 'text-black',
@@ -128,8 +129,9 @@ export default function ProgramasPage() {
       id: 'formacion-social',
       title: 'FORMACIÓN',
       subtitle: 'Social y Humana',
-      description: 'Atención plena para el bienestar emocional y la concentración.',
-      longDescription: 'Con ejercicios de respiración, enfoque y relajación, nuestros alumnos aprenden a gestionar sus emociones y mejorar su rendimiento académico.',
+      // 2026-04-16: Se actualiza el contenido de Formación Social y Humana con el texto oficial proporcionado.
+      description: 'Entendimiento del mundo a través del respeto y la participación.',
+      longDescription: 'Promovemos la conciencia social, la identidad cultural y el compromiso con la comunidad mediante actividades integradoras y experiencias significativas.',
       bgColor: 'from-blue-600 to-blue-800',
       textColor: 'text-white',
       accentColor: 'bg-yellow-400',
@@ -572,6 +574,19 @@ export default function ProgramasPage() {
                     </motion.div>
                   )}
 
+                  {/* 2026-04-16: En Educación Financiera se muestra la frase de introducción en un bloque separado y en negritas. */}
+                  {section.fadeImage?.includes('naranja') && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.8, delay: 0.6 }}
+                      viewport={{ once: true }}
+                      className="text-sm sm:text-base md:text-lg font-bold leading-relaxed text-left text-white mb-3 md:mb-4 ml-0 md:-ml-16 lg:-ml-20"
+                    >
+                      {section.description}
+                    </motion.div>
+                  )}
+
                   {/* Descripción larga */}
                   <motion.p 
                     initial={{ opacity: 0, y: 30 }}
@@ -584,29 +599,7 @@ export default function ProgramasPage() {
                     {section.longDescription}
                   </motion.p>
 
-                  {/* Icono de avión de papel */}
-                  <motion.div 
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, delay: 1 }}
-                    viewport={{ once: true }}
-                    className="hidden md:block absolute bottom-8 left-8"
-                  >
-                    <svg 
-                      className={`w-8 h-8 ${section.fadeImage?.includes('naranja') ? 'text-white' : section.fadeImage?.includes('azul') ? 'text-white' : section.textColor} opacity-60`}
-                      style={section.fadeImage?.includes('verde') ? { color: '#97b664' } : {}} 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
-                    >
-                      <path 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        strokeWidth={2} 
-                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" 
-                      />
-                    </svg>
-                  </motion.div>
+                  {/* 2026-04-16: Se elimina el icono decorativo de avión de papel por solicitud del usuario. */}
 
                   {/* Flechas de navegación */}
                   <div className="absolute right-4 md:right-6 bottom-6 md:top-1/2 md:bottom-auto transform md:-translate-y-1/2 flex md:block gap-3 md:gap-0 md:space-y-6 z-30">
