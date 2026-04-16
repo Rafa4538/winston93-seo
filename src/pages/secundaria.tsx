@@ -591,16 +591,23 @@ export default function SecundariaPage() {
             </div>
           </div>
 
-          {/* 2026-04-16: Botón de admisión centrado debajo de las tarjetas de certificación y estancia. */}
+          {/* 2026-04-16: CTA de admisión con efecto de brillo/luz, sin icono, para mejorar atención visual. */}
           <div className="mt-8 flex justify-center">
-            <a
-              href="https://agendaw.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-[#013BDF] text-white font-bold text-lg uppercase tracking-widest px-10 py-4 rounded-xl shadow-lg hover:bg-[#0050ce] hover:shadow-xl transition-all duration-300 hover:scale-105"
-            >
-              COMIENZA TU PROCESO DE ADMISIÓN
-            </a>
+            <div className="text-center">
+              <a
+                href="https://agendaw.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative inline-flex items-center justify-center overflow-hidden bg-[#013BDF] text-white font-extrabold text-lg uppercase tracking-wider px-10 py-4 rounded-xl border-2 border-[#E3FB07] shadow-[0_0_20px_rgba(227,251,7,0.35)] hover:bg-[#0050ce] hover:shadow-[0_0_28px_rgba(227,251,7,0.55)] transition-all duration-300 hover:scale-105"
+              >
+                <span className="pointer-events-none absolute -inset-1 rounded-xl bg-[#E3FB07]/35 blur-md opacity-70 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true" />
+                <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent group-hover:translate-x-full transition-transform duration-1000" aria-hidden="true" />
+                <span className="relative z-10">COMIENZA TU PROCESO DE ADMISIÓN</span>
+              </a>
+              <p className="mt-2 text-sm font-semibold text-[#013BDF]">
+                Da clic y agenda tu examen de admisión.
+              </p>
+            </div>
           </div>
 
         </div>
