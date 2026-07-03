@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import Head from 'next/head'
 import Navigation from '@/components/Navigation'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
+import Seo from '@/components/Seo'
+import { SITE_ROUTES } from '@/lib/seo/routes'
 
 // 2026-04-10: Overlay de carga con slogan institucional animado — brillo tipo shimmer y flotación juguetona por palabra.
 const SloganLoadingOverlay = ({ visible }: { visible: boolean }) => {
@@ -79,9 +80,12 @@ const ExtracurricularCard = ({
     <div className="relative group overflow-hidden rounded-none cursor-pointer" onClick={onClick}>
       <SloganLoadingOverlay visible={!loaded} />
       {/* 2026-04-10: opacity-0 hasta carga completa; evita renderizado progresivo visible detrás del overlay */}
+      {/* 2026-07-03: width/height fijos (320x320) para evitar CLS al cargar la tarjeta. */}
       <img
         src={src}
         alt={alt}
+        width={320}
+        height={320}
         className={`w-80 h-80 object-cover transition-all duration-700 group-hover:scale-105 ${loaded ? 'opacity-100' : 'opacity-0'}`}
         onLoad={() => setLoaded(true)}
         onError={() => setLoaded(true)}
@@ -126,8 +130,10 @@ const GalleryModal = ({
       >
         <div className="relative max-w-6xl max-h-[95vh] w-full mx-4">
           {/* Botón de cerrar */}
+          {/* 2026-07-03: aria-label en controles de galería para accesibilidad. */}
           <button
             onClick={onClose}
+            aria-label="Cerrar galería"
             className="absolute top-4 right-4 z-10 text-white text-4xl hover:text-gray-300 transition-colors"
           >
             ×
@@ -148,9 +154,12 @@ const GalleryModal = ({
             className="relative"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* 2026-07-03: Dimensiones de referencia para reducir CLS en modal de galería. */}
             <img
               src={images[currentIndex]}
               alt={`${title} - Imagen ${currentIndex + 1}`}
+              width={1200}
+              height={800}
               className="w-full h-auto max-h-[85vh] object-contain rounded-lg"
             />
           </motion.div>
@@ -162,6 +171,7 @@ const GalleryModal = ({
                 e.stopPropagation()
                 onPrev()
               }}
+              aria-label="Imagen anterior"
               className="pointer-events-auto bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-70 transition-all transform hover:scale-110"
             >
               ‹
@@ -171,6 +181,7 @@ const GalleryModal = ({
                 e.stopPropagation()
                 onNext()
               }}
+              aria-label="Imagen siguiente"
               className="pointer-events-auto bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-70 transition-all transform hover:scale-110"
             >
               ›
@@ -314,15 +325,17 @@ export default function PrimariaPage() {
     }
   }, [])
 
+  // 2026-07-03: Metadata SEO centralizada para /primaria.
+  const pageSeo = SITE_ROUTES.find((route) => route.path === '/primaria')!
+
   return (
     <div className="primaria-page">
-      <Head>
-        <title>Primaria - Instituto Winston Churchill</title>
-        <meta name="description" content="Educación primaria bilingüe de excelencia en el Instituto Winston Churchill. Formamos estudiantes con pensamiento crítico y valores sólidos." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="keywords" content="primaria, educación bilingüe, Winston Churchill, educación integral, valores, pensamiento crítico" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Seo
+        title={pageSeo.title}
+        description={pageSeo.description}
+        path={pageSeo.path}
+        keywords={pageSeo.keywords}
+      />
 
       {/* Navigation - transparente al inicio, azul al hacer scroll */}
       <Navigation currentSection={scrolled ? 1 : 0} />
@@ -510,10 +523,13 @@ export default function PrimariaPage() {
                   Contamos con el respaldo del prestigioso programa de Cambridge, diseñado para elevar los estándares educativos en el idioma inglés y proporcionar a nuestros estudiantes las mejores herramientas para su aprendizaje.
                 </p>
                 {/* 2026-04-14: Logo Cambridge centrado horizontalmente dentro del bloque de certificación. */}
+                {/* 2026-07-03: Dimensiones explícitas del logo Cambridge para reducir CLS. */}
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
                   <img
                     src="/images/logos/cambridge.png"
                     alt="University of Cambridge"
+                    width={160}
+                    height={64}
                     className="h-16 w-auto"
                   />
                 </div>

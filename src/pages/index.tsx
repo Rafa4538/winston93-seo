@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import Navigation from '@/components/Navigation'
 import FullPageScroll from '@/components/FullPageScroll'
@@ -7,6 +6,8 @@ import SliderSection from '@/components/sections/ProjectsSection'
 import EducationalOfferSection from '@/components/sections/ServicesSection'
 import ConveniosSection from '@/components/sections/ConveniosSection'
 import OfertaEducativaSection from '@/components/sections/OfertaEducativaSection'
+import Seo from '@/components/Seo'
+import { SITE_ROUTES } from '@/lib/seo/routes'
 
 
 export default function Home() {
@@ -75,15 +76,20 @@ export default function Home() {
     }
   }, [useNativeScroll])
 
+  // 2026-07-03: Metadata SEO centralizada (title, description, OG, Twitter, canonical, JSON-LD).
+  const homeSeo = SITE_ROUTES.find((route) => route.path === '/')!
+
   return (
     <div className="home-page">
-      <Head>
-        <title>Instituto Winston Churchill - Working for a Brighter Future</title>
-        <meta name="description" content="Instituto educativo con 30 años de experiencia. Educación bilingüe integral: Kínder, Primaria y Secundaria. Respaldados por Oxford University Press y University of Cambridge." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="keywords" content="instituto, educación, bilingüe, kínder, primaria, secundaria, Winston Churchill, Oxford, Cambridge" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Seo
+        title={homeSeo.title}
+        description={homeSeo.description}
+        path={homeSeo.path}
+        keywords={homeSeo.keywords}
+      />
+
+      {/* 2026-07-03: H1 semántico oculto visualmente para SEO/accesibilidad sin alterar el diseño. */}
+      <h1 className="sr-only">Instituto Winston Churchill - Educación Bilingüe</h1>
 
       {/* Navigation que recibe la sección actual */}
       <Navigation currentSection={currentSection} />

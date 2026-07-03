@@ -59,9 +59,12 @@ export default function SliderSection() {
               index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
             }`}
           >
+            {/* 2026-07-03: Dimensiones explícitas en slides del home para reducir CLS. */}
             <img
               src={slide.image}
-              alt={`Slide ${index + 1}`}
+              alt={`${slide.title} ${slide.subtitle}`}
+              width={1920}
+              height={1080}
               className="w-full h-full object-cover"
             />
           </div>

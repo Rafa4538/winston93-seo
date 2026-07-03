@@ -1,7 +1,8 @@
-import Head from 'next/head'
 import { useState, useRef, useEffect } from 'react'
 import Navigation from '../components/Navigation'
 import { motion } from 'framer-motion'
+import Seo from '@/components/Seo'
+import { SITE_ROUTES } from '@/lib/seo/routes'
 
 // Componente Modal para la galería
 interface GalleryModalProps {
@@ -33,6 +34,7 @@ const GalleryModal: React.FC<GalleryModalProps> = ({
           <h3 className="text-xl font-bold">{title}</h3>
           <button
             onClick={onClose}
+            aria-label="Cerrar galería"
             className="text-white hover:text-gray-300 text-3xl font-bold"
           >
             ×
@@ -42,9 +44,12 @@ const GalleryModal: React.FC<GalleryModalProps> = ({
         {/* Contenedor de la imagen */}
         <div className="flex-1 flex items-center justify-center p-4">
           <div className="relative w-full h-full flex items-center justify-center">
+            {/* 2026-07-03: Dimensiones y aria-labels en modal de galería. */}
             <img
               src={images[currentIndex]}
               alt={`${title} ${currentIndex + 1}`}
+              width={1200}
+              height={800}
               className="max-w-full max-h-full object-contain"
             />
             
@@ -52,6 +57,7 @@ const GalleryModal: React.FC<GalleryModalProps> = ({
             {images.length > 1 && (
               <button
                 onClick={onPrev}
+                aria-label="Imagen anterior"
                 className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-all"
               >
                 ←
@@ -62,6 +68,7 @@ const GalleryModal: React.FC<GalleryModalProps> = ({
             {images.length > 1 && (
               <button
                 onClick={onNext}
+                aria-label="Imagen siguiente"
                 className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-all"
               >
                 →
@@ -289,12 +296,17 @@ export default function WinstonLife() {
     }, 650)
   }
 
+  // 2026-07-03: Metadata SEO centralizada para /winston-life.
+  const pageSeo = SITE_ROUTES.find((route) => route.path === '/winston-life')!
+
   return (
     <>
-      <Head>
-        <title>Winston Life - Colegio Winston</title>
-        <meta name="description" content="Conoce la vida estudiantil en Colegio Winston" />
-      </Head>
+      <Seo
+        title={pageSeo.title}
+        description={pageSeo.description}
+        path={pageSeo.path}
+        keywords={pageSeo.keywords}
+      />
 
       {/* Header */}
       <Navigation currentSection={0} />
@@ -304,9 +316,12 @@ export default function WinstonLife() {
         {/* Banner Principal */}
         <section className="relative h-screen overflow-hidden">
           <div className="absolute inset-0">
+            {/* 2026-07-03: Dimensiones explícitas en portada para reducir CLS. */}
             <img
               src="/images/Winston Life/portada.jpg"
-              alt="Winston Life"
+              alt="Winston Life - Instituto Winston Churchill"
+              width={1920}
+              height={1080}
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-black bg-opacity-40"></div>
@@ -314,15 +329,16 @@ export default function WinstonLife() {
           
           <div className="relative z-10 h-full flex flex-col items-center justify-center">
             <div className="text-center text-white mb-12 md:mb-16">
-              <motion.div
+              {/* 2026-07-03: H1 semántico real conservando las mismas clases visuales. */}
+              <motion.h1
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1 }}
                 className="text-4xl sm:text-6xl md:text-8xl font-bold leading-tight"
               >
-                <div className="text-white">WINSTON</div>
-                <div className="text-[#E3FB07] text-3xl sm:text-4xl md:text-6xl">LIFE</div>
-              </motion.div>
+                <span className="block text-white">WINSTON</span>
+                <span className="block text-[#E3FB07] text-3xl sm:text-4xl md:text-6xl">LIFE</span>
+              </motion.h1>
             </div>
 
             {/* Cintilla con iconos - Completamente unida con colores sólidos */}
@@ -346,9 +362,12 @@ export default function WinstonLife() {
                 {/* 2026-03-27: Optimización responsive de cintilla para mantener legibilidad/tacto en móvil. */}
                 {/* Icono con z-index muy alto para asegurar visibilidad */}
                 <div className={`relative ${activeRibbon === 'winston-olympics' ? 'z-[9999]' : 'z-20'}`}>
+                  {/* 2026-07-03: Dimensiones explícitas en iconos de cintilla para reducir CLS. */}
                   <img
                     src="/images/Winston Life/iconos/CARA_LEON.png"
                     alt="Winston Olympics"
+                    width={64}
+                    height={64}
                     className={`w-11 h-11 sm:w-16 sm:h-16 mb-1 sm:mb-2 transition-all duration-700 ease-in-out ${
                       activeRibbon === 'winston-olympics' ? 'scale-150 -translate-y-4' : ''
                     }`}
@@ -373,6 +392,8 @@ export default function WinstonLife() {
                   <img
                     src="/images/Winston Life/iconos/FOCO.png"
                     alt="Entrepreneurs"
+                    width={64}
+                    height={64}
                     className={`w-11 h-11 sm:w-16 sm:h-16 mb-1 sm:mb-2 transition-all duration-700 ease-in-out ${
                       activeRibbon === 'entrepreneurs' ? 'scale-150 -translate-y-4' : ''
                     }`}
@@ -397,6 +418,8 @@ export default function WinstonLife() {
                   <img
                     src="/images/Winston Life/iconos/icono_winston.png"
                     alt="#Soy Winston"
+                    width={64}
+                    height={64}
                     className={`w-11 h-11 sm:w-16 sm:h-16 mb-1 sm:mb-2 transition-all duration-700 ease-in-out ${
                       activeRibbon === 'soy-winston' ? 'scale-150 -translate-y-4' : ''
                     }`}
@@ -411,7 +434,10 @@ export default function WinstonLife() {
               >
                 <img
                   src="/images/Winston Life/iconos/CARA_LEON.png"
-                  alt="Winston Olympics"
+                  alt=""
+                  aria-hidden="true"
+                  width={64}
+                  height={64}
                   className={`w-16 h-16 transition-transform duration-700 ease-out ${
                     activeRibbon === 'winston-olympics' ? 'scale-150 -translate-y-3' : 'scale-100 translate-y-0'
                   }`}
@@ -423,7 +449,10 @@ export default function WinstonLife() {
               >
                 <img
                   src="/images/Winston Life/iconos/FOCO.png"
-                  alt="Entrepreneurs"
+                  alt=""
+                  aria-hidden="true"
+                  width={64}
+                  height={64}
                   className={`w-16 h-16 transition-transform duration-700 ease-out ${
                     activeRibbon === 'entrepreneurs' ? 'scale-150 -translate-y-3' : 'scale-100 translate-y-0'
                   }`}
@@ -435,7 +464,10 @@ export default function WinstonLife() {
               >
                 <img
                   src="/images/Winston Life/iconos/icono_winston.png"
-                  alt="#Soy Winston"
+                  alt=""
+                  aria-hidden="true"
+                  width={64}
+                  height={64}
                   className={`w-16 h-16 transition-transform duration-700 ease-out ${
                     activeRibbon === 'soy-winston' ? 'scale-150 -translate-y-3' : 'scale-100 translate-y-0'
                   }`}
@@ -499,7 +531,8 @@ export default function WinstonLife() {
                     <div key={`a-${num}`} className="flex-shrink-0">
                       <div className="relative group">
                         <div className="bg-gradient-to-br from-white via-blue-50 to-blue-100 p-4 rounded-2xl shadow-lg border-2 border-blue-200 transition-all duration-500 group-hover:shadow-2xl group-hover:border-blue-400 group-hover:bg-gradient-to-br group-hover:from-blue-50 group-hover:via-white group-hover:to-blue-50 group-hover:-translate-y-2">
-                          <img src={`/images/Winston Life/emprendedores/emprendedores${num}.${num === 2 ? 'png' : 'jpg'}`} alt={`Programa Entrepreneurs - Actividad ${num}`} className="w-[280px] sm:w-[340px] md:w-[420px] h-[210px] sm:h-[250px] md:h-[300px] object-cover rounded-xl transition-all duration-500 group-hover:scale-105 group-hover:brightness-110" />
+                          {/* 2026-07-03: Dimensiones explícitas en carrusel Entrepreneurs para reducir CLS. */}
+                          <img src={`/images/Winston Life/emprendedores/emprendedores${num}.${num === 2 ? 'png' : 'jpg'}`} alt={`Programa Entrepreneurs - Actividad ${num}`} width={420} height={300} className="w-[280px] sm:w-[340px] md:w-[420px] h-[210px] sm:h-[250px] md:h-[300px] object-cover rounded-xl transition-all duration-500 group-hover:scale-105 group-hover:brightness-110" />
                           <div className="absolute inset-4 bg-gradient-to-t from-blue-700/60 via-blue-500/20 to-[#E3FB07]/25 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
                           <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-md rounded-lg p-3 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
                             <p className="text-blue-900 text-sm font-bold text-center uppercase tracking-wide">Programa Entrepreneurs</p>
@@ -518,7 +551,8 @@ export default function WinstonLife() {
                     <div key={`b-${num}`} className="flex-shrink-0">
                       <div className="relative group">
                         <div className="bg-gradient-to-br from-white via-blue-50 to-blue-100 p-4 rounded-2xl shadow-lg border-2 border-blue-200 transition-all duration-500 group-hover:shadow-2xl group-hover:border-blue-400 group-hover:bg-gradient-to-br group-hover:from-blue-50 group-hover:via-white group-hover:to-blue-50 group-hover:-translate-y-2">
-                          <img src={`/images/Winston Life/emprendedores/emprendedores${num}.${num === 2 ? 'png' : 'jpg'}`} alt={`Programa Entrepreneurs - Actividad ${num}`} className="w-[280px] sm:w-[340px] md:w-[420px] h-[210px] sm:h-[250px] md:h-[300px] object-cover rounded-xl transition-all duration-500 group-hover:scale-105 group-hover:brightness-110" />
+                          {/* 2026-07-03: Dimensiones explícitas en carrusel Entrepreneurs para reducir CLS. */}
+                          <img src={`/images/Winston Life/emprendedores/emprendedores${num}.${num === 2 ? 'png' : 'jpg'}`} alt={`Programa Entrepreneurs - Actividad ${num}`} width={420} height={300} className="w-[280px] sm:w-[340px] md:w-[420px] h-[210px] sm:h-[250px] md:h-[300px] object-cover rounded-xl transition-all duration-500 group-hover:scale-105 group-hover:brightness-110" />
                           <div className="absolute inset-4 bg-gradient-to-t from-blue-700/60 via-blue-500/20 to-[#E3FB07]/25 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
                           <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-md rounded-lg p-3 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
                             <p className="text-blue-900 text-sm font-bold text-center uppercase tracking-wide">Programa Entrepreneurs</p>
@@ -601,9 +635,12 @@ export default function WinstonLife() {
                   className="relative group overflow-hidden rounded-2xl cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300"
                   onClick={() => openGallery('soyWinston', index)}
                 >
+                  {/* 2026-07-03: Dimensiones explícitas en galería #SoyWinston para reducir CLS. */}
                   <img
                     src={image}
                     alt={`#Soy Winston ${index + 1}`}
+                    width={640}
+                    height={320}
                     className="w-full h-64 sm:h-72 md:h-80 object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">

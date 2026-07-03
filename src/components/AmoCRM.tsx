@@ -53,10 +53,12 @@ export default function AmoCRM({
     }
 
     // PASO 2: Función para inicializar amoSocialButton
-    window.amoSocialButton = function(...args: any[]) {
-      (window.amoSocialButton!.q = window.amoSocialButton!.q || []).push(args)
-    } as any
-    window.amoSocialButton.q = []
+    // 2026-07-03: Asignación tipada segura para evitar error de strictNullChecks en build.
+    const amoSocialButtonFn = function (...args: any[]) {
+      ;(amoSocialButtonFn.q = amoSocialButtonFn.q || []).push(args)
+    } as ((...args: any[]) => void) & { q?: any[] }
+    amoSocialButtonFn.q = []
+    window.amoSocialButton = amoSocialButtonFn
 
     console.log('✅ Objeto amo_social_button configurado:', window.amo_social_button)
     console.log('✅ Función amoSocialButton inicializada')

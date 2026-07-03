@@ -1,6 +1,7 @@
-import Head from 'next/head'
 import { useEffect, useRef, useState } from 'react'
 import Navigation from '@/components/Navigation'
+import Seo from '@/components/Seo'
+import { SITE_ROUTES } from '@/lib/seo/routes'
 
 export default function ConocenosPage() {
   const [misionVisible, setMisionVisible] = useState(false)
@@ -22,23 +23,28 @@ export default function ConocenosPage() {
     return () => { misionObs.disconnect(); visionObs.disconnect() }
   }, [])
 
+  // 2026-07-03: Metadata SEO centralizada para /conocenos.
+  const pageSeo = SITE_ROUTES.find((route) => route.path === '/conocenos')!
+
   return (
     <>
-      <Head>
-        <title>Conócenos - Instituto Winston Churchill</title>
-        <meta name="description" content="Conoce la misión, visión e historia del Instituto Winston Churchill. Más de 30 años formando líderes con visión global." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="keywords" content="Instituto Winston Churchill, conócenos, misión, visión, historia, educación" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Seo
+        title={pageSeo.title}
+        description={pageSeo.description}
+        path={pageSeo.path}
+        keywords={pageSeo.keywords}
+      />
 
       <Navigation />
 
       {/* ── Banner principal — pantalla completa ── */}
       <section className="relative w-full h-screen flex items-center justify-center overflow-hidden">
+        {/* 2026-07-03: width/height para reservar espacio y reducir CLS. */}
         <img
           src="/images/conocenos/portada-conoce.png"
           alt="Conócenos - Instituto Winston Churchill"
+          width={1920}
+          height={1080}
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-black/40" />
@@ -88,15 +94,20 @@ export default function ConocenosPage() {
               style={{ transitionDelay: '300ms' }}
             >
               {/* Pleca reposicionada: más arriba (-top-8) y más a la derecha (-right-8) */}
+              {/* 2026-07-03: Dimensiones explícitas para reducir CLS en imágenes decorativas y de contenido. */}
               <img
                 src="/images/conocenos/pleca-verde.png"
                 alt=""
                 aria-hidden="true"
+                width={128}
+                height={128}
                 className="absolute -top-8 -right-8 z-10 w-24 md:w-28 lg:w-32 pointer-events-none select-none"
               />
               <img
                 src="/images/conocenos/pza1.png"
                 alt="Estudiantes del Instituto Winston Churchill"
+                width={800}
+                height={600}
                 className="w-full h-auto rounded-2xl object-contain relative z-0"
               />
             </div>
@@ -139,9 +150,12 @@ export default function ConocenosPage() {
               }`}
               style={{ transitionDelay: '300ms' }}
             >
+              {/* 2026-07-03: Dimensiones explícitas para reducir CLS. */}
               <img
                 src="/images/conocenos/pza2.png"
                 alt="Estudiantes del Instituto Winston Churchill"
+                width={800}
+                height={600}
                 className="w-full h-auto rounded-2xl object-contain"
               />
             </div>

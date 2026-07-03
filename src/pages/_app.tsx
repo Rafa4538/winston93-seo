@@ -24,10 +24,10 @@ export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter()
 
   useEffect(() => {
-    // Simular tiempo de carga inicial
+    // 2026-07-03: Se reduce el loading inicial (2000ms → 1500ms) para mejorar LCP/TBT sin cambiar el diseño.
     const timer = setTimeout(() => {
       setIsLoading(false)
-    }, 2000) // 2 segundos de loading inicial
+    }, 1500)
 
     return () => clearTimeout(timer)
   }, [])
@@ -39,10 +39,10 @@ export default function App({ Component, pageProps }: AppProps) {
     }
 
     const handleComplete = () => {
-      // Pequeño delay para mostrar la animación
+      // 2026-07-03: Se reduce el delay de transición (1200ms → 700ms) para mejorar Core Web Vitals.
       setTimeout(() => {
         setIsPageLoading(false)
-      }, 1200)
+      }, 700)
     }
 
     router.events.on('routeChangeStart', handleStart)
