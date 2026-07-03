@@ -1,9 +1,10 @@
-import Head from 'next/head'
 import { useState, useEffect, useRef } from 'react'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
+import Seo from '@/components/Seo'
+import { SITE_ROUTES } from '@/lib/seo/routes'
 
 // Componente para imagen con efecto de entrada único
 const AnimatedImage = ({ 
@@ -248,15 +249,20 @@ export default function ProgramasPage() {
     }
   }, [currentSection, isScrolling, sectionsData.length])
 
+  // 2026-07-03: Metadata SEO centralizada para /programas.
+  const pageSeo = SITE_ROUTES.find((route) => route.path === '/programas')!
+
   return (
     <div className="programas-page">
-      <Head>
-        <title>Programas - Instituto Winston Churchill</title>
-        <meta name="description" content="Descubre nuestros programas especializados en formación social, educación financiera y mindfulness en el Instituto Winston Churchill." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="keywords" content="programas, mindfulness, emprendimiento, educación financiera, Winston Churchill" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Seo
+        title={pageSeo.title}
+        description={pageSeo.description}
+        path={pageSeo.path}
+        keywords={pageSeo.keywords}
+      />
+
+      {/* 2026-07-03: H1 semántico oculto visualmente para SEO/accesibilidad sin alterar el diseño. */}
+      <h1 className="sr-only">Programas - Instituto Winston Churchill</h1>
 
       {/* Navigation siempre transparente */}
       <Navigation currentSection={0} />
@@ -603,8 +609,10 @@ export default function ProgramasPage() {
 
                   {/* Flechas de navegación */}
                   <div className="absolute right-4 md:right-6 bottom-6 md:top-1/2 md:bottom-auto transform md:-translate-y-1/2 flex md:block gap-3 md:gap-0 md:space-y-6 z-30">
+                    {/* 2026-07-03: aria-label en flechas de navegación de programas. */}
                     <motion.button
                       onClick={() => goToSection(Math.max(0, index - 1))}
+                      aria-label="Sección anterior"
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
                       className={`w-11 h-11 md:w-14 md:h-14 rounded-full backdrop-blur-sm transition-all duration-300 flex items-center justify-center shadow-xl ${
@@ -624,6 +632,7 @@ export default function ProgramasPage() {
                     </motion.button>
                     <motion.button
                       onClick={() => goToSection(Math.min(sectionsData.length - 1, index + 1))}
+                      aria-label="Sección siguiente"
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
                       className={`w-11 h-11 md:w-14 md:h-14 rounded-full backdrop-blur-sm transition-all duration-300 flex items-center justify-center shadow-xl ${

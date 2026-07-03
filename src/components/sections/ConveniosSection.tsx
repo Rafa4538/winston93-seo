@@ -64,9 +64,12 @@ export default function ConveniosSection() {
           <div className={`w-full flex justify-center transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'}`}
             style={{ transitionDelay: '300ms' }}>
             {/* 2026-04-10: Imagen móvil más grande y con leve desplazamiento a la derecha para centrar visualmente. */}
+            {/* 2026-07-03: Dimensiones explícitas para reducir CLS. */}
             <img
               src="/images/logos/convenios.png"
               alt="Convenios y Alianzas Académicas - Instituto Winston Churchill"
+              width={1200}
+              height={600}
               className="w-[108%] max-w-none h-auto object-contain translate-x-3"
             />
           </div>
@@ -87,9 +90,12 @@ export default function ConveniosSection() {
                     : 'opacity-0 translate-y-8 scale-95'
                 }`} style={{ transitionDelay: '200ms' }}>
                   {/* 2026-03-27: Escala reducida para evitar solape con texto lateral. */}
+                  {/* 2026-07-03: Dimensiones explícitas para reducir CLS. */}
                   <img
                     src="/images/logos/convenios.png"
                     alt="Convenios y Alianzas Académicas - Instituto Winston Churchill"
+                    width={1200}
+                    height={600}
                     className="w-auto h-auto object-contain scale-90 sm:scale-95 md:scale-100 lg:scale-110 xl:scale-125 2xl:scale-140"
                   />
                   

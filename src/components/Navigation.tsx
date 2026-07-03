@@ -185,10 +185,13 @@ export default function Navigation({ currentSection = 0 }: NavigationProps) {
           </div>
 
           {/* Mobile menu button - Solo en móvil y tablet vertical */}
+          {/* 2026-07-03: aria-label en botón de menú móvil para accesibilidad. */}
           <div className="md:hidden lg:hidden">
             {isMobileMenu && (
               <button
                 onClick={() => setIsOpen(!isOpen)}
+                aria-label={isOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación'}
+                aria-expanded={isOpen}
                 className="text-white hover:text-black focus:outline-none focus:text-black transition-all duration-300 w-11 h-11 flex items-center justify-center rounded-md hover:shadow-lg"
                 onMouseEnter={(e) => {e.currentTarget.style.backgroundColor = '#E3FB07'; e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(227, 251, 7, 0.5), 0 4px 6px -2px rgba(227, 251, 7, 0.3)'}} 
                 onMouseLeave={(e) => {e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.boxShadow = 'none'}}

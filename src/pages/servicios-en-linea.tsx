@@ -1,13 +1,24 @@
-import Head from 'next/head'
 import { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import Navigation from '@/components/Navigation'
+import Seo from '@/components/Seo'
+import { SITE_ROUTES } from '@/lib/seo/routes'
+
+// 2026-07-03: Tipo de servicio en línea con enlace opcional para accesibilidad SEO.
+interface ServicioEnLinea {
+  id: string
+  nombre: string
+  icono: string
+  link?: string
+  destacado: boolean
+  isNuevo?: boolean
+}
 
 export default function ServiciosEnLinea() {
   const [activeServiceId, setActiveServiceId] = useState<string | null>(null)
   const prefersReducedMotion = useReducedMotion()
 
-  const servicios = [
+  const servicios: ServicioEnLinea[] = [
     {
       id: 'alta-de-facturacion',
       nombre: 'ALTA DE FACTURACIÓN',
@@ -63,39 +74,122 @@ export default function ServiciosEnLinea() {
     }
   ]
 
-  const handleServiceClick = (id: string, link?: string) => {
-    // 2026-03-27: Micro-interacción de click para dar feedback visual antes de navegar.
+  // 2026-07-03: Feedback visual al activar un servicio (sin window.open; el enlace es nativo).
+  const handleServiceActivate = (id: string) => {
     setActiveServiceId(id)
     setTimeout(() => {
-      if (link) {
-        window.open(link, '_blank', 'noopener,noreferrer')
-      }
       setActiveServiceId(null)
     }, prefersReducedMotion ? 20 : 170)
   }
 
+  // 2026-07-03: Metadata SEO centralizada para /servicios-en-linea.
+  const pageSeo = SITE_ROUTES.find((route) => route.path === '/servicios-en-linea')!
+
+  const cardClassName = (servicio: ServicioEnLinea) =>
+    `flex flex-col items-center p-6 md:p-8 transition-all duration-300 hover:scale-105 hover:bg-blue-600 hover:shadow-lg rounded-lg cursor-pointer group service-card relative overflow-hidden no-underline ${
+      servicio.id === 'ssiw-login'
+        ? 'md:col-span-2 lg:col-span-3 md:max-w-md lg:max-w-sm md:mx-auto lg:justify-self-center'
+        : ''
+    }`
+
+  const renderServiceContent = (servicio: ServicioEnLinea) => (
+    <>
+      {servicio.isNuevo && (
+        // 2026-04-14: Badge animado para destacar visualmente el nuevo servicio.
+        <motion.span
+          className="absolute top-3 right-3 z-10 rounded-full bg-yellow-400 px-3 py-1 text-[10px] md:text-xs font-bold uppercase tracking-wider text-gray-900 shadow-md"
+          animate={
+            prefersReducedMotion
+              ? undefined
+              : {
+                  scale: [1, 1.12, 1],
+                  rotate: [0, -4, 4, 0],
+                  boxShadow: [
+                    '0 0 0 0 rgba(250,204,21,0.55)',
+                    '0 0 0 8px rgba(250,204,21,0)',
+                    '0 0 0 0 rgba(250,204,21,0)',
+                  ],
+                }
+          }
+          transition={
+            prefersReducedMotion
+              ? undefined
+              : { duration: 1.6, repeat: Infinity, ease: 'easeInOut' }
+          }
+        >
+          Nuevo
+        </motion.span>
+      )}
+      <motion.div
+        className="mb-5 p-5 md:p-6 rounded-lg bg-gray-100 group-hover:bg-blue-600 transition-colors duration-300"
+        animate={
+          activeServiceId === servicio.id && !prefersReducedMotion
+            ? { scale: [1, 1.06, 0.98, 1], rotate: [0, -3, 2, 0] }
+            : { scale: 1, rotate: 0 }
+        }
+        transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+      >
+        {/* 2026-07-03: width/height explícitos para reducir CLS en iconos de servicios. */}
+        <motion.img
+          src={servicio.icono}
+          alt={servicio.nombre}
+          width={80}
+          height={80}
+          className="w-16 h-16 md:w-20 md:h-20 object-contain service-icon"
+          style={{
+            filter: 'grayscale(100%) opacity(60%)',
+            transition: 'all 0.3s ease',
+          }}
+          whileHover={prefersReducedMotion ? undefined : { scale: 1.04 }}
+          whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}
+        />
+      </motion.div>
+      <h3 className="text-center font-semibold uppercase tracking-wide text-base md:text-lg text-gray-700 group-hover:text-white transition-colors duration-300">
+        {servicio.nombre}
+      </h3>
+    </>
+  )
+
+  const hoverHandlers = {
+    onMouseEnter: (e: React.MouseEvent<HTMLElement>) => {
+      const icon = e.currentTarget.querySelector('.service-icon') as HTMLImageElement | null
+      if (icon) {
+        icon.style.filter = 'grayscale(0%) brightness(0) invert(1)'
+        icon.style.opacity = '1'
+      }
+    },
+    onMouseLeave: (e: React.MouseEvent<HTMLElement>) => {
+      const icon = e.currentTarget.querySelector('.service-icon') as HTMLImageElement | null
+      if (icon) {
+        icon.style.filter = 'grayscale(100%) opacity(60%)'
+        icon.style.opacity = '0.6'
+      }
+    },
+  }
+
   return (
     <div className="servicios-en-linea-page">
-      <Head>
-        <title>Servicios en Línea - Instituto Winston Churchill</title>
-        <meta name="description" content="Accede a nuestros servicios en línea: colegiaturas, inscripciones, tareas y más." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <style jsx global>{`
-          .service-icon {
-            filter: grayscale(100%) opacity(60%);
-            transition: all 0.3s ease;
-          }
-          .group:hover .service-icon {
-            filter: grayscale(0%) brightness(0) invert(1) !important;
-            opacity: 1 !important;
-          }
-          /* Estilo más específico para asegurar que funcione */
-          .service-card:hover .service-icon {
-            filter: grayscale(0%) brightness(0) invert(1) !important;
-            opacity: 1 !important;
-          }
-        `}</style>
-      </Head>
+      <Seo
+        title={pageSeo.title}
+        description={pageSeo.description}
+        path={pageSeo.path}
+        keywords={pageSeo.keywords}
+      />
+
+      <style jsx global>{`
+        .service-icon {
+          filter: grayscale(100%) opacity(60%);
+          transition: all 0.3s ease;
+        }
+        .group:hover .service-icon {
+          filter: grayscale(0%) brightness(0) invert(1) !important;
+          opacity: 1 !important;
+        }
+        .service-card:hover .service-icon {
+          filter: grayscale(0%) brightness(0) invert(1) !important;
+          opacity: 1 !important;
+        }
+      `}</style>
 
       {/* Header con navegación */}
       <Navigation currentSection={1} />
@@ -114,6 +208,7 @@ export default function ServiciosEnLinea() {
 
           {/* Grid de servicios */}
           {/* 2026-03-27: Entrada escalonada para iconos/cards de servicios. */}
+          {/* 2026-07-03: Tarjetas como <a> reales (o <button> sin enlace) para SEO y accesibilidad. */}
           <motion.div
             className="mt-10 md:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8 max-w-6xl mx-auto"
             initial={prefersReducedMotion ? false : 'hidden'}
@@ -123,84 +218,56 @@ export default function ServiciosEnLinea() {
               show: {
                 transition: {
                   staggerChildren: 0.09,
-                  delayChildren: 0.1
-                }
-              }
+                  delayChildren: 0.1,
+                },
+              },
             }}
           >
-            {servicios.map((servicio) => (
-              <motion.div
-                key={servicio.id}
-                className={`flex flex-col items-center p-6 md:p-8 transition-all duration-300 hover:scale-105 hover:bg-blue-600 hover:shadow-lg rounded-lg cursor-pointer group service-card relative overflow-hidden ${
-                  servicio.id === 'ssiw-login' ? 'md:col-span-2 lg:col-span-3 md:max-w-md lg:max-w-sm md:mx-auto lg:justify-self-center' : ''
-                }`}
-                initial={prefersReducedMotion ? false : { opacity: 0, y: 28, scale: 0.97 }}
-                animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
-                transition={prefersReducedMotion ? undefined : { duration: 0.45, ease: [0.25, 1, 0.5, 1] }}
-                whileTap={prefersReducedMotion ? undefined : { scale: 0.985 }}
-                onClick={() => handleServiceClick(servicio.id, servicio.link)}
-                onMouseEnter={(e) => {
-                  const icon = e.currentTarget.querySelector('.service-icon') as HTMLImageElement;
-                  if (icon) {
-                    icon.style.filter = 'grayscale(0%) brightness(0) invert(1)';
-                    icon.style.opacity = '1';
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  const icon = e.currentTarget.querySelector('.service-icon') as HTMLImageElement;
-                  if (icon) {
-                    icon.style.filter = 'grayscale(100%) opacity(60%)';
-                    icon.style.opacity = '0.6';
-                  }
-                }}
-              >
-                {servicio.isNuevo && (
-                  // 2026-04-14: Badge animado para destacar visualmente el nuevo servicio.
-                  <motion.span
-                    className="absolute top-3 right-3 z-10 rounded-full bg-yellow-400 px-3 py-1 text-[10px] md:text-xs font-bold uppercase tracking-wider text-gray-900 shadow-md"
-                    animate={
-                      prefersReducedMotion
-                        ? undefined
-                        : { scale: [1, 1.12, 1], rotate: [0, -4, 4, 0], boxShadow: ['0 0 0 0 rgba(250,204,21,0.55)', '0 0 0 8px rgba(250,204,21,0)', '0 0 0 0 rgba(250,204,21,0)'] }
-                    }
-                    transition={
-                      prefersReducedMotion
-                        ? undefined
-                        : { duration: 1.6, repeat: Infinity, ease: 'easeInOut' }
-                    }
+            {servicios.map((servicio) => {
+              const motionProps = {
+                initial: prefersReducedMotion ? false : { opacity: 0, y: 28, scale: 0.97 },
+                animate: prefersReducedMotion ? undefined : { opacity: 1, y: 0, scale: 1 },
+                transition: prefersReducedMotion
+                  ? undefined
+                  : { duration: 0.45, ease: [0.25, 1, 0.5, 1] as const },
+                whileTap: prefersReducedMotion ? undefined : { scale: 0.985 },
+              }
+
+              if (servicio.link) {
+                return (
+                  <motion.a
+                    key={servicio.id}
+                    href={servicio.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${servicio.nombre} (se abre en una nueva pestaña)`}
+                    className={cardClassName(servicio)}
+                    onClick={() => handleServiceActivate(servicio.id)}
+                    {...hoverHandlers}
+                    {...motionProps}
                   >
-                    Nuevo
-                  </motion.span>
-                )}
-                <motion.div
-                  className="mb-5 p-5 md:p-6 rounded-lg bg-gray-100 group-hover:bg-blue-600 transition-colors duration-300"
-                  animate={
-                    activeServiceId === servicio.id && !prefersReducedMotion
-                      ? { scale: [1, 1.06, 0.98, 1], rotate: [0, -3, 2, 0] }
-                      : { scale: 1, rotate: 0 }
-                  }
-                  transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+                    {renderServiceContent(servicio)}
+                  </motion.a>
+                )
+              }
+
+              return (
+                <motion.button
+                  key={servicio.id}
+                  type="button"
+                  aria-label={servicio.nombre}
+                  className={`${cardClassName(servicio)} border-0 bg-transparent w-full`}
+                  onClick={() => handleServiceActivate(servicio.id)}
+                  {...hoverHandlers}
+                  {...motionProps}
                 >
-                  <motion.img
-                    src={servicio.icono}
-                    alt={servicio.nombre}
-                    className="w-16 h-16 md:w-20 md:h-20 object-contain service-icon"
-                    style={{
-                      filter: 'grayscale(100%) opacity(60%)',
-                      transition: 'all 0.3s ease'
-                    }}
-                    whileHover={prefersReducedMotion ? undefined : { scale: 1.04 }}
-                    whileTap={prefersReducedMotion ? undefined : { scale: 0.95 }}
-                  />
-                </motion.div>
-                <h3 className="text-center font-semibold uppercase tracking-wide text-base md:text-lg text-gray-700 group-hover:text-white transition-colors duration-300">
-                  {servicio.nombre}
-                </h3>
-              </motion.div>
-            ))}
+                  {renderServiceContent(servicio)}
+                </motion.button>
+              )
+            })}
           </motion.div>
         </div>
       </div>
     </div>
   )
-} 
+}

@@ -90,9 +90,13 @@ export default function OfertaEducativaSection() {
           isTabletHorizontal ? 'px-1' : isMobile ? 'px-4' : 'px-4 md:px-8'
         }`}>
           {/* 2026-04-14: Se agrega pleca verde decorativa en el lateral izquierdo, como en la referencia visual. */}
+          {/* 2026-07-03: Dimensiones explícitas en pleca decorativa para reducir CLS. */}
           <img
             src="/images/primaria/pleca_verde.png"
-            alt="Pleca verde decorativa"
+            alt=""
+            aria-hidden="true"
+            width={80}
+            height={200}
             className={`absolute z-0 pointer-events-none select-none ${
               isTabletHorizontal
                 ? 'left-1 top-12 w-12'
@@ -158,9 +162,12 @@ export default function OfertaEducativaSection() {
                 >
                   {/* 2026-04-14: Imágenes levemente más grandes y títulos de tarjeta más pequeños. */}
                   <div className="relative overflow-hidden py-0">
+                    {/* 2026-07-03: Dimensiones explícitas en tarjetas de oferta educativa para reducir CLS. */}
                     <img
                       src={level.image}
                       alt={`Estudiantes de ${level.name} - Instituto Winston Churchill`}
+                      width={250}
+                      height={320}
                       className="w-full h-auto max-w-[185px] md:max-w-[215px] lg:max-w-[250px] mx-auto object-contain transition-all duration-200 ease-out group-hover:scale-105 group-hover:brightness-105"
                     />
 

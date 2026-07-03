@@ -137,8 +137,9 @@ const PageLoadingScreen = () => {
               className="h-full bg-yellow-400 rounded-full"
               initial={{ width: "0%" }}
               animate={{ width: "100%" }}
+              // 2026-07-03: Duración alineada al timer de transición de página (700ms).
               transition={{
-                duration: 1,
+                duration: 0.7,
                 ease: "easeInOut",
               }}
             />

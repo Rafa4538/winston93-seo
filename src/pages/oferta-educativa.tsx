@@ -1,16 +1,20 @@
-import Head from 'next/head'
 import Navigation from '@/components/Navigation'
 import OfertaEducativaSection from '@/components/sections/OfertaEducativaSection'
+import Seo from '@/components/Seo'
+import { SITE_ROUTES } from '@/lib/seo/routes'
 
 export default function OfertaEducativaPage() {
+  // 2026-07-03: Metadata SEO centralizada para /oferta-educativa.
+  const pageSeo = SITE_ROUTES.find((route) => route.path === '/oferta-educativa')!
+
   return (
     <>
-      <Head>
-        <title>Oferta Educativa - Instituto Winston Churchill</title>
-        <meta name="description" content="Descubre nuestra oferta educativa: Kínder, Primaria y Secundaria. Formación integral para un futuro brillante." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Seo
+        title={pageSeo.title}
+        description={pageSeo.description}
+        path={pageSeo.path}
+        keywords={pageSeo.keywords}
+      />
       
       <div className="oferta-educativa-page">
         <Navigation />

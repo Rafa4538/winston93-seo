@@ -1,7 +1,8 @@
-import Head from 'next/head'
 import Navigation from '@/components/Navigation'
 import { useState } from 'react'
 import Image from 'next/image'
+import Seo from '@/components/Seo'
+import { SITE_ROUTES } from '@/lib/seo/routes'
 
 export default function ContactoPage() {
   const [parentName, setParentName] = useState('')
@@ -72,12 +73,17 @@ export default function ContactoPage() {
     }
   }
 
+  // 2026-07-03: Metadata SEO centralizada para /contacto.
+  const pageSeo = SITE_ROUTES.find((route) => route.path === '/contacto')!
+
   return (
     <div className="contacto-page">
-      <Head>
-        <title>Contáctanos - Instituto Winston Churchill</title>
-        <meta name="description" content="Agenda una cita y conoce más sobre el Instituto Winston Churchill. Estamos para ayudarte." />
-      </Head>
+      <Seo
+        title={pageSeo.title}
+        description={pageSeo.description}
+        path={pageSeo.path}
+        keywords={pageSeo.keywords}
+      />
 
       <Navigation currentSection={1} />
 
@@ -127,11 +133,13 @@ export default function ContactoPage() {
         <div className="container mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
           {/* Formulario */}
           <form onSubmit={handleSubmit} className="space-y-5">
+            {/* 2026-07-03: htmlFor/id en labels e inputs para accesibilidad (asociación explícita). */}
             <div>
-              <label className="block text-xs font-semibold uppercase text-gray-700 mb-2">
+              <label htmlFor="parentName" className="block text-xs font-semibold uppercase text-gray-700 mb-2">
                 Nombre del padre o tutor
               </label>
               <input
+                id="parentName"
                 type="text"
                 required
                 value={parentName}
@@ -142,10 +150,11 @@ export default function ContactoPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase text-gray-700 mb-2">
+              <label htmlFor="studentName" className="block text-xs font-semibold uppercase text-gray-700 mb-2">
                 Nombre del aspirante
               </label>
               <input
+                id="studentName"
                 type="text"
                 required
                 value={studentName}
@@ -156,10 +165,11 @@ export default function ContactoPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-xs font-semibold uppercase text-gray-700 mb-2">
                 Correo
               </label>
               <input
+                id="email"
                 type="email"
                 required
                 value={email}
@@ -170,10 +180,11 @@ export default function ContactoPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase text-gray-700 mb-2">
+              <label htmlFor="message" className="block text-xs font-semibold uppercase text-gray-700 mb-2">
                 Mensaje
               </label>
               <textarea
+                id="message"
                 rows={4}
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
@@ -183,10 +194,11 @@ export default function ContactoPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase text-gray-700 mb-2">
+              <label htmlFor="phone" className="block text-xs font-semibold uppercase text-gray-700 mb-2">
                 Teléfono
               </label>
               <input
+                id="phone"
                 type="tel"
                 required
                 value={phone}
